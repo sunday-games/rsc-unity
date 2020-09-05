@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Highscore
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 2
+      m_CompressionQuality: 75
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b345472e3baa04a45866712342c187a5, type: 3}
+    totalSpriteSurfaceArea: 807855
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 66bbd551f0aa58a489f9ba49328c7602, type: 3}
+  - {fileID: 21300000, guid: f9f6673493c25bd4c932e448b7e391b9, type: 3}
+  - {fileID: 21300000, guid: a399ea74dd4af7e4faea93eb966f5803, type: 3}
+  - {fileID: 21300000, guid: 2853102558757cf40ab67d945cbf7188, type: 3}
+  - {fileID: 21300000, guid: a2697965902c07f43b1b63fdd0c4a059, type: 3}
+  - {fileID: 21300000, guid: a16cdaf70bd43c54292b763bd4b51e5b, type: 3}
+  - {fileID: 21300000, guid: 588d4c38e569bd0438b931ece82509b8, type: 3}
+  - {fileID: 21300000, guid: 6d1836f8a27dab744808032a0906b392, type: 3}
+  - {fileID: 21300000, guid: bd5f83fe0b86cd84297aaf9f7bc35c67, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - cat
+  - cat_paw_R
+  - cat_lime_picked
+  - window_striped
+  - cat_lime_picked_2
+  - cat_purple_picked
+  - cat_lime_picked_1
+  - cat_paw_L
+  - cat_whitey_picked
+  m_Tag: Highscore
+  m_IsVariant: 0

@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Lucky Wheel
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 2
+      m_CompressionQuality: 75
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: aa0a130c833d29c469e8214e56b1b8a9, type: 3}
+    totalSpriteSurfaceArea: 1625342
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3f95f2706eaa83548aa5c9b8554915c5, type: 3}
+  - {fileID: 21300004, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300006, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300000, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300002, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300012, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300008, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300010, guid: 62ba50122628ca54fb84e799a59b3974, type: 3}
+  - {fileID: 21300000, guid: 9b6f1cabfb7410b48847ffc5975ad39d, type: 3}
+  - {fileID: 21300000, guid: 3d4e56de08dcb064584b1d01a985bcb6, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - sausage_back
+  - luckywheel_cat_2
+  - luckywheel_cat_3
+  - luckywheel_cat_0
+  - luckywheel_cat_1
+  - luckywheel_cat_6
+  - luckywheel_cat_4
+  - luckywheel_cat_5
+  - luckywheel_arrow
+  - luckywheel
+  m_Tag: Lucky Wheel
+  m_IsVariant: 0
