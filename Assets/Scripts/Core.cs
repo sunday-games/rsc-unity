@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using UnityEngine.SceneManagement;
 
 public enum Platform { Unknown, Editor, AppStore, GooglePlay, Facebook, Amazon, WindowsPhone, Tizen, tvOS }
 public abstract class Core : MonoBehaviour
@@ -29,8 +27,9 @@ public abstract class Core : MonoBehaviour
 
     public static bool isDebug { get { return (int)build.debugLevel > 2; } }
 
-    public static bool isTNT { get { return SceneManager.GetActiveScene().name == "TNT"; } }
-    public static bool isRiki { get { return SceneManager.GetActiveScene().name == "Riki"; } }
+    public static UnityEngine.SceneManagement.Scene currentScene => UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+    public static bool isTNT => currentScene.name == "TNT";
+    public static bool isRiki => currentScene.name == "Riki";
 
     public static Vector2 halfVector2 = new Vector2(0.5f, 0.5f);
 

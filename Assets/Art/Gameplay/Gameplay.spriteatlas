@@ -55,7 +55,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: d5aaca166c6ec824db4979997fa4e249, type: 3}
-    totalSpriteSurfaceArea: 3972379
+    totalSpriteSurfaceArea: 3960119
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -97,6 +97,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a07d8ba4aa7983c4a91675e4661b8e8a, type: 3}
   - {fileID: 21300000, guid: e779eda42e0c7314a8a7873f7388743c, type: 3}
   - {fileID: 21300000, guid: 41f9c2e425776e94d8efc324bdcbe99d, type: 3}
+  - {fileID: 21300000, guid: a9f9d115da9a15541b2f374208b4a326, type: 3}
   - {fileID: 21300000, guid: 8cf33855d1d4e894c85faeacf50dc596, type: 3}
   - {fileID: 21300000, guid: 543d246520ccefa46998e74903a5b308, type: 3}
   - {fileID: 21300000, guid: 96bea47532da9384a9e7276986330a65, type: 3}
@@ -123,7 +124,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 77cb0e09c3aaf3449815e41c54e1dda7, type: 3}
   - {fileID: 21300000, guid: 672346295de9a2e4a8f90b1df6e3e70a, type: 3}
   - {fileID: 21300000, guid: 0f4c8959a63a20e49ae291798484a40c, type: 3}
-  - {fileID: 21300000, guid: 4b351e69a73fdca45afff6b3cb8dd1f0, type: 3}
   - {fileID: 21300000, guid: cbc67c996a48f08428f179440ba7b20f, type: 3}
   - {fileID: 21300000, guid: 071072e9349b93141a43bc4540523414, type: 3}
   - {fileID: 21300000, guid: 7195d14a8fb4cdf44aff0a6ed8ecc176, type: 3}
@@ -145,7 +145,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 606ecc8d0be812247b7964799caf1e80, type: 3}
   - {fileID: 21300000, guid: 7eabd54e50774f74bad0553005f8c900, type: 3}
   - {fileID: 21300000, guid: 24259b4e72821d147bfe7173065bff78, type: 3}
-  - {fileID: 21300000, guid: 424c9f9e1c8b3a74c8049f6577de6919, type: 3}
   - {fileID: 21300000, guid: 37e45fae37154004baed862975e9ab69, type: 3}
   - {fileID: 21300000, guid: 810d26eed6f51da4b8da3090d383b4d4, type: 3}
   - {fileID: 21300000, guid: 9a3c51fe9e5260a4a95b603e83456c64, type: 3}
@@ -192,6 +191,7 @@ SpriteAtlas:
   - smallcat_lime_fish
   - smallcat_ginger_bat
   - cat_slot_lock_1
+  - highlight_back90
   - cat_slot_lock_3
   - timer_freezed
   - smallcat_lime_fish_picked
@@ -218,7 +218,6 @@ SpriteAtlas:
   - smallcat_lime_multiplier
   - Circle
   - cat_mage_hat
-  - check
   - cat_zen
   - multiplier_light
   - smallcat_lime_heart_picked
@@ -240,7 +239,6 @@ SpriteAtlas:
   - multiplier_x5
   - cat_disco
   - smallcat_purple_multiplier
-  - check_back
   - smallcat_purple_heart_picked
   - smallcat_ginger_fish_picked
   - cat_loki

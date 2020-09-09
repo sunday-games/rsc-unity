@@ -175,8 +175,8 @@ PlayerSettings:
     WebGL: com.tnt.fridaygames.girlsvscats
     iPhone: com.tnt.fridaygames.girlsvscats
   buildNumber:
-    iPhone: 274
-  AndroidBundleVersionCode: 274
+    iPhone: 275
+  AndroidBundleVersionCode: 275
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -238,7 +238,7 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
-  appleDeveloperTeamID: 
+  appleDeveloperTeamID: NM8UM5C8Q5
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0

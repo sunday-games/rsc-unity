@@ -196,6 +196,8 @@ public class BuildSettings : Core
         PlayerSettings.iOS.appleDeveloperTeamID = appleDeveloperTeamID;
 #endif
 
+        EditorBuildSettings.scenes = new EditorBuildSettingsScene[] { new EditorBuildSettingsScene(currentScene.path, true) };
+
         var googleAnalyticsManager = FindObjectOfType<SG.GoogleAnalyticsManager>();
         googleAnalyticsManager?.Setup();
 
