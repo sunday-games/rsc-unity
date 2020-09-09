@@ -194,9 +194,9 @@ public class BuildSettings : Core
         PlayerSettings.Android.keyaliasName = keyaliasName;
         PlayerSettings.Android.keyaliasPass = keyaliasPass;
         PlayerSettings.iOS.appleDeveloperTeamID = appleDeveloperTeamID;
-#endif
 
         EditorBuildSettings.scenes = new EditorBuildSettingsScene[] { new EditorBuildSettingsScene(currentScene.path, true) };
+#endif // UNITY_EDITOR
 
         var googleAnalyticsManager = FindObjectOfType<SG.GoogleAnalyticsManager>();
         googleAnalyticsManager?.Setup();

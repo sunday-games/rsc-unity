@@ -23,9 +23,9 @@ public abstract class Core : MonoBehaviour
     public static Balance balance;
     public static IngameAdvisor.Advisor advisor;
     public static Platform platform = Platform.Unknown;
-    public static Factory.Sprites pics { get { return factory.sprites; } }
+    public static Factory.Sprites pics => factory.sprites;
 
-    public static bool isDebug { get { return (int)build.debugLevel > 2; } }
+    public static bool isDebug => (int)build.debugLevel > 2;
 
     public static UnityEngine.SceneManagement.Scene currentScene => UnityEngine.SceneManagement.SceneManager.GetActiveScene();
     public static bool isTNT => currentScene.name == "TNT";
