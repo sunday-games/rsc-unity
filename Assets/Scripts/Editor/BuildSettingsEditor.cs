@@ -13,8 +13,6 @@ public class BuildSettingsFeatures : Editor
         if (GUILayout.Button("Debug")) Core.build.SetupDebug();
         GUILayout.Space(5);
         if (GUILayout.Button("Release")) Core.build.SetupRelease();
-        GUILayout.Space(20);
-        if (GUILayout.Button("Manual")) Core.build.Setup();
 
         GUILayout.Space(5);
         base.OnInspectorGUI();

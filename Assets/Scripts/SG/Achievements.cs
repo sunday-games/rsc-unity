@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SocialPlatforms;
 
 namespace SG
 {
@@ -10,12 +9,7 @@ namespace SG
     {
         public bool loginAtStart = true;
 
-        public string googleGameId;
-        // Main 696475165707
-        // TNT 375103891482
-        // Riki 674564863449
-        public string googleGameClassName = "GooglePlayGames.GPGSIds";
-        [TextArea]
+        [TextArea(2,10)]
         public string googleGameData;
         public string[] googleAchievementIds;
 
@@ -141,7 +135,7 @@ namespace SG
             public string getText { get { return Localization.Get("achievement" + name + "Get", target.SpaceFormat()); } }
             public string bonusText { get { return Localization.Get("achievement" + name + "Bonus", bonus.SpaceFormat()); } }
             public bool isDone { get { return check != null ? check() : current() >= target; } }
-            public float progress { get { return (float)current() / (float)target; } }
+            public float progress { get { return current() / (float)target; } }
 
             public Func<bool> check = null;
 

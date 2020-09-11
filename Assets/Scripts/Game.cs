@@ -170,12 +170,11 @@ public class Game : Core
         music.Switch(music.menu);
 
         if (Missions.isTournament || Missions.isChampionship)
-        {
-            if (platform == Platform.Amazon) ads.ShowInterstitial(considerRevenue: true);
             ui.PopupShow(ui.main);
-        }
-        else if (user.level > 0) ui.PopupShow(ui.prepare);
-        else ui.PopupShow(ui.intro);
+        else if (user.level > 0)
+            ui.PopupShow(ui.prepare);
+        else
+            ui.PopupShow(ui.intro);
     }
 
     //    #region LOGIN
@@ -485,8 +484,6 @@ public class Game : Core
             while (ui.rentCat.gameObject.activeSelf) yield return new WaitForEndOfFrame();
         }
 
-        if (ReplayKitManager.ON) ReplayKitManager.RecStart();
-
         music.Switch(music.game, 3);
 
         sound.PlayVoice(sound.voiceClips.ready);
@@ -617,8 +614,6 @@ public class Game : Core
             { "Goldfishes", Analytic.Round(coins).SpaceFormat() },
             { "Multiplier " + Missions.maxMultiplier, multiplier.ToString() },
         });
-
-        if (ReplayKitManager.ON && ReplayKitManager.isCurrentlyRecording) ReplayKitManager.RecStop();
 
         music.Switch(music.result);
 

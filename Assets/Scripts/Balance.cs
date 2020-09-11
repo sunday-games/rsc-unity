@@ -7,7 +7,8 @@ public class Balance : Core
     {
         if (build.premium)
         {
-            reward.getCoinChance *= 1.5f;
+            expMultiplier = 1.5f;
+            reward.coinValue *= 2;
             events.hatsForGift /= 2;
             events.heartsForGift /= 2;
             events.batsForGift /= 2;
@@ -28,6 +29,9 @@ public class Balance : Core
 
     [Tooltip("Базовое значение очков, скорость их прироста")]
     public int baseScore;
+
+    [Tooltip("Множитель на получаемый котами опыт")]
+    public float expMultiplier = 1f;
 
     [Tooltip("Предлашать оставить отзыв раз в столько то игр")]
     public int showRateAppEveryGame;

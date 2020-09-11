@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PopupResult : Popup
 {
@@ -19,7 +18,6 @@ public class PopupResult : Popup
     public GameObject bat;
 
     [Space(10)]
-    public GameObject recButton;
     public GameObject button;
     public Text buttonText;
 
@@ -71,23 +69,14 @@ public class PopupResult : Popup
 
         button.SetActive(true);
 
-        recButton.SetActive(ReplayKitManager.isExistRec);
-
         user.blockSave = false;
     }
 
     public override void OnEscapeKey() { Next(); }
 
-    public void RecShowPreview()
-    {
-        ReplayKitManager.RecShowPreview();
-        recButton.SetActive(false);
-    }
 
     public void Next()
     {
-        if (ReplayKitManager.isExistRec) ReplayKitManager.RecDiscard();
-
         gameplay.ResetGame();
 
         if (Missions.isGoldfishes)

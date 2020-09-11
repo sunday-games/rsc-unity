@@ -7,23 +7,19 @@ using UnityEditor.SceneManagement;
 
 public class BuildSettings : Core
 {
+    public BuildSettingsFeatures target;
+
     [Header("Debug")]
     public DebugLevel debugLevel = DebugLevel.Debug;
     public enum DebugLevel { None = 0, Error = 1, Release = 2, Debug = 3 }
 
     public Platform debugPlatform = Platform.Unknown;
     public bool balanceDebug = false;
-    public bool parseDebug = false;
     public bool serverDebug = false;
     public bool unlockAll = false;
     public bool cheats = false;
     public bool exceptionWatcher = false;
     public bool FPSWatcher = false;
-
-    [Space(10)]
-    public BuildSettingsFeatures iOS;
-    public BuildSettingsFeatures android;
-    public BuildSettingsFeatures tizen;
 
     [Header("Features")]
     public bool premium = false;
@@ -34,8 +30,6 @@ public class BuildSettings : Core
     public bool localPurchaseVerification = false;
     public bool serverPurchaseVerification = true;
     public bool googlePlayGames = false;
-    public bool readPhoneState = false;
-    public bool replayKit = true;
     public bool ingameAdvisor = false;
 
     [Space(10)]
@@ -56,10 +50,10 @@ public class BuildSettings : Core
     public int versionCode;
     [HideInInspector]
     public int currentVersionCode;
-    public bool isUpdateNeeded { get { return versionCode < currentVersionCode; } }
+    public bool isUpdateNeeded => versionCode < currentVersionCode;
     [HideInInspector]
     public int criticalVersionCode;
-    public bool isCriticalUpdateNeeded { get { return versionCode < criticalVersionCode; } }
+    public bool isCriticalUpdateNeeded => versionCode < criticalVersionCode;
     [HideInInspector]
     public string updateUrl = null;
 
@@ -77,6 +71,9 @@ public class BuildSettings : Core
     public string APPLE_ID;
     public string AMAZON_ID;
     public string appleDeveloperTeamID;
+
+    [Space(10)]
+    public string googlePublicKey;
 
     [Space(10)]
     public string pathForScreenshots;
@@ -97,43 +94,31 @@ public class BuildSettings : Core
 
     void Copy()
     {
-#if UNITY_TIZEN
-        BuildSettingsFeatures copyFrom = tizen;
-#elif UNITY_IOS
-        BuildSettingsFeatures copyFrom = iOS;
-#elif UNITY_ANDROID
-        BuildSettingsFeatures copyFrom = android;
-#else
-        BuildSettingsFeatures copyFrom = null;
-#endif
-        if (copyFrom == null) return;
+        premium = target.premium;
+        externalNotifications = target.externalNotifications;
+        facebook = target.facebook;
+        parentGate = target.parentGate;
+        promocodes = target.promocodes;
+        googlePlayGames = target.googlePlayGames;
+        localPurchaseVerification = target.localPurchaseVerification;
+        serverPurchaseVerification = target.serverPurchaseVerification;
+        ingameAdvisor = target.ingameAdvisor;
 
-        premium = copyFrom.premium;
-        externalNotifications = copyFrom.externalNotifications;
-        facebook = copyFrom.facebook;
-        parentGate = copyFrom.parentGate;
-        promocodes = copyFrom.promocodes;
-        googlePlayGames = copyFrom.googlePlayGames;
-        //readPhoneState = copyFrom.readPhoneState;
-        localPurchaseVerification = copyFrom.localPurchaseVerification;
-        serverPurchaseVerification = copyFrom.serverPurchaseVerification;
-        replayKit = copyFrom.replayKit;
-        ingameAdvisor = copyFrom.ingameAdvisor;
+        chartboost = target.chartboost;
+        appodeal = target.appodeal;
+        googleAnalytics = target.googleAnalytics;
+        gameAnalytics = target.gameAnalytics;
+        amplitude = target.amplitude;
+        appMetrica = target.appMetrica;
+        unityAnalytics = target.unityAnalytics;
+        unityAds = target.unityAds;      
 
-        chartboost = copyFrom.chartboost;
-        appodeal = copyFrom.appodeal;
-        googleAnalytics = copyFrom.googleAnalytics;
-        gameAnalytics = copyFrom.gameAnalytics;
-        amplitude = copyFrom.amplitude;
-        appMetrica = copyFrom.appMetrica;
-        unityAnalytics = copyFrom.unityAnalytics;
-        unityAds = copyFrom.unityAds;      
-
-        productName = copyFrom.productName;
-        ID = copyFrom.ID;
-        APPLE_ID = copyFrom.APPLE_ID;
-        AMAZON_ID = copyFrom.AMAZON_ID;
-        appleDeveloperTeamID = copyFrom.appleDeveloperTeamID;
+        productName = target.productName;
+        ID = target.ID;
+        APPLE_ID = target.APPLE_ID;
+        AMAZON_ID = target.AMAZON_ID;
+        appleDeveloperTeamID = target.appleDeveloperTeamID;
+        googlePublicKey = target.googlePublicKey;
     }
 
     public void SetupDebug()
@@ -154,7 +139,7 @@ public class BuildSettings : Core
         Setup();
     }
 
-    public void Setup()
+    void Setup()
     {
         // foreach (var atlas in tntSpriteAtlas) atlas.includeInBuild = isTNT;
 
@@ -162,7 +147,6 @@ public class BuildSettings : Core
 
         var defineSymbols = new System.Text.StringBuilder();
         if (!premium) defineSymbols.Append("IAP_PURCHASES;");
-        if (localPurchaseVerification) defineSymbols.Append("LOCAL_PURCHASE_VERIFICATION;");
         if (chartboost) defineSymbols.Append("CHARTBOOST;");
         if (googleAnalytics) defineSymbols.Append("GOOGLE_ANALYTICS;");
         if (gameAnalytics) defineSymbols.Append("GAME_ANALYTICS;");
@@ -171,10 +155,7 @@ public class BuildSettings : Core
         if (appodeal) defineSymbols.Append("APPODEAL;");
         if (unityAds) defineSymbols.Append("UNITY_ADS;");
         if (facebook) defineSymbols.Append("FACEBOOK;");
-        if (replayKit) defineSymbols.Append("REPLAY_KIT;");
         if (googlePlayGames) defineSymbols.Append("GOOGLE_PLAY_GAMES;");
-        // if (!readPhoneState) defineSymbols.Append("PREVENT_READ_PHONE_STATE;");
-        // if (!readPhoneState) defineSymbols.Append("ACTK_PREVENT_READ_PHONE_STATE;");
 #if UNITY_EDITOR
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defineSymbols.ToString());
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, defineSymbols.ToString());

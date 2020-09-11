@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Collection
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 2
+      m_CompressionQuality: 75
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 6ae0b4fa103a1aa4fb6580cb322ab74d, type: 3}
+    totalSpriteSurfaceArea: 876841
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ba0d3dc088bbe93468e47593997e6b44, type: 3}
+  - {fileID: 21300000, guid: 483ed9616dc04e04ca7b8da4fffd1b5e, type: 3}
+  - {fileID: 21300000, guid: 65d8a5e2ef3c8dd468b5247a17d1db34, type: 3}
+  - {fileID: 21300000, guid: 9c791e141d4838c4e85c4757f289fd79, type: 3}
+  - {fileID: 21300000, guid: 17c42c753145a4e41ad6f0e44bb96a5f, type: 3}
+  - {fileID: 21300000, guid: 08c7f3c66efbd27479464453e948ad22, type: 3}
+  - {fileID: 21300000, guid: 677691d67a4536547b76abf32aa6e200, type: 3}
+  - {fileID: 21300000, guid: 0c4da1a978bf9404499b6a7048138532, type: 3}
+  - {fileID: 21300000, guid: 0cdfda2ae022fe745818f6bc87fd1c41, type: 3}
+  - {fileID: 21300000, guid: a13471bafa38dfc46bdb35d0efe36438, type: 3}
+  - {fileID: 21300000, guid: 4dbf8ada39dec9e4684016d205147926, type: 3}
+  - {fileID: 21300000, guid: f1bd0e1bbe3a1d344840be7063e18a1b, type: 3}
+  - {fileID: 21300000, guid: bb501a5d01cc22242867b5f95b4a4921, type: 3}
+  - {fileID: 21300000, guid: 142b396de05f7164087b25a290aafbe1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - cat_lady_slot
+  - cat_flint_slot
+  - cat_mage_slot
+  - cat_santa_slot
+  - cat_boom_slot
+  - cat_orion_slot
+  - cat_cap_slot
+  - cat_zen_slot
+  - cat_loki_slot
+  - cat_joker_slot
+  - cat_disco_slot
+  - cat_jack_slot
+  - cat_raiden_slot
+  - cat_king_slot
+  m_Tag: Collection
+  m_IsVariant: 0

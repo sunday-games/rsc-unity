@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PopupOptions : Popup
 {
@@ -30,17 +29,12 @@ public class PopupOptions : Popup
     [Space(10)]
     public Text versionText;
 
-    [Space(10)]
-    public Text recText;
-    public GameObject recButton;
-
     public override void Init()
     {
         soundText.text = Localization.Get(sound.ON ? "on" : "off");
         voiceText.text = Localization.Get(sound.voiceON ? "on" : "off");
         musicText.text = Localization.Get(music.ON ? "on" : "off");
         notificationsText.text = Localization.Get(Notifications.ON ? "on" : "off");
-        recText.text = Localization.Get(ReplayKitManager.ON ? "on" : "off");
         if (languageText != null) languageText.text = Localization.Get(Localization.language.ToString());
 
         versionText.text = Localization.Get("version", build.version + "." + build.versionCode);
@@ -59,8 +53,6 @@ public class PopupOptions : Popup
 
         promocodeButton.SetActive(build.promocodes);
 
-        recButton.SetActive(ReplayKitManager.isRecAvailable);
-
         emailButton.SetActive(!advisor || string.IsNullOrEmpty(advisor.GetProjectId(Localization.language)));
     }
     public override void Reset() { }
@@ -75,12 +67,6 @@ public class PopupOptions : Popup
     {
         sound.voiceON = !sound.voiceON;
         voiceText.text = Localization.Get(sound.voiceON ? "on" : "off");
-    }
-
-    public void RecToggle()
-    {
-        ReplayKitManager.ON = !ReplayKitManager.ON;
-        recText.text = Localization.Get(ReplayKitManager.ON ? "on" : "off");
     }
 
     public void MusicToggle()

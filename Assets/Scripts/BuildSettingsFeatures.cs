@@ -31,4 +31,5 @@ public class BuildSettingsFeatures : MonoBehaviour
     public string APPLE_ID;
     public string AMAZON_ID;
     public string appleDeveloperTeamID;
+    public string googlePublicKey;
 }

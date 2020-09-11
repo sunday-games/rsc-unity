@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 917276901670067
+  - 776966945678883
   appLabels:
-  - "\u0414\u0435\u0444\u0444\u0447\u043E\u043D\u043A\u0438"
+  - READY SET CAT
   cookie: 1
   logging: 1
   status: 1

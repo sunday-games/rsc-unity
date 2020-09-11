@@ -59,7 +59,6 @@ namespace SG
         public long discount;
 
         public string sku { get { return iapManager.skuPrefix + name; } }
-        public string facebookUrl { get { return (iapManager.store as IAPFacebookCanvas).urlPrefix + name; } }
         public double revenueUSD { get { return dictRevenueUSD[tier]; } }
         public double priceUSD { get { return dictPriceUSD[tier]; } }
         public double priceRUB { get { return dictPriceRUB[tier]; } }

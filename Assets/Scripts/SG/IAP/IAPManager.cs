@@ -28,10 +28,10 @@ namespace SG
 #if IAP_PURCHASES
             if (platform == Platform.AppStore || platform == Platform.GooglePlay || platform == Platform.WindowsPhone || platform == Platform.Tizen)
                 store = GetComponent<IAPMobile>();
-#endif
+
             if (platform == Platform.Facebook)
                 store = GetComponent<IAPFacebookCanvas>();
-
+#endif
             IAP.IAPs = GetComponentsInChildren<IAP>();
 
             Init();

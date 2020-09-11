@@ -239,15 +239,8 @@ namespace SG
              }, hashValidation: false);
         }
 
-        public void VerifyPurchase(PurchaseData data)
+        public void VerifyPurchase(PurchaseData data, Action<bool?> callback)
         {
-            if (!build.serverPurchaseVerification)
-            {
-                Log("Server - IAP - Server Verify Disabled");
-                iapManager.PurchaseSucceed(data);
-                return;
-            }
-
             var url = links.server;
 
             var request = new Dictionary<string, object>()
@@ -280,29 +273,27 @@ namespace SG
                 {
                     if (download.responseDict.ContainsKey("valid") && (bool)download.responseDict["valid"])
                     {
-                        iapManager.PurchaseSucceed(data);
+                        callback?.Invoke(true);
                         if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Success");
                     }
                     else
                     {
-                        if (download.responseDict.ContainsKey("message")) LogError("Server - Verify Purchase - Store Error: {0}", download.responseDict["message"]);
-                        iapManager.PurchaseFailed();
+                        if (download.responseDict.ContainsKey("message"))
+                            LogError("Server - Verify Purchase - Store Error: " + download.responseDict["message"]);
+
+                        callback?.Invoke(false);
                         if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Failed");
                     }
                 }
                 else if (download.isCorrupted)
                 {
-                    iapManager.PurchaseFailed();
+                    LogError("Server - Verify Purchase - Corrupted");
+                    callback?.Invoke(false);
                 }
                 else
                 {
-                    iapManager.PurchaseSucceed(data);
-
-                    //iapManager.store.Verify(data, success =>
-                    //{
-                    //    if (success) iapManager.PurchaseSucceed(data);
-                    //    else iapManager.PurchaseFailed();
-                    //});
+                    LogError("Server - Verify Purchase - Unknown Error");
+                    callback?.Invoke(null);
                 }
             });
         }

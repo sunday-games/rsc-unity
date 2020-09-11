@@ -17,8 +17,7 @@ public class CatPromote : Core
 
     public void Init(CatItem catItem)
     {
-        catItem.expGame = (int)(catItem.expGame * achievements.moreExpCat);
-        if (build.premium) catItem.expGame = (int)((float)catItem.expGame * 1.5f);
+        catItem.expGame = (int)(catItem.expGame * achievements.moreExpCat * balance.expMultiplier);
         if (gameplay.boosts.experience.ON) catItem.expGame *= gameplay.boosts.experience.power;
 
         catSlot.Init(catItem);
