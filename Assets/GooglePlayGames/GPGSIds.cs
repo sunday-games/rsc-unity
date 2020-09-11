@@ -25,31 +25,31 @@ namespace GooglePlayGames
 {
 public static class GPGSIds
 {
-        public const string achievement_true_friend_ii = "CgkIi8ieyaIUEAIQDA"; // <GPGSID>
-        public const string achievement_true_friend_i = "CgkIi8ieyaIUEAIQCw"; // <GPGSID>
-        public const string achievement_hero = "CgkIi8ieyaIUEAIQEw"; // <GPGSID>
-        public const string achievement_guru = "CgkIi8ieyaIUEAIQEg"; // <GPGSID>
-        public const string achievement_gourmet_i = "CgkIi8ieyaIUEAIQDg"; // <GPGSID>
-        public const string achievement_gourmet_ii = "CgkIi8ieyaIUEAIQDw"; // <GPGSID>
-        public const string achievement_coach = "CgkIi8ieyaIUEAIQFQ"; // <GPGSID>
-        public const string achievement_winner_i = "CgkIi8ieyaIUEAIQCA"; // <GPGSID>
-        public const string achievement_great_8 = "CgkIi8ieyaIUEAIQGA"; // <GPGSID>
-        public const string achievement_hard_worker_iii = "CgkIi8ieyaIUEAIQBw"; // <GPGSID>
-        public const string achievement_hard_worker_i = "CgkIi8ieyaIUEAIQBA"; // <GPGSID>
-        public const string achievement_honoured = "CgkIi8ieyaIUEAIQGQ"; // <GPGSID>
-        public const string achievement_millionaire = "CgkIi8ieyaIUEAIQFw"; // <GPGSID>
-        public const string achievement_collector_i = "CgkIi8ieyaIUEAIQAQ"; // <GPGSID>
-        public const string achievement_hard_worker_ii = "CgkIi8ieyaIUEAIQBQ"; // <GPGSID>
-        public const string achievement_gourmet_iii = "CgkIi8ieyaIUEAIQEA"; // <GPGSID>
-        public const string achievement_chosen_one = "CgkIi8ieyaIUEAIQFg"; // <GPGSID>
-        public const string achievement_collector_iii = "CgkIi8ieyaIUEAIQAw"; // <GPGSID>
-        public const string achievement_true_friend_iii = "CgkIi8ieyaIUEAIQDQ"; // <GPGSID>
-        public const string achievement_winner_ii = "CgkIi8ieyaIUEAIQCQ"; // <GPGSID>
-        public const string achievement_collector_ii = "CgkIi8ieyaIUEAIQAg"; // <GPGSID>
-        public const string achievement_winner_iii = "CgkIi8ieyaIUEAIQCg"; // <GPGSID>
-        public const string achievement_moneybag = "CgkIi8ieyaIUEAIQEQ"; // <GPGSID>
-        public const string achievement_patron = "CgkIi8ieyaIUEAIQGg"; // <GPGSID>
-        public const string achievement_virtuoso = "CgkIi8ieyaIUEAIQFA"; // <GPGSID>
+        public const string achievement__i = "CgkImtC8r_UKEAIQAg"; // <GPGSID>
+        public const string achievement__i_3 = "CgkImtC8r_UKEAIQCg"; // <GPGSID>
+        public const string achievement___iii = "CgkImtC8r_UKEAIQEA"; // <GPGSID>
+        public const string achievement__iii_2 = "CgkImtC8r_UKEAIQCA"; // <GPGSID>
+        public const string achievement_4 = "CgkImtC8r_UKEAIQDQ"; // <GPGSID>
+        public const string achievement__ii_4 = "CgkImtC8r_UKEAIQEw"; // <GPGSID>
+        public const string achievement_7 = "CgkImtC8r_UKEAIQFg"; // <GPGSID>
+        public const string achievement_2 = "CgkImtC8r_UKEAIQBQ"; // <GPGSID>
+        public const string achievement__i_2 = "CgkImtC8r_UKEAIQBg"; // <GPGSID>
+        public const string achievement = "CgkImtC8r_UKEAIQAQ"; // <GPGSID>
+        public const string achievement_8 = "CgkImtC8r_UKEAIQGA"; // <GPGSID>
+        public const string achievement_6 = "CgkImtC8r_UKEAIQFQ"; // <GPGSID>
+        public const string achievement__i_4 = "CgkImtC8r_UKEAIQEg"; // <GPGSID>
+        public const string achievement_3 = "CgkImtC8r_UKEAIQCQ"; // <GPGSID>
+        public const string achievement_5 = "CgkImtC8r_UKEAIQEQ"; // <GPGSID>
+        public const string achievement___ii = "CgkImtC8r_UKEAIQDw"; // <GPGSID>
+        public const string achievement__ii = "CgkImtC8r_UKEAIQAw"; // <GPGSID>
+        public const string achievement__iii_3 = "CgkImtC8r_UKEAIQDA"; // <GPGSID>
+        public const string achievement__ii_2 = "CgkImtC8r_UKEAIQBw"; // <GPGSID>
+        public const string achievement__ii_3 = "CgkImtC8r_UKEAIQCw"; // <GPGSID>
+        public const string achievement__iii = "CgkImtC8r_UKEAIQBA"; // <GPGSID>
+        public const string achievement__iii_4 = "CgkImtC8r_UKEAIQFA"; // <GPGSID>
+        public const string achievement___i = "CgkImtC8r_UKEAIQDg"; // <GPGSID>
+        public const string achievement_9 = "CgkImtC8r_UKEAIQGQ"; // <GPGSID>
+        public const string achievement__8 = "CgkImtC8r_UKEAIQFw"; // <GPGSID>
 
 }
 }

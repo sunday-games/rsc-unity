@@ -25,10 +25,11 @@ namespace SG
         {
             if (build.premium) return;
 
-#if IAP_PURCHASES
+#if IAP_PURCHASES && UNITY_PURCHASING
             if (platform == Platform.AppStore || platform == Platform.GooglePlay || platform == Platform.WindowsPhone || platform == Platform.Tizen)
                 store = GetComponent<IAPMobile>();
-
+#endif
+#if IAP_PURCHASES && FACEBOOK
             if (platform == Platform.Facebook)
                 store = GetComponent<IAPFacebookCanvas>();
 #endif
