@@ -401,9 +401,9 @@ public class FacebookManager : Core
 #endif
     }
 
-    void OnDeeplinkCaught(IAppLinkResult result)
-    {
-        if (!string.IsNullOrEmpty(result.Url))
-            Log("FacebookManager - OnDeeplinkCaught: " + result.Url);
-    }
+    //void OnDeeplinkCaught(IAppLinkResult result)
+    //{
+    //    if (!string.IsNullOrEmpty(result.Url))
+    //        Log("FacebookManager - OnDeeplinkCaught: " + result.Url);
+    //}
 }

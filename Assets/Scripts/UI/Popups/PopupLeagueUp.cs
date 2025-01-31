@@ -20,7 +20,7 @@ public class PopupLeagueUp : Popup
     {
         sound.Play(sound.winPrize);
 
-        foreach (GameObject go in user.league.leagueUpFX) go.SetActive(true);
+        foreach (var go in user.league.leagueUpFX) go.SetActive(true);
         leagueNameText.text = Localization.Get("league" + user.league.name);
         leagueNameText.color = user.league.color;
         leagueText.color = leagueNameText.color;
@@ -43,13 +43,13 @@ public class PopupLeagueUp : Popup
         }
     }
 
-    public override void OnEscapeKey() { Next(); }
+    public override void OnEscapeKey() => Next();
 
-    public void Next() { ui.PopupShow(ui.result); }
+    public void Next() => ui.PopupShow(ui.result);
 
     public override void PreReset()
     {
-        foreach (GameObject go in leagueFX) go.SetActive(false);
+        foreach (var go in leagueFX) go.SetActive(false);
     }
 
     public void ShareLeagueUp()
