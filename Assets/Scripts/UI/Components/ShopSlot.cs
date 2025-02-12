@@ -2,12 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ShopSlot : MonoBehaviour
+namespace SG.RSC
 {
-    public Text descriptionText;
-    public GameObject price;
-    public Text priceText;
+    public class ShopSlot : MonoBehaviour
+    {
+        public Text descriptionText;
+        public GameObject price;
+        public Text priceText;
 
-    public GameObject sale;
-    public Text saleText;
+        public GameObject sale;
+        public Text saleText;
+    }
 }

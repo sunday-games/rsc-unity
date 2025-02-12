@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class BoostMultiplier : Boost
+﻿namespace SG.RSC
 {
-    void Start()
+    public class BoostMultiplier : Boost
     {
-        tutorialPart = Tutorial.Part.BoostMultiplier;
-        avalible = () => Missions.isBoostMultiplier;
+        void Start()
+        {
+            tutorialPart = Tutorial.Part.BoostMultiplier;
+            avalible = () => Missions.isBoostMultiplier;
+        }
     }
 }

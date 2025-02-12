@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class BoostTime : Boost
+﻿namespace SG.RSC
 {
-    void Start()
+    public class BoostTime : Boost
     {
-        tutorialPart = Tutorial.Part.BoostTime;
-        power = 10;
-        avalible = () => Missions.isBoostTime;
+        void Start()
+        {
+            tutorialPart = Tutorial.Part.BoostTime;
+            power = 10;
+            avalible = () => Missions.isBoostTime;
+        }
     }
 }

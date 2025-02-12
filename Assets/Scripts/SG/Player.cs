@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CodeStage.AntiCheat.ObscuredTypes;
 
-namespace SG
+namespace SG.RSC
 {
     public class Player : Core
     {
@@ -12,7 +12,7 @@ namespace SG
 
         public virtual void Init()
         {
-            LogDebug("Player - Load: {0}", ObscuredPrefs.GetString("user", "{}"));
+            Log.Debug($"Player - Load: {ObscuredPrefs.GetString("user", "{}")}");
 
             data = Json.Deserialize(ObscuredPrefs.GetString("user", "{}")) as Dictionary<string, object>;
 
@@ -88,7 +88,7 @@ namespace SG
         {
             if (blockSave || !needSave) return;
 
-            // LogDebug("Player - Save: " + Json.Serialize(data));
+            // Log.Debug("Player - Save: " + Json.Serialize(data));
 
             ObscuredPrefs.SetString("user", Json.Serialize(data));
             // ObscuredPrefs.Save();

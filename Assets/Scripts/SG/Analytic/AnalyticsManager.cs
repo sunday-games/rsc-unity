@@ -1,4 +1,4 @@
-﻿namespace SG
+﻿namespace SG.RSC
 {
     public class AnalyticsManager : Core
     {

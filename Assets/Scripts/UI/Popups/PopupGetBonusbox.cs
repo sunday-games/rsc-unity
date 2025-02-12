@@ -1,36 +1,35 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class PopupGetBonusbox : Popup
+namespace SG.RSC
 {
-    [Space(10)]
-
-    public Catbox bonusbox;
-
-    [Space(10)]
-
-    public Image[] bonusImages = new Image[3];
-
-    [Space(10)]
-
-    public GameObject collectButton;
-
-    public override void Init()
+    public class PopupGetBonusbox : Popup
     {
-        previous = ui.prepare;
+        [Space(10)]
+        public Catbox bonusbox;
 
-        collectButton.SetActive(false);
+        [Space(10)]
+        public Image[] bonusImages = new Image[3];
 
-        for (int i = 0; i < bonusImages.Length; ++i)
-            bonusImages[i].sprite = user.lastGetBoosts[i].sprite;
+        [Space(10)]
+        public GameObject collectButton;
 
-        Invoke("ShowButton", 1.5f);
-    }
+        public override void Init()
+        {
+            previous = ui.prepare;
 
-    void ShowButton()
-    {
-        sound.Play(sound.winPrize);
-        collectButton.SetActive(true);
+            collectButton.SetActive(false);
+
+            for (int i = 0; i < bonusImages.Length; ++i)
+                bonusImages[i].sprite = user.lastGetBoosts[i].sprite;
+
+            Invoke("ShowButton", 1.5f);
+        }
+
+        void ShowButton()
+        {
+            sound.Play(sound.winPrize);
+            collectButton.SetActive(true);
+        }
     }
 }

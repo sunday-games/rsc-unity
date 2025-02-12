@@ -3,56 +3,59 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class MedalShow : MonoBehaviour
+namespace SG.RSC
 {
-    public Transform medalParent;
-    public Text descriptionText;
-    public float time = 1f;
-    public Vector2 hidePosition = new Vector2(0f, 112f);
-
-    Medal medal;
-    bool isShow = false;
-
-    RectTransform _rectTransform;
-    RectTransform rectTransform
+    public class MedalShow : MonoBehaviour
     {
-        get
+        public Transform medalParent;
+        public Text descriptionText;
+        public float time = 1f;
+        public Vector2 hidePosition = new Vector2(0f, 112f);
+
+        Medal medal;
+        bool isShow = false;
+
+        RectTransform _rectTransform;
+        RectTransform rectTransform
         {
-            if (_rectTransform == null) _rectTransform = transform as RectTransform;
-            return _rectTransform;
+            get
+            {
+                if (_rectTransform == null) _rectTransform = transform as RectTransform;
+                return _rectTransform;
+            }
         }
-    }
 
-    [ContextMenu("ShowTest")]
-    public void ShowTest() { Show(Core.achievements.goldfishes); }
+        [ContextMenu("ShowTest")]
+        public void ShowTest() { Show(Core.achievements.goldfishes); }
 
-    public bool Show(Achievements.Achievement achievement)
-    {
-        if (isShow) return false;
+        public bool Show(Achievements.Achievement achievement)
+        {
+            if (isShow) return false;
 
-        isShow = true;
+            isShow = true;
 
-        descriptionText.text = achievement.getText;
-        medal = Medal.Create(medalParent, achievement);
+            descriptionText.text = achievement.getText;
+            medal = Medal.Create(medalParent, achievement);
 
-        rectTransform.anchoredPosition = hidePosition;
-        gameObject.SetActive(true);
+            rectTransform.anchoredPosition = hidePosition;
+            gameObject.SetActive(true);
 
-        StartCoroutine(Showing());
+            StartCoroutine(Showing());
 
-        return true;
-    }
+            return true;
+        }
 
-    IEnumerator Showing()
-    {
-        rectTransform.DOAnchorPos(Vector2.zero, time).SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(4f);
+        IEnumerator Showing()
+        {
+            rectTransform.DOAnchorPos(Vector2.zero, time).SetEase(Ease.OutBack);
+            yield return new WaitForSeconds(4f);
 
-        rectTransform.DOAnchorPos(hidePosition, time).SetEase(Ease.InBack);
-        yield return new WaitForSeconds(1f);
+            rectTransform.DOAnchorPos(hidePosition, time).SetEase(Ease.InBack);
+            yield return new WaitForSeconds(1f);
 
-        Destroy(medal.gameObject);
-        gameObject.SetActive(false);
-        isShow = false;
+            Destroy(medal.gameObject);
+            gameObject.SetActive(false);
+            isShow = false;
+        }
     }
 }

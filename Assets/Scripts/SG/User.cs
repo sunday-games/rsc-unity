@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SG
+namespace SG.RSC
 {
-    public class User : Player
+    public class UserSG : Player
     {
         public override void Init()
         {
@@ -126,10 +126,8 @@ namespace SG
                 Save();
             }
         }
-        public Texture2D socialPic
-        {
-            get { return (Social.localUser != null && Social.localUser.authenticated && platform == Platform.GooglePlay) ? Social.localUser.image : null; }
-        }
+        public Texture2D socialPic =>
+            (Social.localUser != null && Social.localUser.authenticated && platform == Platform.Android) ? Social.localUser.image : null;
 
         public string gameCenterId
         {
@@ -236,7 +234,7 @@ namespace SG
         }
 
 
-        public virtual void Buy(IAP iap)
+        public virtual void Buy(IAP_SG iap)
         {
             revenue += Convert.ToSingle(iap.priceUSD);
         }
@@ -368,7 +366,7 @@ namespace SG
         {
             if (!string.IsNullOrEmpty(invitedBy))
             {
-                Log("User - Already Invited by {0}", invitedBy);
+                Log.Info($"User - Already Invited by {invitedBy}");
                 return;
             }
 

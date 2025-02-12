@@ -1,270 +1,271 @@
 ﻿using UnityEngine;
 using System;
 
-public class Missions : Core
+namespace SG.RSC
 {
-    public static int MAX_LEVEL;
-    public static Level[] LEVELS;
-    public static void UNLOCK(int level)
+    public class Missions : Core
     {
-        for (int i = 2; i <= level; i++)
-            if (LEVELS[i - 1].unlock != null) LEVELS[i - 1].unlock();
-    }
-
-
-    public static int maxMultiplier = 1;
-    public static int maxCatSlot = 0;
-    public static bool isChampionship = false;
-    public static bool isGoldfishes = false;
-    public static bool isTournament = false;
-    public static bool isLuckyWheel = false;
-    public static bool isFever = false;
-
-    public static bool isFireworkBoomSmall = false;
-    public static bool isFireworkBoomBig = false;
-    public static bool isFireworkRocket = false;
-    public static bool isFireworkColor = false;
-
-    public static bool isBoostMultiplier = false;
-    public static bool isBoostExperience = false;
-    public static bool isBoostTime = false;
-    public static bool isBoostFirework = false;
-    public static bool isBoosts { get { return isBoostMultiplier || isBoostExperience || isBoostTime || isBoostFirework; } }
-
-    static int _сhainSquence = 0;
-    static bool isChainSquenceInGame;
-    static bool isMultiplierUsed;
-    static bool isLimeUsed;
-    static bool isGingerUsed;
-
-    public static void LockAll()
-    {
-        maxMultiplier = 1;
-        maxCatSlot = 0;
-        isChampionship = false;
-        isGoldfishes = false;
-        isTournament = false;
-        isLuckyWheel = false;
-        isFever = false;
-
-        isFireworkBoomSmall = false;
-        isFireworkBoomBig = false;
-        isFireworkRocket = false;
-        isFireworkColor = false;
-
-        isBoostMultiplier = false;
-        isBoostExperience = false;
-        isBoostTime = false;
-        isBoostFirework = false;
-    }
-
-    public static void UnlockAll()
-    {
-        maxMultiplier = 9;
-        maxCatSlot = 4;
-        isChampionship = true;
-        isGoldfishes = true;
-        isTournament = true;
-        isLuckyWheel = true;
-        isFever = true;
-
-        isFireworkBoomSmall = true;
-        isFireworkBoomBig = true;
-        isFireworkRocket = true;
-        isFireworkColor = true;
-
-        isBoostMultiplier = true;
-        isBoostExperience = true;
-        isBoostTime = true;
-        isBoostFirework = true;
-    }
-
-    public static bool IsMissionActive<T>()
-    {
-        if (!user.isLevelOK) return false;
-
-        foreach (Mission mission in LEVELS[user.level].missions)
-            if (mission is T) return true;
-
-        return false;
-    }
-
-    public static void AtOneGameMissionsClear()
-    {
-        if (user.isLevelOK)
-            foreach (Mission mission in Missions.LEVELS[user.level].missions)
-                if (!mission.isDone && mission.atOneGame && mission.clear != null) mission.clear();
-    }
-
-    #region EVENTS
-    public static void OnGameStart()
-    {
-        _сhainSquence = 0;
-        isMultiplierUsed = false;
-        isLimeUsed = false;
-        isGingerUsed = false;
-    }
-
-    public static void OnGameEnd()
-    {
-        user.gameSessions++;
-    }
-
-    public static void OnUseFirework(Firework firework)
-    {
-        if (IsMissionActive<UseFireworkBoomSmall>() && firework is FireworkBoom && (firework as FireworkBoom).radius < 3)
-            user.useFireworkBoomSmall++;
-        else if (IsMissionActive<UseFireworkBoomBig>() && firework is FireworkBoom && (firework as FireworkBoom).radius > 3)
-            user.useFireworkBoomBig++;
-        else if (IsMissionActive<UseFireworkRocket>() && firework is FireworkRocket)
-            user.useFireworkRocket++;
-        else if (IsMissionActive<UseFireworkColor>() && firework is FireworkColor)
-            user.useFireworkColor++;
-
-        if (IsMissionActive<UseFireworksAtOneGame>())
-            user.useFireworkAtOneGame++;
-    }
-
-    public static void OnUseBoost(Boost boost)
-    {
-        if (IsMissionActive<UseBoost>()) user.useBoosts++;
-    }
-
-    public static void OnUseSausage()
-    {
-        if (IsMissionActive<UseSausage>()) user.useSausages++;
-
-        user.useSausagesHistory++;
-    }
-
-    public static void OnGetScore(int currentScore)
-    {
-        if (IsMissionActive<GetScore>() && user.recordStat < currentScore)
-            user.recordStat = currentScore;
-
-        if (IsMissionActive<GetScoreWithoutMultipliers>() && !isMultiplierUsed && user.recordWithoutMultipliers < currentScore)
-            user.recordWithoutMultipliers = currentScore;
-
-        if (IsMissionActive<GetScoreWithoutLime>() && !isLimeUsed && user.recordWithoutLime < currentScore)
-            user.recordWithoutLime = currentScore;
-
-        if (IsMissionActive<GetScoreWithoutGinger>() && !isGingerUsed && user.recordWithoutGinger < currentScore)
-            user.recordWithoutGinger = currentScore;
-    }
-
-    public static void OnGetGoldfishes(int count)
-    {
-        if (IsMissionActive<GetGoldfishes>())
-            user.getGoldfishes += count;
-
-        if (IsMissionActive<GetGoldfishesAtOneGame>())
-            user.getGoldfishesAtOneGame += count;
-    }
-
-    public static void OnChainDone(int count, CatType type, bool isLoop)
-    {
-        OnGetCats(count);
-
-        if (count > user.chainLengthHistory)
+        public static int MAX_LEVEL;
+        public static Level[] LEVELS;
+        public static void UNLOCK(int level)
         {
-            user.chainLengthHistory = count;
-
-            achievements.OnChainDone();
+            for (int i = 2; i <= level; i++)
+                if (LEVELS[i - 1].unlock != null) LEVELS[i - 1].unlock();
         }
 
-        if (type == CatType.GetCatType(Cats.Lime))
-            isLimeUsed = true;
+        public static int maxMultiplier = 1;
+        public static int maxCatSlot = 0;
+        public static bool isChampionship = false;
+        public static bool isGoldfishes = false;
+        public static bool isTournament = false;
+        public static bool isLuckyWheel = false;
+        public static bool isFever = false;
 
-        if (type == CatType.GetCatType(Cats.Ginger))
-            isGingerUsed = true;
+        public static bool isFireworkBoomSmall = false;
+        public static bool isFireworkBoomBig = false;
+        public static bool isFireworkRocket = false;
+        public static bool isFireworkColor = false;
 
-        if (IsMissionActive<ChainLength>() && count > user.chainLength)
-            user.chainLength = count;
+        public static bool isBoostMultiplier = false;
+        public static bool isBoostExperience = false;
+        public static bool isBoostTime = false;
+        public static bool isBoostFirework = false;
+        public static bool isBoosts { get { return isBoostMultiplier || isBoostExperience || isBoostTime || isBoostFirework; } }
 
-        if (IsMissionActive<LoopLength>() && isLoop && count > user.loopLength)
-            user.loopLength = count;
+        static int _сhainSquence = 0;
+        static bool isChainSquenceInGame;
+        static bool isMultiplierUsed;
+        static bool isLimeUsed;
+        static bool isGingerUsed;
 
-        if (IsMissionActive<ChainSequence>())
+        public static void LockAll()
         {
-            isChainSquenceInGame = count >= 6;
-            if (isChainSquenceInGame) _сhainSquence++;
-            if (_сhainSquence > user.chainSequence) user.chainSequence = _сhainSquence;
-            if (!isChainSquenceInGame) _сhainSquence = 0;
+            maxMultiplier = 1;
+            maxCatSlot = 0;
+            isChampionship = false;
+            isGoldfishes = false;
+            isTournament = false;
+            isLuckyWheel = false;
+            isFever = false;
+
+            isFireworkBoomSmall = false;
+            isFireworkBoomBig = false;
+            isFireworkRocket = false;
+            isFireworkColor = false;
+
+            isBoostMultiplier = false;
+            isBoostExperience = false;
+            isBoostTime = false;
+            isBoostFirework = false;
         }
 
-        if (IsMissionActive<GetLoops>() && isLoop)
-            user.loops++;
-
-        if (IsMissionActive<GetLoopsAtOneGame>() && isLoop)
-            user.loopsAtOneGame++;
-
-        // if (!isLoop && UnityEngine.Random.value < 0.1f) Analytic.Event("Game", "Combo", count.ToString());
-        if (isLoop) Analytic.EventProperties("Game", "ComboLoop", count.ToString());
-    }
-
-    public static void OnGetCats(int count)
-    {
-        if (IsMissionActive<GetCats>())
-            user.getCats += count;
-
-        if (IsMissionActive<GetCatsAtOneGame>())
-            user.getCatsAtOneGame += count;
-
-        user.getCatsHistory += count;
-    }
-
-    public static void OnGetFever()
-    {
-        if (IsMissionActive<GetFever>())
-            ++user.getFever;
-
-        if (IsMissionActive<GetFeverAtOneGame>())
-            ++user.getFeverAtOneGame;
-    }
-
-    public static void OnGetMultiplier(int multiplier)
-    {
-        isMultiplierUsed = true;
-
-        if (IsMissionActive<GetMultiplier>() && multiplier > user.getMultiplier)
-            user.getMultiplier = multiplier;
-    }
-
-    public static void OnUseCats(CatType catType)
-    {
-        if (IsMissionActive<UseCats>())
-            ++user.useCats;
-
-        if (IsMissionActive<UseCatsAtOneGame>())
-            ++user.useCatsAtOneGame;
-    }
-    #endregion
-
-    ///////////////////////////////////////////////////////////
-    // Если что то меняешь, не забудь проверить этот хардкод //
-    ///////////////////////////////////////////////////////////
-    public static int[] BOX_UNLOCK_LEVELS = new int[4] { 4, 13, 24, 36 };
-    public static int COMBO_LOOP_LEVEL = 10;
-    public static int FIREWORK_BOOM_SMALL_LEVEL = 11;
-    public static int FIREWORK_ROCKET_LEVEL = 18;
-    public static int FIREWORK_BOOM_BIG_LEVEL = 28;
-    public static int FIREWORK_COLOR_LEVEL = 39;
-    public static int MULTIPLIER_X5_LEVEL = 21;
-
-    public static void Init()
-    {
-        MAX_LEVEL = 100;
-        LEVELS = new Level[MAX_LEVEL];
-        for (int i = 0; i < MAX_LEVEL; i++) LEVELS[i] = new Level();
-
-        if (isRiki) SetupMissions();
-        else SetupMissionsWithBonusBox();
-    }
-
-    static void SetupMissionsWithBonusBox()
-    {
-        Mission[] missionList = new Mission[]
+        public static void UnlockAll()
         {
+            maxMultiplier = 9;
+            maxCatSlot = 4;
+            isChampionship = true;
+            isGoldfishes = true;
+            isTournament = true;
+            isLuckyWheel = true;
+            isFever = true;
+
+            isFireworkBoomSmall = true;
+            isFireworkBoomBig = true;
+            isFireworkRocket = true;
+            isFireworkColor = true;
+
+            isBoostMultiplier = true;
+            isBoostExperience = true;
+            isBoostTime = true;
+            isBoostFirework = true;
+        }
+
+        public static bool IsMissionActive<T>()
+        {
+            if (!user.isLevelOK) return false;
+
+            foreach (Mission mission in LEVELS[user.level].missions)
+                if (mission is T) return true;
+
+            return false;
+        }
+
+        public static void AtOneGameMissionsClear()
+        {
+            if (user.isLevelOK)
+                foreach (Mission mission in Missions.LEVELS[user.level].missions)
+                    if (!mission.isDone && mission.atOneGame && mission.clear != null) mission.clear();
+        }
+
+        #region EVENTS
+        public static void OnGameStart()
+        {
+            _сhainSquence = 0;
+            isMultiplierUsed = false;
+            isLimeUsed = false;
+            isGingerUsed = false;
+        }
+
+        public static void OnGameEnd()
+        {
+            user.gameSessions++;
+        }
+
+        public static void OnUseFirework(Firework firework)
+        {
+            if (IsMissionActive<UseFireworkBoomSmall>() && firework is FireworkBoom && (firework as FireworkBoom).radius < 3)
+                user.useFireworkBoomSmall++;
+            else if (IsMissionActive<UseFireworkBoomBig>() && firework is FireworkBoom && (firework as FireworkBoom).radius > 3)
+                user.useFireworkBoomBig++;
+            else if (IsMissionActive<UseFireworkRocket>() && firework is FireworkRocket)
+                user.useFireworkRocket++;
+            else if (IsMissionActive<UseFireworkColor>() && firework is FireworkColor)
+                user.useFireworkColor++;
+
+            if (IsMissionActive<UseFireworksAtOneGame>())
+                user.useFireworkAtOneGame++;
+        }
+
+        public static void OnUseBoost(Boost boost)
+        {
+            if (IsMissionActive<UseBoost>()) user.useBoosts++;
+        }
+
+        public static void OnUseSausage()
+        {
+            if (IsMissionActive<UseSausage>()) user.useSausages++;
+
+            user.useSausagesHistory++;
+        }
+
+        public static void OnGetScore(int currentScore)
+        {
+            if (IsMissionActive<GetScore>() && user.recordStat < currentScore)
+                user.recordStat = currentScore;
+
+            if (IsMissionActive<GetScoreWithoutMultipliers>() && !isMultiplierUsed && user.recordWithoutMultipliers < currentScore)
+                user.recordWithoutMultipliers = currentScore;
+
+            if (IsMissionActive<GetScoreWithoutLime>() && !isLimeUsed && user.recordWithoutLime < currentScore)
+                user.recordWithoutLime = currentScore;
+
+            if (IsMissionActive<GetScoreWithoutGinger>() && !isGingerUsed && user.recordWithoutGinger < currentScore)
+                user.recordWithoutGinger = currentScore;
+        }
+
+        public static void OnGetGoldfishes(int count)
+        {
+            if (IsMissionActive<GetGoldfishes>())
+                user.getGoldfishes += count;
+
+            if (IsMissionActive<GetGoldfishesAtOneGame>())
+                user.getGoldfishesAtOneGame += count;
+        }
+
+        public static void OnChainDone(int count, CatType type, bool isLoop)
+        {
+            OnGetCats(count);
+
+            if (count > user.chainLengthHistory)
+            {
+                user.chainLengthHistory = count;
+
+                achievements.OnChainDone();
+            }
+
+            if (type == CatType.GetCatType(Cats.Lime))
+                isLimeUsed = true;
+
+            if (type == CatType.GetCatType(Cats.Ginger))
+                isGingerUsed = true;
+
+            if (IsMissionActive<ChainLength>() && count > user.chainLength)
+                user.chainLength = count;
+
+            if (IsMissionActive<LoopLength>() && isLoop && count > user.loopLength)
+                user.loopLength = count;
+
+            if (IsMissionActive<ChainSequence>())
+            {
+                isChainSquenceInGame = count >= 6;
+                if (isChainSquenceInGame) _сhainSquence++;
+                if (_сhainSquence > user.chainSequence) user.chainSequence = _сhainSquence;
+                if (!isChainSquenceInGame) _сhainSquence = 0;
+            }
+
+            if (IsMissionActive<GetLoops>() && isLoop)
+                user.loops++;
+
+            if (IsMissionActive<GetLoopsAtOneGame>() && isLoop)
+                user.loopsAtOneGame++;
+
+            // if (!isLoop && UnityEngine.Random.value < 0.1f) Analytic.Event("Game", "Combo", count.ToString());
+            if (isLoop) Analytic.EventProperties("Game", "ComboLoop", count.ToString());
+        }
+
+        public static void OnGetCats(int count)
+        {
+            if (IsMissionActive<GetCats>())
+                user.getCats += count;
+
+            if (IsMissionActive<GetCatsAtOneGame>())
+                user.getCatsAtOneGame += count;
+
+            user.getCatsHistory += count;
+        }
+
+        public static void OnGetFever()
+        {
+            if (IsMissionActive<GetFever>())
+                ++user.getFever;
+
+            if (IsMissionActive<GetFeverAtOneGame>())
+                ++user.getFeverAtOneGame;
+        }
+
+        public static void OnGetMultiplier(int multiplier)
+        {
+            isMultiplierUsed = true;
+
+            if (IsMissionActive<GetMultiplier>() && multiplier > user.getMultiplier)
+                user.getMultiplier = multiplier;
+        }
+
+        public static void OnUseCats(CatType catType)
+        {
+            if (IsMissionActive<UseCats>())
+                ++user.useCats;
+
+            if (IsMissionActive<UseCatsAtOneGame>())
+                ++user.useCatsAtOneGame;
+        }
+        #endregion
+
+        ///////////////////////////////////////////////////////////
+        // Если что то меняешь, не забудь проверить этот хардкод //
+        ///////////////////////////////////////////////////////////
+        public static int[] BOX_UNLOCK_LEVELS = new int[4] { 4, 13, 24, 36 };
+        public static int COMBO_LOOP_LEVEL = 10;
+        public static int FIREWORK_BOOM_SMALL_LEVEL = 11;
+        public static int FIREWORK_ROCKET_LEVEL = 18;
+        public static int FIREWORK_BOOM_BIG_LEVEL = 28;
+        public static int FIREWORK_COLOR_LEVEL = 39;
+        public static int MULTIPLIER_X5_LEVEL = 21;
+
+        public static void Init()
+        {
+            MAX_LEVEL = 100;
+            LEVELS = new Level[MAX_LEVEL];
+            for (int i = 0; i < MAX_LEVEL; i++) LEVELS[i] = new Level();
+
+            if (isRiki) SetupMissions();
+            else SetupMissionsWithBonusBox();
+        }
+
+        static void SetupMissionsWithBonusBox()
+        {
+            Mission[] missionList = new Mission[]
+            {
 new GameSessions (1),
 new GameSessions (1),
 new GameSessions (1),
@@ -670,140 +671,140 @@ new GetFeverAtOneGame (10),
 new GameSessions (3000),
 new UseFireworkBoomSmall (200),
 new GetScoreWithoutMultipliers (500000),
-        };
+            };
 
-        int j = 0;
-        for (int i = 0; i < MAX_LEVEL; i++)
-            LEVELS[i].missions = new Mission[3] { missionList[j++], missionList[j++], missionList[j++] };
+            int j = 0;
+            for (int i = 0; i < MAX_LEVEL; i++)
+                LEVELS[i].missions = new Mission[3] { missionList[j++], missionList[j++], missionList[j++] };
 
-        int n = 0;
-        AddGift(n, Gifts.aquariumSmall);
-        // 1
-        AddGift(++n, () => isChampionship = true, pics.championship, () => Localization.Get("unlockChampionship"));
-        AddGift(++n, () => isGoldfishes = true, pics.goldfish, () => Localization.Get("unlockGoldfishes"));
-        AddGift(++n, Gifts.catbox, 1, () => maxCatSlot = 1);
-        AddGift(++n, () => maxMultiplier = 2, pics.multiplier, () => Localization.Get("unlockMultiplier", 2));
-        AddGift(++n, Gifts.aquariumSmall, 1);
-        // 6        
-        AddGift(++n, () => isLuckyWheel = true, pics.luckyWheel, () => Localization.Get("unlockLuckyWheel"));
-        if (build.facebook) AddGift(++n, () => isTournament = true, pics.tournament, () => Localization.Get("unlockTournament"));
-        else AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxMultiplier = 3, pics.multiplier, () => Localization.Get("unlockMultiplier", 3));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isFireworkBoomSmall = true, pics.fireworkBoomSmall, () => Localization.Get("unlockFireworkBoomSmall"));
-        // 11
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxCatSlot = 2, pics.catSlot, () => Localization.Get("unlockCatSlot", 2));
-        AddGift(++n, () => maxMultiplier = 4, pics.multiplier, () => Localization.Get("unlockMultiplier", 4));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isFever = true, pics.fever, () => Localization.Get("unlockFever"));
-        // 16
-        AddGift(++n, Gifts.aquariumSmall, 2);
-        AddGift(++n, () => isFireworkRocket = true, pics.fireworkRocket, () => Localization.Get("unlockFireworkRocket"));
-        AddGift(++n, () => isBoostTime = true, gameplay.boosts.time.sprite, () => Localization.Get("unlockBoostTime")); // AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxMultiplier = 5, pics.multiplier, () => Localization.Get("unlockMultiplier", 5));
-        // 21
-        AddGift(++n, Gifts.aquariumSmall, 3);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxCatSlot = 3, pics.catSlot, () => Localization.Get("unlockCatSlot", 3));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.aquariumSmall, 4);
-        // 26
-        AddGift(++n, () => isBoostExperience = true, gameplay.boosts.experience.sprite, () => Localization.Get("unlockBoostExperience")); //AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => isFireworkBoomBig = true, pics.fireworkBoomBig, () => Localization.Get("unlockFireworkBoomBig"));
-        AddGift(++n, Gifts.aquariumSmall, 5);
-        AddGift(++n, Gifts.catbox); // Тут сидит Царь
-        AddGift(++n, Gifts.boosterbox);
-        // 31
-        AddGift(++n, () => maxMultiplier = 6, pics.multiplier, () => Localization.Get("unlockMultiplier", 6));
-        AddGift(++n, () => isBoostMultiplier = true, gameplay.boosts.multiplier.sprite, () => Localization.Get("unlockBoostMultiplier")); //AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 6);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxCatSlot = 4, pics.catSlot, () => Localization.Get("unlockCatSlot", 4));
-        // 36
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 7);
-        AddGift(++n, () => isFireworkColor = true, pics.fireworkColor, () => Localization.Get("unlockFireworkColor"));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isBoostFirework = true, gameplay.boosts.firework.sprite, () => Localization.Get("unlockBoostFirework")); //AddGift(++n, Gifts.sausage);
-        // 41
-        AddGift(++n, Gifts.aquariumSmall, 8);
-        AddGift(++n, () => maxMultiplier = 7, pics.multiplier, () => Localization.Get("unlockMultiplier", 7));
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.aquariumSmall, 9);
-        // 46
-        AddGift(++n, () => maxMultiplier = 8, pics.multiplier, () => Localization.Get("unlockMultiplier", 8));
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 10);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxMultiplier = 9, pics.multiplier, () => Localization.Get("unlockMultiplier", 9));
-        // 51
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 11);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        // 56
-        AddGift(++n, Gifts.aquariumSmall, 12);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 13);
-        // 61
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 14);
-        AddGift(++n, Gifts.boosterbox);
-        // 66
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 15);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        // 71
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 16);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        // 76
-        AddGift(++n, Gifts.aquariumSmall, 17);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 18);
-        // 81
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 19);
-        AddGift(++n, Gifts.boosterbox);
-        // 86
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 20);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        // 91
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 21);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        // 96
-        AddGift(++n, Gifts.aquariumSmall, 22);
-        AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-    }
+            int n = 0;
+            AddGift(n, Gifts.aquariumSmall);
+            // 1
+            AddGift(++n, () => isChampionship = true, pics.championship, () => Localization.Get("unlockChampionship"));
+            AddGift(++n, () => isGoldfishes = true, pics.goldfish, () => Localization.Get("unlockGoldfishes"));
+            AddGift(++n, Gifts.catbox, 1, () => maxCatSlot = 1);
+            AddGift(++n, () => maxMultiplier = 2, pics.multiplier, () => Localization.Get("unlockMultiplier", 2));
+            AddGift(++n, Gifts.aquariumSmall, 1);
+            // 6        
+            AddGift(++n, () => isLuckyWheel = true, pics.luckyWheel, () => Localization.Get("unlockLuckyWheel"));
+            if (build.facebook) AddGift(++n, () => isTournament = true, pics.tournament, () => Localization.Get("unlockTournament"));
+            else AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxMultiplier = 3, pics.multiplier, () => Localization.Get("unlockMultiplier", 3));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isFireworkBoomSmall = true, pics.fireworkBoomSmall, () => Localization.Get("unlockFireworkBoomSmall"));
+            // 11
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxCatSlot = 2, pics.catSlot, () => Localization.Get("unlockCatSlot", 2));
+            AddGift(++n, () => maxMultiplier = 4, pics.multiplier, () => Localization.Get("unlockMultiplier", 4));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isFever = true, pics.fever, () => Localization.Get("unlockFever"));
+            // 16
+            AddGift(++n, Gifts.aquariumSmall, 2);
+            AddGift(++n, () => isFireworkRocket = true, pics.fireworkRocket, () => Localization.Get("unlockFireworkRocket"));
+            AddGift(++n, () => isBoostTime = true, gameplay.boosts.time.sprite, () => Localization.Get("unlockBoostTime")); // AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxMultiplier = 5, pics.multiplier, () => Localization.Get("unlockMultiplier", 5));
+            // 21
+            AddGift(++n, Gifts.aquariumSmall, 3);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxCatSlot = 3, pics.catSlot, () => Localization.Get("unlockCatSlot", 3));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 4);
+            // 26
+            AddGift(++n, () => isBoostExperience = true, gameplay.boosts.experience.sprite, () => Localization.Get("unlockBoostExperience")); //AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => isFireworkBoomBig = true, pics.fireworkBoomBig, () => Localization.Get("unlockFireworkBoomBig"));
+            AddGift(++n, Gifts.aquariumSmall, 5);
+            AddGift(++n, Gifts.catbox); // Тут сидит Царь
+            AddGift(++n, Gifts.boosterbox);
+            // 31
+            AddGift(++n, () => maxMultiplier = 6, pics.multiplier, () => Localization.Get("unlockMultiplier", 6));
+            AddGift(++n, () => isBoostMultiplier = true, gameplay.boosts.multiplier.sprite, () => Localization.Get("unlockBoostMultiplier")); //AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 6);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxCatSlot = 4, pics.catSlot, () => Localization.Get("unlockCatSlot", 4));
+            // 36
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 7);
+            AddGift(++n, () => isFireworkColor = true, pics.fireworkColor, () => Localization.Get("unlockFireworkColor"));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isBoostFirework = true, gameplay.boosts.firework.sprite, () => Localization.Get("unlockBoostFirework")); //AddGift(++n, Gifts.sausage);
+                                                                                                                                        // 41
+            AddGift(++n, Gifts.aquariumSmall, 8);
+            AddGift(++n, () => maxMultiplier = 7, pics.multiplier, () => Localization.Get("unlockMultiplier", 7));
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 9);
+            // 46
+            AddGift(++n, () => maxMultiplier = 8, pics.multiplier, () => Localization.Get("unlockMultiplier", 8));
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 10);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxMultiplier = 9, pics.multiplier, () => Localization.Get("unlockMultiplier", 9));
+            // 51
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 11);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            // 56
+            AddGift(++n, Gifts.aquariumSmall, 12);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 13);
+            // 61
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 14);
+            AddGift(++n, Gifts.boosterbox);
+            // 66
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 15);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            // 71
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 16);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            // 76
+            AddGift(++n, Gifts.aquariumSmall, 17);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 18);
+            // 81
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 19);
+            AddGift(++n, Gifts.boosterbox);
+            // 86
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 20);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            // 91
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 21);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            // 96
+            AddGift(++n, Gifts.aquariumSmall, 22);
+            AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+        }
 
-    static void SetupMissions()
-    {
-        Mission[] missionList = new Mission[]
+        static void SetupMissions()
         {
+            Mission[] missionList = new Mission[]
+            {
 new GameSessions (1),
 new GameSessions (1),
 new GameSessions (1),
@@ -1209,584 +1210,585 @@ new GetFeverAtOneGame (10),
 new GameSessions (3000),
 new UseFireworkBoomSmall (200),
 new GetScoreWithoutMultipliers (500000),
-        };
+            };
 
-        int j = 0;
-        for (int i = 0; i < MAX_LEVEL; i++)
-            LEVELS[i].missions = new Mission[3] { missionList[j++], missionList[j++], missionList[j++] };
+            int j = 0;
+            for (int i = 0; i < MAX_LEVEL; i++)
+                LEVELS[i].missions = new Mission[3] { missionList[j++], missionList[j++], missionList[j++] };
 
-        int n = 0;
-        AddGift(n, Gifts.aquariumSmall);
-        // 1
-        AddGift(++n, () => isChampionship = true, pics.championship, () => Localization.Get("unlockChampionship"));
-        AddGift(++n, () => isGoldfishes = true, pics.goldfish, () => Localization.Get("unlockGoldfishes"));
-        AddGift(++n, Gifts.catbox, 1, () => maxCatSlot = 1);
-        AddGift(++n, () => maxMultiplier = 2, pics.multiplier, () => Localization.Get("unlockMultiplier", 2));
-        AddGift(++n, Gifts.aquariumSmall, 1);
-        // 6        
-        AddGift(++n, () => isLuckyWheel = true, pics.luckyWheel, () => Localization.Get("unlockLuckyWheel"));
-        if (build.facebook) AddGift(++n, () => isTournament = true, pics.tournament, () => Localization.Get("unlockTournament"));
-        else AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxMultiplier = 3, pics.multiplier, () => Localization.Get("unlockMultiplier", 3));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isFireworkBoomSmall = true, pics.fireworkBoomSmall, () => Localization.Get("unlockFireworkBoomSmall"));
-        // 11
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxCatSlot = 2, pics.catSlot, () => Localization.Get("unlockCatSlot", 2));
-        AddGift(++n, () => maxMultiplier = 4, pics.multiplier, () => Localization.Get("unlockMultiplier", 4));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isFever = true, pics.fever, () => Localization.Get("unlockFever"));
-        // 16
-        AddGift(++n, Gifts.aquariumSmall, 2);
-        AddGift(++n, () => isFireworkRocket = true, pics.fireworkRocket, () => Localization.Get("unlockFireworkRocket"));
-        AddGift(++n, () => isBoostTime = true, gameplay.boosts.time.sprite, () => Localization.Get("unlockBoostTime")); // AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxMultiplier = 5, pics.multiplier, () => Localization.Get("unlockMultiplier", 5));
-        // 21
-        AddGift(++n, Gifts.aquariumSmall, 3);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => maxCatSlot = 3, pics.catSlot, () => Localization.Get("unlockCatSlot", 3));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.aquariumSmall, 4);
-        // 26
-        AddGift(++n, () => isBoostExperience = true, gameplay.boosts.experience.sprite, () => Localization.Get("unlockBoostExperience")); //AddGift(++n, Gifts.sausage);
-        AddGift(++n, () => isFireworkBoomBig = true, pics.fireworkBoomBig, () => Localization.Get("unlockFireworkBoomBig"));
-        AddGift(++n, Gifts.aquariumSmall, 5);
-        AddGift(++n, Gifts.catbox); // Тут сидит Царь
-        AddGift(++n, Gifts.sausage); //AddGift(++n, Gifts.boosterbox);
-        // 31
-        AddGift(++n, () => maxMultiplier = 6, pics.multiplier, () => Localization.Get("unlockMultiplier", 6));
-        AddGift(++n, () => isBoostMultiplier = true, gameplay.boosts.multiplier.sprite, () => Localization.Get("unlockBoostMultiplier")); //AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 6);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxCatSlot = 4, pics.catSlot, () => Localization.Get("unlockCatSlot", 4));
-        // 36
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 7);
-        AddGift(++n, () => isFireworkColor = true, pics.fireworkColor, () => Localization.Get("unlockFireworkColor"));
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => isBoostFirework = true, gameplay.boosts.firework.sprite, () => Localization.Get("unlockBoostFirework")); //AddGift(++n, Gifts.sausage);
-        // 41
-        AddGift(++n, Gifts.aquariumSmall, 8);
-        AddGift(++n, () => maxMultiplier = 7, pics.multiplier, () => Localization.Get("unlockMultiplier", 7));
-        AddGift(++n, Gifts.sausage); //AddGift(++n, Gifts.boosterbox);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.aquariumSmall, 9);
-        // 46
-        AddGift(++n, () => maxMultiplier = 8, pics.multiplier, () => Localization.Get("unlockMultiplier", 8));
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 10);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, () => maxMultiplier = 9, pics.multiplier, () => Localization.Get("unlockMultiplier", 9));
-        // 51
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 11);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 12);
+            int n = 0;
+            AddGift(n, Gifts.aquariumSmall);
+            // 1
+            AddGift(++n, () => isChampionship = true, pics.championship, () => Localization.Get("unlockChampionship"));
+            AddGift(++n, () => isGoldfishes = true, pics.goldfish, () => Localization.Get("unlockGoldfishes"));
+            AddGift(++n, Gifts.catbox, 1, () => maxCatSlot = 1);
+            AddGift(++n, () => maxMultiplier = 2, pics.multiplier, () => Localization.Get("unlockMultiplier", 2));
+            AddGift(++n, Gifts.aquariumSmall, 1);
+            // 6        
+            AddGift(++n, () => isLuckyWheel = true, pics.luckyWheel, () => Localization.Get("unlockLuckyWheel"));
+            if (build.facebook) AddGift(++n, () => isTournament = true, pics.tournament, () => Localization.Get("unlockTournament"));
+            else AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxMultiplier = 3, pics.multiplier, () => Localization.Get("unlockMultiplier", 3));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isFireworkBoomSmall = true, pics.fireworkBoomSmall, () => Localization.Get("unlockFireworkBoomSmall"));
+            // 11
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxCatSlot = 2, pics.catSlot, () => Localization.Get("unlockCatSlot", 2));
+            AddGift(++n, () => maxMultiplier = 4, pics.multiplier, () => Localization.Get("unlockMultiplier", 4));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isFever = true, pics.fever, () => Localization.Get("unlockFever"));
+            // 16
+            AddGift(++n, Gifts.aquariumSmall, 2);
+            AddGift(++n, () => isFireworkRocket = true, pics.fireworkRocket, () => Localization.Get("unlockFireworkRocket"));
+            AddGift(++n, () => isBoostTime = true, gameplay.boosts.time.sprite, () => Localization.Get("unlockBoostTime")); // AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxMultiplier = 5, pics.multiplier, () => Localization.Get("unlockMultiplier", 5));
+            // 21
+            AddGift(++n, Gifts.aquariumSmall, 3);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => maxCatSlot = 3, pics.catSlot, () => Localization.Get("unlockCatSlot", 3));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 4);
+            // 26
+            AddGift(++n, () => isBoostExperience = true, gameplay.boosts.experience.sprite, () => Localization.Get("unlockBoostExperience")); //AddGift(++n, Gifts.sausage);
+            AddGift(++n, () => isFireworkBoomBig = true, pics.fireworkBoomBig, () => Localization.Get("unlockFireworkBoomBig"));
+            AddGift(++n, Gifts.aquariumSmall, 5);
+            AddGift(++n, Gifts.catbox); // Тут сидит Царь
+            AddGift(++n, Gifts.sausage); //AddGift(++n, Gifts.boosterbox);
+                                         // 31
+            AddGift(++n, () => maxMultiplier = 6, pics.multiplier, () => Localization.Get("unlockMultiplier", 6));
+            AddGift(++n, () => isBoostMultiplier = true, gameplay.boosts.multiplier.sprite, () => Localization.Get("unlockBoostMultiplier")); //AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 6);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxCatSlot = 4, pics.catSlot, () => Localization.Get("unlockCatSlot", 4));
+            // 36
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 7);
+            AddGift(++n, () => isFireworkColor = true, pics.fireworkColor, () => Localization.Get("unlockFireworkColor"));
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => isBoostFirework = true, gameplay.boosts.firework.sprite, () => Localization.Get("unlockBoostFirework")); //AddGift(++n, Gifts.sausage);
+                                                                                                                                        // 41
+            AddGift(++n, Gifts.aquariumSmall, 8);
+            AddGift(++n, () => maxMultiplier = 7, pics.multiplier, () => Localization.Get("unlockMultiplier", 7));
+            AddGift(++n, Gifts.sausage); //AddGift(++n, Gifts.boosterbox);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 9);
+            // 46
+            AddGift(++n, () => maxMultiplier = 8, pics.multiplier, () => Localization.Get("unlockMultiplier", 8));
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 10);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, () => maxMultiplier = 9, pics.multiplier, () => Localization.Get("unlockMultiplier", 9));
+            // 51
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 11);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 12);
 
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 13);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 13);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
 
-        AddGift(++n, Gifts.aquariumSmall, 14);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 15);
-        AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 14);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 15);
+            AddGift(++n, Gifts.catbox);
 
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 16);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 17);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 16);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 17);
 
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 18);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 18);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
 
-        AddGift(++n, Gifts.aquariumSmall, 19);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 20);
-        AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 19);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 20);
+            AddGift(++n, Gifts.catbox);
 
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 21);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 22);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 21);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 22);
 
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 23);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 23);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
 
-        AddGift(++n, Gifts.aquariumSmall, 24);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 25);
-        AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.aquariumSmall, 24);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 25);
+            AddGift(++n, Gifts.catbox);
 
-        AddGift(++n, Gifts.sausage);
-        AddGift(++n, Gifts.aquariumSmall, 26);
-        AddGift(++n, Gifts.catbox);
-        AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.sausage);
+            AddGift(++n, Gifts.aquariumSmall, 26);
+            AddGift(++n, Gifts.catbox);
+            AddGift(++n, Gifts.sausage);
 
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 11);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //// 56
-        //AddGift(++n, Gifts.aquariumSmall, 12);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 13);
-        //// 61
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 14);
-        //AddGift(++n, Gifts.boosterbox);
-        //// 66
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 15);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //// 71
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 16);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //// 76
-        //AddGift(++n, Gifts.aquariumSmall, 17);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 18);
-        //// 81
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 19);
-        //AddGift(++n, Gifts.boosterbox);
-        //// 86
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 20);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //// 91
-        //AddGift(++n, Gifts.sausage);
-        //AddGift(++n, Gifts.aquariumSmall, 21);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-        //// 96
-        //AddGift(++n, Gifts.aquariumSmall, 22);
-        //AddGift(++n, Gifts.boosterbox);
-        //AddGift(++n, Gifts.catbox);
-        //AddGift(++n, Gifts.sausage);
-    }
-
-    public static void AddGift(int n, Gifts gift, int count = 1, Action unlock = null)
-    {
-        LEVELS[n].gift = gift;
-        LEVELS[n].unlock = unlock;
-
-        if (gift == Gifts.catbox)
-        {
-            LEVELS[n].giftSprite = pics.catbox;
-            LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 11);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //// 56
+            //AddGift(++n, Gifts.aquariumSmall, 12);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 13);
+            //// 61
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 14);
+            //AddGift(++n, Gifts.boosterbox);
+            //// 66
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 15);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //// 71
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 16);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //// 76
+            //AddGift(++n, Gifts.aquariumSmall, 17);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 18);
+            //// 81
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 19);
+            //AddGift(++n, Gifts.boosterbox);
+            //// 86
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 20);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //// 91
+            //AddGift(++n, Gifts.sausage);
+            //AddGift(++n, Gifts.aquariumSmall, 21);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
+            //// 96
+            //AddGift(++n, Gifts.aquariumSmall, 22);
+            //AddGift(++n, Gifts.boosterbox);
+            //AddGift(++n, Gifts.catbox);
+            //AddGift(++n, Gifts.sausage);
         }
-        else if (gift == Gifts.sausage)
+
+        public static void AddGift(int n, Gifts gift, int count = 1, Action unlock = null)
         {
-            LEVELS[n].giftSprite = pics.sausage;
-            LEVELS[n].giftCount = count * balance.reward.sausageForLevelUp;
-            LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
+            LEVELS[n].gift = gift;
+            LEVELS[n].unlock = unlock;
+
+            if (gift == Gifts.catbox)
+            {
+                LEVELS[n].giftSprite = pics.catbox;
+                LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
+            }
+            else if (gift == Gifts.sausage)
+            {
+                LEVELS[n].giftSprite = pics.sausage;
+                LEVELS[n].giftCount = count * balance.reward.sausageForLevelUp;
+                LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
+            }
+            else if (gift == Gifts.aquariumSmall)
+            {
+                LEVELS[n].giftSprite = pics.aquariumSmall;
+                LEVELS[n].giftCount = count * balance.reward.coinsForLevelUp;
+                LEVELS[n].giftDescription = () => Localization.Get(gift.ToString(), LEVELS[n].giftCount);
+            }
+            else if (gift == Gifts.boosterbox)
+            {
+                LEVELS[n].giftSprite = pics.boosterbox;
+                LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
+            }
         }
-        else if (gift == Gifts.aquariumSmall)
+        public static void AddGift(int n, Action unlock, Sprite sprite, Func<string> description)
         {
-            LEVELS[n].giftSprite = pics.aquariumSmall;
-            LEVELS[n].giftCount = count * balance.reward.coinsForLevelUp;
-            LEVELS[n].giftDescription = () => Localization.Get(gift.ToString(), LEVELS[n].giftCount);
-        }
-        else if (gift == Gifts.boosterbox)
-        {
-            LEVELS[n].giftSprite = pics.boosterbox;
-            LEVELS[n].giftDescription = () => Localization.Get(gift.ToString());
-        }
-    }
-    public static void AddGift(int n, Action unlock, Sprite sprite, Func<string> description)
-    {
-        LEVELS[n].unlock = unlock;
-        LEVELS[n].giftSprite = sprite;
-        LEVELS[n].giftDescription = description;
-    }
-}
-
-public enum Gifts { catbox, sausage, aquariumSmall, boosterbox, empty }
-
-public class Level
-{
-    public Action unlock;
-    public Gifts gift = Gifts.empty;
-    public int giftCount;
-    public Func<string> giftDescription;
-    public Sprite giftSprite;
-    public Mission[] missions = null;
-
-    public bool isDone { get { return missions[0].isDone && missions[1].isDone && missions[2].isDone; } }
-
-    public Level()
-    {
-    }
-    public Level(Mission[] missions, Action unlock, Gifts gift)
-    {
-        this.missions = missions;
-        this.unlock = unlock;
-        this.gift = gift;
-    }
-}
-
-public class Mission
-{
-    public string name { get { return this.GetType().Name; } }
-    public Func<bool> check = null;
-    public int target = 0;
-    public Func<int> current = null;
-    public Action clear = null;
-    public Tutorial.Part tipTutorial = null;
-    public bool isDone
-    {
-        get
-        {
-            if (check != null) return check();
-            else return current() >= target;
-        }
-    }
-    public bool isProgress { get { return target != 0; } }
-    public string description
-    {
-        get
-        {
-            string key = "mission" + name;
-            if (key == "missionInviteFriends" && !Core.user.isId) key = "missionInviteFriendsLogout";
-            return target > 0 ? Localization.Get(key, target.SpaceFormat()) : Localization.Get(key);
+            LEVELS[n].unlock = unlock;
+            LEVELS[n].giftSprite = sprite;
+            LEVELS[n].giftDescription = description;
         }
     }
 
-    public bool[] status;
-    public bool atOneGame = false;
-}
+    public enum Gifts { catbox, sausage, aquariumSmall, boosterbox, empty }
 
-public class ChainLength : Mission
-{
-    public ChainLength(int targetValue)
+    public class Level
     {
-        this.current = () => Core.user.chainLength;
-        this.target = targetValue;
-        this.clear = () => Core.user.chainLength = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.ChainLengthTip;
-    }
-}
-public class ChainSequence : Mission
-{
-    public ChainSequence(int targetValue)
-    {
-        this.current = () => Core.user.chainSequence;
-        this.target = targetValue;
-        this.clear = () => Core.user.chainSequence = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.ChainSequenceTip;
-    }
-}
-public class LoopLength : Mission
-{
-    public LoopLength(int targetValue)
-    {
-        this.current = () => Core.user.loopLength;
-        this.target = targetValue;
-        this.clear = () => Core.user.loopLength = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.LoopLengthTip;
-    }
-}
-public class GetLoops : Mission
-{
-    public GetLoops(int targetValue)
-    {
-        this.current = () => Core.user.loops;
-        this.target = targetValue;
-        this.clear = () => Core.user.loops = 0;
-        this.tipTutorial = Tutorial.Part.GetLoopsTip;
-    }
-}
-public class GetLoopsAtOneGame : Mission
-{
-    public GetLoopsAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.loopsAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.loopsAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetLoopsTip;
-    }
-}
-public class GetCats : Mission
-{
-    public GetCats(int targetValue)
-    {
-        this.current = () => Core.user.getCats;
-        this.target = targetValue;
-        this.clear = () => Core.user.getCats = 0;
-        this.tipTutorial = Tutorial.Part.GetCatsTip;
-    }
-}
-public class GetCatsAtOneGame : Mission
-{
-    public GetCatsAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.getCatsAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.getCatsAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetCatsTip;
-    }
-}
-public class GetScore : Mission
-{
-    public GetScore(int targetValue)
-    {
-        this.current = () => Core.user.recordStat;
-        this.target = targetValue;
-        this.clear = () => Core.user.recordStat = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetScoreTip;
-    }
-}
-public class GetScoreWithoutMultipliers : Mission
-{
-    public GetScoreWithoutMultipliers(int targetValue)
-    {
-        this.current = () => Core.user.recordWithoutMultipliers;
-        this.target = targetValue;
-        this.clear = () => Core.user.recordWithoutMultipliers = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetScoreWithoutMultipliersTip;
-    }
-}
-public class GetScoreWithoutLime : Mission
-{
-    public GetScoreWithoutLime(int targetValue)
-    {
-        this.current = () => Core.user.recordWithoutLime;
-        this.target = targetValue;
-        this.clear = () => Core.user.recordWithoutLime = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetScoreWithoutLimeTip;
-    }
-}
-public class GetScoreWithoutGinger : Mission
-{
-    public GetScoreWithoutGinger(int targetValue)
-    {
-        this.current = () => Core.user.recordWithoutGinger;
-        this.target = targetValue;
-        this.clear = () => Core.user.recordWithoutGinger = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetScoreWithoutGingerTip;
-    }
-}
-public class GameSessions : Mission
-{
-    public GameSessions(int targetValue)
-    {
-        this.current = () => Core.user.gameSessions;
-        this.target = targetValue;
-        this.tipTutorial = Tutorial.Part.GameSessionsTip;
-    }
-}
-public class GetFever : Mission
-{
-    public GetFever(int targetValue)
-    {
-        this.current = () => Core.user.getFever;
-        this.target = targetValue;
-        this.clear = () => Core.user.getFever = 0;
-        this.tipTutorial = Tutorial.Part.GetFeverTip;
-    }
-}
-public class GetFeverAtOneGame : Mission
-{
-    public GetFeverAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.getFeverAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.getFeverAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetFeverTip;
-    }
-}
-public class GetGoldfishes : Mission
-{
-    public GetGoldfishes(int targetValue)
-    {
-        this.current = () => Core.user.getGoldfishes;
-        this.target = targetValue;
-        this.clear = () => Core.user.getGoldfishes = 0;
-        this.tipTutorial = Tutorial.Part.GetGoldfishesTip;
-    }
-}
-public class GetGoldfishesAtOneGame : Mission
-{
-    public GetGoldfishesAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.getGoldfishesAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.getGoldfishesAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetGoldfishesTip;
-    }
-}
-public class GetMultiplier : Mission
-{
-    public GetMultiplier(int targetValue)
-    {
-        this.current = () => Core.user.getMultiplier;
-        this.target = targetValue;
-        this.clear = () => Core.user.getMultiplier = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.GetMultiplierTip;
-    }
-}
-public class UseCats : Mission
-{
-    public UseCats(int targetValue)
-    {
-        this.current = () => Core.user.useCats;
-        this.target = targetValue;
-        this.clear = () => Core.user.useCats = 0;
-        this.tipTutorial = Tutorial.Part.UseCatsTip;
-    }
-}
-public class UseCatsAtOneGame : Mission
-{
-    public UseCatsAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.useCatsAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.useCatsAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.UseCatsTip;
-    }
-}
-public class LevelUpCat : Mission
-{
-    public LevelUpCat(int targetValue)
-    {
-        this.current = () => Core.user.maxCatLevel;
-        this.target = targetValue;
-        this.tipTutorial = Tutorial.Part.LevelUpCatTip;
-    }
-}
-public class UseFireworksAtOneGame : Mission
-{
-    public UseFireworksAtOneGame(int targetValue)
-    {
-        this.current = () => Core.user.useFireworkAtOneGame;
-        this.target = targetValue;
-        this.clear = () => Core.user.useFireworkAtOneGame = 0;
-        this.atOneGame = true;
-        this.tipTutorial = Tutorial.Part.UseFireworksAtOneGameTip;
-    }
-}
-public class UseFireworkBoomSmall : Mission
-{
-    public UseFireworkBoomSmall(int targetValue)
-    {
-        this.current = () => Core.user.useFireworkBoomSmall;
-        this.target = targetValue;
-        this.clear = () => Core.user.useFireworkBoomSmall = 0;
-        this.tipTutorial = Tutorial.Part.UseFireworkBoomSmallTip;
-    }
-}
-public class UseFireworkBoomBig : Mission
-{
-    public UseFireworkBoomBig(int targetValue)
-    {
-        this.current = () => Core.user.useFireworkBoomBig;
-        this.target = targetValue;
-        this.clear = () => Core.user.useFireworkBoomBig = 0;
-        this.tipTutorial = Tutorial.Part.UseFireworkBoomBigTip;
-    }
-}
-public class UseFireworkRocket : Mission
-{
-    public UseFireworkRocket(int targetValue)
-    {
-        this.current = () => Core.user.useFireworkRocket;
-        this.target = targetValue;
-        this.clear = () => Core.user.useFireworkRocket = 0;
-        this.tipTutorial = Tutorial.Part.UseFireworkRocketTip;
-    }
-}
-public class UseFireworkColor : Mission
-{
-    public UseFireworkColor(int targetValue)
-    {
-        this.current = () => Core.user.useFireworkColor;
-        this.target = targetValue;
-        this.clear = () => Core.user.useFireworkColor = 0;
-        this.tipTutorial = Tutorial.Part.UseFireworkColorTip;
-    }
-}
-public class UseSausage : Mission
-{
-    public UseSausage(int targetValue)
-    {
-        this.current = () => Core.user.useSausages;
-        this.target = targetValue;
-        this.clear = () => Core.user.useSausages = 0;
-        this.tipTutorial = Tutorial.Part.UseSausageTip;
-    }
-}
-public class UseBoost : Mission
-{
-    public UseBoost(int targetValue)
-    {
-        this.current = () => Core.user.useBoosts;
-        this.target = targetValue;
-        this.clear = () => Core.user.useBoosts = 0;
-        this.tipTutorial = Tutorial.Part.UseBoostTip;
-    }
-}
+        public Action unlock;
+        public Gifts gift = Gifts.empty;
+        public int giftCount;
+        public Func<string> giftDescription;
+        public Sprite giftSprite;
+        public Mission[] missions = null;
 
-//public class WinTournament : Mission
-//{
-//    public WinTournament(int targetValue)
-//    {
-//        this.current = () => Core.user.maxWonFriends;
-//        this.target = targetValue;
-//        this.tipTutorial = Tutorial.Part.WinTournamentTip;
-//    }
-//}
-//public class InviteFriends : Mission
-//{
-//    public InviteFriends(int targetValue)
-//    {
-//        this.current = () => Core.user.invitedFriends.Count;
-//        this.target = targetValue;
-//        this.tipTutorial = Tutorial.Part.InviteFriendsTip;
-//    }
-//}
+        public bool isDone { get { return missions[0].isDone && missions[1].isDone && missions[2].isDone; } }
+
+        public Level()
+        {
+        }
+        public Level(Mission[] missions, Action unlock, Gifts gift)
+        {
+            this.missions = missions;
+            this.unlock = unlock;
+            this.gift = gift;
+        }
+    }
+
+    public class Mission
+    {
+        public string name { get { return this.GetType().Name; } }
+        public Func<bool> check = null;
+        public int target = 0;
+        public Func<int> current = null;
+        public Action clear = null;
+        public Tutorial.Part tipTutorial = null;
+        public bool isDone
+        {
+            get
+            {
+                if (check != null) return check();
+                else return current() >= target;
+            }
+        }
+        public bool isProgress { get { return target != 0; } }
+        public string description
+        {
+            get
+            {
+                string key = "mission" + name;
+                if (key == "missionInviteFriends" && !Core.user.isId) key = "missionInviteFriendsLogout";
+                return target > 0 ? Localization.Get(key, target.SpaceFormat()) : Localization.Get(key);
+            }
+        }
+
+        public bool[] status;
+        public bool atOneGame = false;
+    }
+
+    public class ChainLength : Mission
+    {
+        public ChainLength(int targetValue)
+        {
+            this.current = () => Core.user.chainLength;
+            this.target = targetValue;
+            this.clear = () => Core.user.chainLength = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.ChainLengthTip;
+        }
+    }
+    public class ChainSequence : Mission
+    {
+        public ChainSequence(int targetValue)
+        {
+            this.current = () => Core.user.chainSequence;
+            this.target = targetValue;
+            this.clear = () => Core.user.chainSequence = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.ChainSequenceTip;
+        }
+    }
+    public class LoopLength : Mission
+    {
+        public LoopLength(int targetValue)
+        {
+            this.current = () => Core.user.loopLength;
+            this.target = targetValue;
+            this.clear = () => Core.user.loopLength = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.LoopLengthTip;
+        }
+    }
+    public class GetLoops : Mission
+    {
+        public GetLoops(int targetValue)
+        {
+            this.current = () => Core.user.loops;
+            this.target = targetValue;
+            this.clear = () => Core.user.loops = 0;
+            this.tipTutorial = Tutorial.Part.GetLoopsTip;
+        }
+    }
+    public class GetLoopsAtOneGame : Mission
+    {
+        public GetLoopsAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.loopsAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.loopsAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetLoopsTip;
+        }
+    }
+    public class GetCats : Mission
+    {
+        public GetCats(int targetValue)
+        {
+            this.current = () => Core.user.getCats;
+            this.target = targetValue;
+            this.clear = () => Core.user.getCats = 0;
+            this.tipTutorial = Tutorial.Part.GetCatsTip;
+        }
+    }
+    public class GetCatsAtOneGame : Mission
+    {
+        public GetCatsAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.getCatsAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.getCatsAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetCatsTip;
+        }
+    }
+    public class GetScore : Mission
+    {
+        public GetScore(int targetValue)
+        {
+            this.current = () => Core.user.recordStat;
+            this.target = targetValue;
+            this.clear = () => Core.user.recordStat = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetScoreTip;
+        }
+    }
+    public class GetScoreWithoutMultipliers : Mission
+    {
+        public GetScoreWithoutMultipliers(int targetValue)
+        {
+            this.current = () => Core.user.recordWithoutMultipliers;
+            this.target = targetValue;
+            this.clear = () => Core.user.recordWithoutMultipliers = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetScoreWithoutMultipliersTip;
+        }
+    }
+    public class GetScoreWithoutLime : Mission
+    {
+        public GetScoreWithoutLime(int targetValue)
+        {
+            this.current = () => Core.user.recordWithoutLime;
+            this.target = targetValue;
+            this.clear = () => Core.user.recordWithoutLime = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetScoreWithoutLimeTip;
+        }
+    }
+    public class GetScoreWithoutGinger : Mission
+    {
+        public GetScoreWithoutGinger(int targetValue)
+        {
+            this.current = () => Core.user.recordWithoutGinger;
+            this.target = targetValue;
+            this.clear = () => Core.user.recordWithoutGinger = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetScoreWithoutGingerTip;
+        }
+    }
+    public class GameSessions : Mission
+    {
+        public GameSessions(int targetValue)
+        {
+            this.current = () => Core.user.gameSessions;
+            this.target = targetValue;
+            this.tipTutorial = Tutorial.Part.GameSessionsTip;
+        }
+    }
+    public class GetFever : Mission
+    {
+        public GetFever(int targetValue)
+        {
+            this.current = () => Core.user.getFever;
+            this.target = targetValue;
+            this.clear = () => Core.user.getFever = 0;
+            this.tipTutorial = Tutorial.Part.GetFeverTip;
+        }
+    }
+    public class GetFeverAtOneGame : Mission
+    {
+        public GetFeverAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.getFeverAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.getFeverAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetFeverTip;
+        }
+    }
+    public class GetGoldfishes : Mission
+    {
+        public GetGoldfishes(int targetValue)
+        {
+            this.current = () => Core.user.getGoldfishes;
+            this.target = targetValue;
+            this.clear = () => Core.user.getGoldfishes = 0;
+            this.tipTutorial = Tutorial.Part.GetGoldfishesTip;
+        }
+    }
+    public class GetGoldfishesAtOneGame : Mission
+    {
+        public GetGoldfishesAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.getGoldfishesAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.getGoldfishesAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetGoldfishesTip;
+        }
+    }
+    public class GetMultiplier : Mission
+    {
+        public GetMultiplier(int targetValue)
+        {
+            this.current = () => Core.user.getMultiplier;
+            this.target = targetValue;
+            this.clear = () => Core.user.getMultiplier = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.GetMultiplierTip;
+        }
+    }
+    public class UseCats : Mission
+    {
+        public UseCats(int targetValue)
+        {
+            this.current = () => Core.user.useCats;
+            this.target = targetValue;
+            this.clear = () => Core.user.useCats = 0;
+            this.tipTutorial = Tutorial.Part.UseCatsTip;
+        }
+    }
+    public class UseCatsAtOneGame : Mission
+    {
+        public UseCatsAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.useCatsAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.useCatsAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.UseCatsTip;
+        }
+    }
+    public class LevelUpCat : Mission
+    {
+        public LevelUpCat(int targetValue)
+        {
+            this.current = () => Core.user.maxCatLevel;
+            this.target = targetValue;
+            this.tipTutorial = Tutorial.Part.LevelUpCatTip;
+        }
+    }
+    public class UseFireworksAtOneGame : Mission
+    {
+        public UseFireworksAtOneGame(int targetValue)
+        {
+            this.current = () => Core.user.useFireworkAtOneGame;
+            this.target = targetValue;
+            this.clear = () => Core.user.useFireworkAtOneGame = 0;
+            this.atOneGame = true;
+            this.tipTutorial = Tutorial.Part.UseFireworksAtOneGameTip;
+        }
+    }
+    public class UseFireworkBoomSmall : Mission
+    {
+        public UseFireworkBoomSmall(int targetValue)
+        {
+            this.current = () => Core.user.useFireworkBoomSmall;
+            this.target = targetValue;
+            this.clear = () => Core.user.useFireworkBoomSmall = 0;
+            this.tipTutorial = Tutorial.Part.UseFireworkBoomSmallTip;
+        }
+    }
+    public class UseFireworkBoomBig : Mission
+    {
+        public UseFireworkBoomBig(int targetValue)
+        {
+            this.current = () => Core.user.useFireworkBoomBig;
+            this.target = targetValue;
+            this.clear = () => Core.user.useFireworkBoomBig = 0;
+            this.tipTutorial = Tutorial.Part.UseFireworkBoomBigTip;
+        }
+    }
+    public class UseFireworkRocket : Mission
+    {
+        public UseFireworkRocket(int targetValue)
+        {
+            this.current = () => Core.user.useFireworkRocket;
+            this.target = targetValue;
+            this.clear = () => Core.user.useFireworkRocket = 0;
+            this.tipTutorial = Tutorial.Part.UseFireworkRocketTip;
+        }
+    }
+    public class UseFireworkColor : Mission
+    {
+        public UseFireworkColor(int targetValue)
+        {
+            this.current = () => Core.user.useFireworkColor;
+            this.target = targetValue;
+            this.clear = () => Core.user.useFireworkColor = 0;
+            this.tipTutorial = Tutorial.Part.UseFireworkColorTip;
+        }
+    }
+    public class UseSausage : Mission
+    {
+        public UseSausage(int targetValue)
+        {
+            this.current = () => Core.user.useSausages;
+            this.target = targetValue;
+            this.clear = () => Core.user.useSausages = 0;
+            this.tipTutorial = Tutorial.Part.UseSausageTip;
+        }
+    }
+    public class UseBoost : Mission
+    {
+        public UseBoost(int targetValue)
+        {
+            this.current = () => Core.user.useBoosts;
+            this.target = targetValue;
+            this.clear = () => Core.user.useBoosts = 0;
+            this.tipTutorial = Tutorial.Part.UseBoostTip;
+        }
+    }
+
+    //public class WinTournament : Mission
+    //{
+    //    public WinTournament(int targetValue)
+    //    {
+    //        this.current = () => Core.user.maxWonFriends;
+    //        this.target = targetValue;
+    //        this.tipTutorial = Tutorial.Part.WinTournamentTip;
+    //    }
+    //}
+    //public class InviteFriends : Mission
+    //{
+    //    public InviteFriends(int targetValue)
+    //    {
+    //        this.current = () => Core.user.invitedFriends.Count;
+    //        this.target = targetValue;
+    //        this.tipTutorial = Tutorial.Part.InviteFriendsTip;
+    //    }
+    //}
+}

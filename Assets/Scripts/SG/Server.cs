@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
-namespace SG
+namespace SG.RSC
 {
     public class Server : Core
     {
@@ -91,13 +91,13 @@ namespace SG
                     return;
                 }
 
-                LogDebug("Server - Get Tournament - Server response: {0}", download.www.text);
+                Log.Debug("Server - Get Tournament - Server response: {0}", download.www.text);
 
                 var response = Json.Deserialize(download.www.text) as Dictionary<string, object>;
 
                 if (response == null || !response.ContainsKey("currentTournamentEndDate"))
                 {
-                    LogError("Server - Get Tournament - Cant parse response: {0}", download.www.text);
+                    Log.Error("Server - Get Tournament - Cant parse response: {0}", download.www.text);
                     callback(null, 0, null, 0);
                     return;
                 }
@@ -172,13 +172,13 @@ namespace SG
                      return;
                  }
 
-                 LogDebug("Server - Get Championship - Server response: {0}", download.www.text);
+                 Log.Debug("Server - Get Championship - Server response: {0}", download.www.text);
 
                  var rivalsDict = Json.Deserialize(download.www.text) as List<object>;
 
                  if (rivalsDict == null)
                  {
-                     LogError("Server - Get Championship - Cant parse response: {0}", download.www.text);
+                     Log.Error("Server - Get Championship - Cant parse response: {0}", download.www.text);
                      callback(null);
                      return;
                  }
@@ -251,14 +251,14 @@ namespace SG
                 { "userId", user.id },
             };
 
-            if (platform == Platform.AppStore || platform == Platform.tvOS)
+            if (platform == Platform.iOS || platform == Platform.tvOS)
             {
                 url += links.verifyPurchaseApple;
 
                 request.Add("base64EncodedReceipt", data.receipt);
                 request.Add("debug", isDebug);
             }
-            else if (platform == Platform.GooglePlay)
+            else if (platform == Platform.Android)
             {
                 url += links.verifyPurchaseGoogle;
 
@@ -279,7 +279,7 @@ namespace SG
                     else
                     {
                         if (download.responseDict.ContainsKey("message"))
-                            LogError("Server - Verify Purchase - Store Error: " + download.responseDict["message"]);
+                            Log.Error("Server - Verify Purchase - Store Error: " + download.responseDict["message"]);
 
                         callback?.Invoke(false);
                         if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Failed");
@@ -287,12 +287,12 @@ namespace SG
                 }
                 else if (download.isCorrupted)
                 {
-                    LogError("Server - Verify Purchase - Corrupted");
+                    Log.Error("Server - Verify Purchase - Corrupted");
                     callback?.Invoke(false);
                 }
                 else
                 {
-                    LogError("Server - Verify Purchase - Unknown Error");
+                    Log.Error("Server - Verify Purchase - Unknown Error");
                     callback?.Invoke(null);
                 }
             });
@@ -312,7 +312,7 @@ namespace SG
         //    {
         //        if (download.isSuccess)
         //        {
-        //            LogDebug("Server - Get Time ({0}) - Server response: {1}", download.time, download.www.text);
+        //            Log.Debug("Server - Get Time ({0}) - Server response: {1}", download.time, download.www.text);
 
         //            var response = Json.Deserialize(download.www.text) as Dictionary<string, object>;
 
@@ -324,7 +324,7 @@ namespace SG
         //            }
         //            else
         //            {
-        //                LogError("Server - Get Time ({0}) - Cant parse response: {1}", download.time, download.www.text);
+        //                Log.Error("Server - Get Time ({0}) - Cant parse response: {1}", download.time, download.www.text);
         //                callback(DateTime.MinValue);
         //            }
         //        }
@@ -358,13 +358,13 @@ namespace SG
                     timeUTC = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
                     //lastUpdateTime = DateTime.Now;
 
-                    Log("Server - UpdateTime - Success. Time Shift: {0}", (DateTime.UtcNow - timeUTC).TotalSeconds);
+                    Log.Info("Server - UpdateTime - Success. Time Shift: {0}", (DateTime.UtcNow - timeUTC).TotalSeconds);
                     callback(true);
                     return;
                 }
                 catch (Exception e)
                 {
-                    LogError("Server - UpdateTime - {0} - Error: {1}", url, e);
+                    Log.Error("Server - UpdateTime - {0} - Error: {1}", url, e);
                 }
             }
 
@@ -455,7 +455,7 @@ namespace SG
                 { "Key", (request + build.s).MD5() },
             };
 
-            LogDebug("Server - {0} - Url: '{1}', Key: '{2}', Request: {3}", name, url, headers["Key"], request);
+            Log.Debug("Server - {0} - Url: '{1}', Key: '{2}', Request: {3}", name, url, headers["Key"], request);
 
             Download.Create(gameObject).Run(name, new WWW(url, Encoding.UTF8.GetBytes(request), headers), download =>
             {
@@ -469,7 +469,7 @@ namespace SG
                 {
                     if (!download.www.responseHeaders.ContainsKey("KEY") || download.www.responseHeaders["KEY"] != (download.www.text + build.s).MD5())
                     {
-                        LogError("Server - {0} - Hash validation failed. Response: {1}", name, download.www.text);
+                        Log.Error("Server - {0} - Hash validation failed. Response: {1}", name, download.www.text);
                         download.status = Download.Status.Corrupted;
                         callback(download);
                         return;

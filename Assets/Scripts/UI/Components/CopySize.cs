@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SG
+namespace SG.RSC
 {
     [ExecuteInEditMode]
     public class CopySize : MonoBehaviour

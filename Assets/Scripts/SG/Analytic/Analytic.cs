@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SG
+namespace SG.RSC
 {
-    public class Analytic : Core
+    public class AnalyticSG : Core
     {
         public void Init()
         {

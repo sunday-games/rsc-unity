@@ -1,72 +1,74 @@
 ﻿using UnityEngine;
 
-public class CatJokerRiki : CatJoker
+namespace SG.RSC
 {
-    [Space(10)]
-    public Transform animParent;
-    public GameObject rikiImage;
-
-    [Space(10)]
-    public BasicCatAnimation[] animations;
-
-    [HideInInspector]
-    public BasicCatAnimation anim;
-
-    public override void Setup()
+    public class CatJokerRiki : CatJoker
     {
-        radiusNormal = (shape as CircleCollider2D).radius;
+        [Space(10)]
+        public Transform animParent;
+        public GameObject rikiImage;
 
-        t.localScale = smallScreen ? type.scale * 1.1f : type.scale;
+        [Space(10)]
+        public BasicCatAnimation[] animations;
 
-        if (!user.IsTutorialShown(Tutorial.Part.CatUseActivateJoker)) Invoke("TutorialCatUseActivate", 2);
-    }
+        [HideInInspector]
+        public BasicCatAnimation anim;
 
-    void TutorialCatUseActivate()
-    {
-        if (ui.current == ui.game && !user.IsTutorialShown(Tutorial.Part.CatUseActivateJoker))
-            ui.tutorial.Show(Tutorial.Part.CatUseActivateJoker, new Transform[] { t });
-    }
+        public override void Setup()
+        {
+            radiusNormal = (shape as CircleCollider2D).radius;
 
-    public override void Activate(Vector2 sourse)
-    {
-        t.SetParent(ui.game.stuffFrontFront, false);
+            t.localScale = smallScreen ? type.scale * 1.1f : type.scale;
 
-        isPicked = false;
+            if (!user.IsTutorialShown(Tutorial.Part.CatUseActivateJoker)) Invoke("TutorialCatUseActivate", 2);
+        }
 
-        shape.enabled = false;
+        void TutorialCatUseActivate()
+        {
+            if (ui.current == ui.game && !user.IsTutorialShown(Tutorial.Part.CatUseActivateJoker))
+                ui.tutorial.Show(Tutorial.Part.CatUseActivateJoker, new Transform[] { t });
+        }
+
+        public override void Activate(Vector2 sourse)
+        {
+            t.SetParent(ui.game.stuffFrontFront, false);
+
+            isPicked = false;
+
+            shape.enabled = false;
 #if GAF
         if (anim != null) anim.clip.play();
 #endif
-        if (gameplay.isPlaying)
-        {
-            Vector2 force = (t.anchoredPosition - new Vector2(sourse.x * Random.Range(0.8f, 1.2f), sourse.y * Random.Range(0.8f, 1.2f))).normalized;
-            rb.AddForce(force * 500);
-            rb.gravityScale *= 1.5f;
+            if (gameplay.isPlaying)
+            {
+                Vector2 force = (t.anchoredPosition - new Vector2(sourse.x * Random.Range(0.8f, 1.2f), sourse.y * Random.Range(0.8f, 1.2f))).normalized;
+                rb.AddForce(force * 500);
+                rb.gravityScale *= 1.5f;
 
-            Missions.OnUseCats(type);
+                Missions.OnUseCats(type);
 
-            Destroy(gameObject, 2f);
+                Destroy(gameObject, 2f);
+            }
+            else
+            {
+                shape.enabled = false;
+                ShakeAndDestroy();
+                gameplay.GetScores(t.anchoredPosition, countCats: Mathf.CeilToInt(item.level * 1.5f));
+            }
         }
-        else
+
+        public override void Pick()
         {
-            shape.enabled = false;
-            ShakeAndDestroy();
-            gameplay.GetScores(t.anchoredPosition, countCats: Mathf.CeilToInt(item.level * 1.5f));
-        }
-    }
+            isPicked = true;
 
-    public override void Pick()
-    {
-        isPicked = true;
+            (shape as CircleCollider2D).radius *= 1.2f;
 
-        (shape as CircleCollider2D).radius *= 1.2f;
+            rikiImage.SetActive(false);
 
-        rikiImage.SetActive(false);
-
-        if (anim == null)
-        {
-            anim = Instantiate(animations[CHAIN.Count > 0 ? CHAIN[CHAIN.Count - 1].type.id : 0]) as BasicCatAnimation;
-            anim.transform.SetParent(animParent, false);
+            if (anim == null)
+            {
+                anim = Instantiate(animations[CHAIN.Count > 0 ? CHAIN[CHAIN.Count - 1].type.id : 0]) as BasicCatAnimation;
+                anim.transform.SetParent(animParent, false);
 #if GAF
             anim.clip.addTrigger(clip =>
             {
@@ -78,20 +80,21 @@ public class CatJokerRiki : CatJoker
                 rikiImage.SetActive(true);
             }, anim.frameEnd);
 #endif
+            }
+
+            if (sound.ON && onClickSound != null) onClickSound.Play();
+
+            if (CHAIN.Count > 0) SetColor(CHAIN[CHAIN.Count - 1].type);
         }
+        public override void Unpick()
+        {
+            isPicked = false;
 
-        if (sound.ON && onClickSound != null) onClickSound.Play();
-
-        if (CHAIN.Count > 0) SetColor(CHAIN[CHAIN.Count - 1].type);
-    }
-    public override void Unpick()
-    {
-        isPicked = false;
-
-        (shape as CircleCollider2D).radius = radiusNormal;
+            (shape as CircleCollider2D).radius = radiusNormal;
 #if GAF
         anim.clip.play();
 #endif
-        RunColors();
+            RunColors();
+        }
     }
 }

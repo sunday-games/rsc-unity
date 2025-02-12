@@ -1,0 +1,2 @@
+https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask
+https://github.com/immutable/unity-immutable-sdk.git?path=/src/Packages/Passport

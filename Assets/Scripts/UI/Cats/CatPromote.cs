@@ -2,74 +2,77 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class CatPromote : Core
+namespace SG.RSC
 {
-    public CatSlot catSlot;
-
-    public Text nameText;
-
-    public Image levelImage;
-    public Text levelText;
-    public Image expSlider;
-
-    [HideInInspector]
-    public bool isDone = false;
-
-    public void Init(CatItem catItem)
+    public class CatPromote : Core
     {
-        catItem.expGame = (int)(catItem.expGame * achievements.moreExpCat * balance.expMultiplier);
-        if (gameplay.boosts.experience.ON) catItem.expGame *= gameplay.boosts.experience.power;
+        public CatSlot catSlot;
 
-        catSlot.Init(catItem);
+        public Text nameText;
 
-        nameText.text = catItem.type.localizedName;
-        levelText.text = catItem.level.ToString();
-        StartCoroutine(ShowGettingExp(catItem.level, catItem.type.levelPower.Length, catItem.exp, catItem.expGame));
+        public Image levelImage;
+        public Text levelText;
+        public Image expSlider;
 
-        GetExp(catItem);
-    }
+        [HideInInspector]
+        public bool isDone = false;
 
-    IEnumerator ShowGettingExp(int level, int levelMAX, int exp, int expGame)
-    {
-        while (expGame > 0)
+        public void Init(CatItem catItem)
         {
-            exp++;
-            expGame--;
+            catItem.expGame = (int)(catItem.expGame * achievements.moreExpCat * balance.expMultiplier);
+            if (gameplay.boosts.experience.ON) catItem.expGame *= gameplay.boosts.experience.power;
 
-            if (exp >= balance.catLevelsExp[level - 1] && level < levelMAX)
-            {
-                level++;
-                exp = 0;
+            catSlot.Init(catItem);
 
-                var fx = Instantiate(factory.catLevelUpFXPrefab) as GameObject;
-                fx.transform.SetParent(catSlot.itemViewParent, false);
-                Invoke("PunchCat", 0.3f);
-                iTween.PunchScale(levelImage.gameObject, Vector3.one, 1);
-                levelText.text = level.ToString();
+            nameText.text = catItem.type.localizedName;
+            levelText.text = catItem.level.ToString();
+            StartCoroutine(ShowGettingExp(catItem.level, catItem.type.levelPower.Length, catItem.exp, catItem.expGame));
 
-                if (!user.IsTutorialShown(Tutorial.Part.CatLevelUp))
-                    ui.tutorial.Show(Tutorial.Part.CatLevelUp, new Transform[] { ui.promoteCats.addWindow, ui.promoteCats.window });
-            }
-            expSlider.fillAmount = (float)exp / (float)balance.catLevelsExp[level - 1];
-
-            yield return new WaitForEndOfFrame();
+            GetExp(catItem);
         }
 
-        isDone = true;
-    }
-
-    public void PunchCat() { iTween.PunchScale(catSlot.itemView.gameObject, Vector3.one, 1); }
-
-    void GetExp(CatItem catItem)
-    {
-        Debug.Log(catItem.type.name + " Cat get " + catItem.expGame + " exp");
-
-        while (catItem.expGame > 0)
+        IEnumerator ShowGettingExp(int level, int levelMAX, int exp, int expGame)
         {
-            catItem.exp++;
-            catItem.expGame--;
+            while (expGame > 0)
+            {
+                exp++;
+                expGame--;
 
-            if (catItem.exp >= Game.balance.catLevelsExp[catItem.level - 1]) catItem.LevelUp();
+                if (exp >= balance.catLevelsExp[level - 1] && level < levelMAX)
+                {
+                    level++;
+                    exp = 0;
+
+                    var fx = Instantiate(factory.catLevelUpFXPrefab) as GameObject;
+                    fx.transform.SetParent(catSlot.itemViewParent, false);
+                    Invoke("PunchCat", 0.3f);
+                    iTween.PunchScale(levelImage.gameObject, Vector3.one, 1);
+                    levelText.text = level.ToString();
+
+                    if (!user.IsTutorialShown(Tutorial.Part.CatLevelUp))
+                        ui.tutorial.Show(Tutorial.Part.CatLevelUp, new Transform[] { ui.promoteCats.addWindow, ui.promoteCats.window });
+                }
+                expSlider.fillAmount = (float)exp / (float)balance.catLevelsExp[level - 1];
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            isDone = true;
+        }
+
+        public void PunchCat() { iTween.PunchScale(catSlot.itemView.gameObject, Vector3.one, 1); }
+
+        void GetExp(CatItem catItem)
+        {
+            Debug.Log(catItem.type.name + " Cat get " + catItem.expGame + " exp");
+
+            while (catItem.expGame > 0)
+            {
+                catItem.exp++;
+                catItem.expGame--;
+
+                if (catItem.exp >= Game.balance.catLevelsExp[catItem.level - 1]) catItem.LevelUp();
+            }
         }
     }
 }

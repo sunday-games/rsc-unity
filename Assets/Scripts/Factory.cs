@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using SG;
 
-public class Factory : Core
+namespace SG.RSC
+{
+    public class Factory : Core
 {
     public static List<Stuff> STUFF = new List<Stuff>(200);
     public static List<Stuff> LIVE_STUFF = new List<Stuff>(150);
@@ -305,5 +306,4 @@ public class Factory : Core
     [Space(10)]
     public ExceptionView exceptionView;
 }
-
-
+}

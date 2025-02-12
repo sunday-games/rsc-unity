@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class PopupIntro : Popup
+namespace SG.RSC
 {
-    public override void OnEscapeKey()
+    public class PopupIntro : Popup
     {
-        Application.Quit();
+        public override void OnEscapeKey()
+        {
+            Application.Quit();
+        }
     }
 }

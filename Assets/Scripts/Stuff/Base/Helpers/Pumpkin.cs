@@ -1,40 +1,42 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
-public class Pumpkin : Stuff
+namespace SG.RSC
 {
-    public static List<Pumpkin> pumpkins = new List<Pumpkin>();
-    static Vector3 punchScale = new Vector3(0.3f, 0.3f, 1f);
-
-    public static Pumpkin Create(Vector3 position, Quaternion rotation)
+    public class Pumpkin : Stuff
     {
-        var pumpkin = Instantiate(factory.pumpkinPrefab, position, rotation) as Pumpkin;
-        pumpkin.t.SetParent(ui.game.stuffBack, true);
-        pumpkin.t.localScale = Vector3.one;
-        pumpkin.Punch(punchScale, 0.7f);
-        if (sound.ON && pumpkin.onClickSound != null) pumpkin.onClickSound.Play();
+        public static List<Pumpkin> pumpkins = new List<Pumpkin>();
+        static Vector3 punchScale = new Vector3(0.3f, 0.3f, 1f);
 
-        pumpkins.Add(pumpkin);
+        public static Pumpkin Create(Vector3 position, Quaternion rotation)
+        {
+            var pumpkin = Instantiate(factory.pumpkinPrefab, position, rotation) as Pumpkin;
+            pumpkin.t.SetParent(ui.game.stuffBack, true);
+            pumpkin.t.localScale = Vector3.one;
+            pumpkin.Punch(punchScale, 0.7f);
+            if (sound.ON && pumpkin.onClickSound != null) pumpkin.onClickSound.Play();
 
-        return pumpkin;
-    }
+            pumpkins.Add(pumpkin);
 
-    public override void Activate(Vector2 sourse)
-    {
-        if (isActivated) return;
-        else isActivated = true;
+            return pumpkin;
+        }
 
-        t.SetParent(ui.game.stuffFrontFront, false);
+        public override void Activate(Vector2 sourse)
+        {
+            if (isActivated) return;
+            else isActivated = true;
 
-        shape.enabled = false;
+            t.SetParent(ui.game.stuffFrontFront, false);
 
-        Vector2 force = (t.anchoredPosition - new Vector2(sourse.x * Random.Range(0.8f, 1.2f), sourse.y * Random.Range(0.8f, 1.2f))).normalized;
-        rb.AddForce(force * 500);
-        rb.gravityScale *= 1.5f;
+            shape.enabled = false;
 
-        if (gameplay.isPlaying) factory.CreateCatRandomBasic();
+            Vector2 force = (t.anchoredPosition - new Vector2(sourse.x * Random.Range(0.8f, 1.2f), sourse.y * Random.Range(0.8f, 1.2f))).normalized;
+            rb.AddForce(force * 500);
+            rb.gravityScale *= 1.5f;
 
-        Destroy(gameObject, 2f);
+            if (gameplay.isPlaying) factory.CreateCatRandomBasic();
+
+            Destroy(gameObject, 2f);
+        }
     }
 }

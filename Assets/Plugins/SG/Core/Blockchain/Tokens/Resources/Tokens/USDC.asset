@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4d2eadc56084d578e25c822ac7fdec, type: 3}
+  m_Name: USDC
+  m_EditorClassIdentifier: 
+  Standart: 1
+  Decimals: 6
+  TotalSupplyLimit: 1000000000
+  UsdRate: 1
+  OwnerFee: 0
+  Sign: 
+  OwnerAddress: 
+  OwnerAddressDebug: 
+  _addresses:
+    _Buckets: ffffffff0200000000000000
+    _HashCodes: 020000000400000007000000
+    _Next: ffffffffffffffff01000000
+    _Count: 3
+    _Version: 12
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys: 020000000400000007000000
+    _Values:
+    - 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+    - 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+    - 0x8965349fb649a33a30cbfda057d8ec2c48abe2a2
+  _addressesDebug:
+    _Buckets: ffffffff0200000000000000
+    _HashCodes: 020000000400000007000000
+    _Next: ffffffffffffffff01000000
+    _Count: 3
+    _Version: 14
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys: 020000000400000007000000
+    _Values:
+    - 0x07865c6E87B9F70255377e024ace6630C1Eaa37F
+    - 0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582
+    - 0x64544969ed7EBf5f083679233325356EbE738930
+  BlockchainName: 4
+  Time: 1
+  GasPriceGWEI: 5
+  Result: 
+  OpenExplorer: 0
+  Balance:
+    Recipients: 
+    GetBalance: 0
+  GetTotalSupply: 0
+  Mint:
+    Recipient: 
+    Amount: 
+    Reason: 
+    Mint: 0
+  Burn:
+    Amount: 
+    Reason: 
+    Burn: 0
+  Transfer:
+    Recipients: 
+    Preview: 
+    Transfer: 0
+  Approve:
+    Operator: 
+    Amount: 
+    Approve: 0
+    IsApproved: 0
+    RevokeApproval: 0
+  UniswapPairs: []
+  UpdateUniswapRate: 0

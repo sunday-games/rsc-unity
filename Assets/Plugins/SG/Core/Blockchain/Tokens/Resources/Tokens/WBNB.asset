@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4d2eadc56084d578e25c822ac7fdec, type: 3}
+  m_Name: WBNB
+  m_EditorClassIdentifier: 
+  Standart: 1
+  Decimals: 18
+  TotalSupplyLimit: 0
+  UsdRate: 0
+  OwnerFee: 0
+  Sign: 
+  NameMin: WEI
+  OwnerAddress: 
+  OwnerAddressDebug: 
+  _addresses:
+    _Buckets: ffffffff02000000ffffffff
+    _HashCodes: ffffffffffffffff07000000
+    _Next: ffffffff00000000ffffffff
+    _Count: 3
+    _Version: 16
+    _FreeList: 1
+    _FreeCount: 2
+    _Keys: 000000000000000007000000
+    _Values:
+    - 
+    - 
+    - 0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c
+  _addressesDebug:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: ffffffffffffffffffffffff
+    _Next: ffffffff0000000001000000
+    _Count: 3
+    _Version: 15
+    _FreeList: 2
+    _FreeCount: 3
+    _Keys: 000000000000000000000000
+    _Values:
+    - 
+    - 
+    - 
+  BlockchainName: 7
+  Time: 1
+  GasPriceGWEI: 3
+  Result: 
+  OpenExplorer: 0
+  Balance:
+    Recipients: 
+    GetBalance: 0
+  GetTotalSupply: 0
+  Mint:
+    Recipient: 
+    Amount: 
+    Reason: 
+    Mint: 0
+  Burn:
+    Amount: 
+    Reason: 
+    Burn: 0
+  Transfer:
+    Recipients: 
+    Preview: 
+    Transfer: 0
+  Approve:
+    Operator: 
+    Amount: 
+    Approve: 0
+    IsApproved: 0
+    RevokeApproval: 0
+  UniswapPairs:
+  - BlockchainName: 7
+    Address: 0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae
+    TokenView: {fileID: 11400000, guid: 96b1d928f27614953b674440db0f6204, type: 2}
+  UpdateUniswapRate: 0

@@ -2,25 +2,28 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PopupGetGoldfishes : Popup
+namespace SG.RSC
 {
-    public Image coinsImage;
-    public Text coinsText;
-
-    public override void Init()
+    public class PopupGetGoldfishes : Popup
     {
-        previous = ui.prepare;
+        public Image coinsImage;
+        public Text coinsText;
 
-        coinsText.text = (ui.shop.aquarium * ui.shop.xGoldfishes).SpaceFormat();
+        public override void Init()
+        {
+            previous = ui.prepare;
 
-        sound.Play(sound.winPrize);
+            coinsText.text = (ui.shop.aquarium * ui.shop.xGoldfishes).SpaceFormat();
+
+            sound.Play(sound.winPrize);
+        }
+
+        public void Get()
+        {
+            ui.header.ShowCoinsIn(coinsImage.transform.position, 15, ui.canvas[3].transform, shift: 0.4f, delay: 0.6f);
+            ui.PopupClose();
+        }
+
+        public override void OnEscapeKey() { Get(); }
     }
-
-    public void Get()
-    {
-        ui.header.ShowCoinsIn(coinsImage.transform.position, 15, ui.canvas[3].transform, shift: 0.4f, delay: 0.6f);
-        ui.PopupClose();
-    }
-
-    public override void OnEscapeKey() { Get(); }
 }

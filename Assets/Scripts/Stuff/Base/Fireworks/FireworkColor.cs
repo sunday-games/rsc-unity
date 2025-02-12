@@ -1,36 +1,36 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 
-public class FireworkColor : Firework
+namespace SG.RSC
 {
-    public ChangingColor changingColor;
-    public Mover shardExplosion;
-
-    public override void Boom()
+    public class FireworkColor : Firework
     {
-        HashSet<Stuff> stuffToBoom = new HashSet<Stuff>();
-        foreach (Stuff stuff in Factory.LIVE_STUFF)
-            if (stuff != null && stuff is CatBasic && (stuff as CatBasic).type == changingColor.catType)
-                stuffToBoom.Add(stuff);
+        public ChangingColor changingColor;
+        public Mover shardExplosion;
 
-        foreach (Stuff stuff in stuffToBoom)
-            Factory.LIVE_STUFF.Remove(stuff);
+        public override void Boom()
+        {
+            HashSet<Stuff> stuffToBoom = new HashSet<Stuff>();
+            foreach (Stuff stuff in Factory.LIVE_STUFF)
+                if (stuff != null && stuff is CatBasic && (stuff as CatBasic).type == changingColor.catType)
+                    stuffToBoom.Add(stuff);
 
-        Vector2 position = t.anchoredPosition;
-        foreach (Stuff stuff in stuffToBoom)
-            Mover.Create(shardExplosion, ui.canvas[3].transform, t.position, stuff, 0.4f,
-                target =>
-                {
-                    (target as CatBasic).Activate(position);
-                    iTween.PunchScale(target.gameObject, new Vector3(0.5f, 0.5f, 0), 0.7f);
-                });
+            foreach (Stuff stuff in stuffToBoom)
+                Factory.LIVE_STUFF.Remove(stuff);
 
-        gameplay.GetScores(t.anchoredPosition, countCats: stuffToBoom.Count);
+            Vector2 position = t.anchoredPosition;
+            foreach (Stuff stuff in stuffToBoom)
+                Mover.Create(shardExplosion, ui.canvas[3].transform, t.position, stuff, 0.4f,
+                    target =>
+                    {
+                        (target as CatBasic).Activate(position);
+                        iTween.PunchScale(target.gameObject, new Vector3(0.5f, 0.5f, 0), 0.7f);
+                    });
 
-        if (sound.ON && audioClip != null) AudioSource.PlayClipAtPoint(audioClip, t.position);
-        Destroy(gameObject);
+            gameplay.GetScores(t.anchoredPosition, countCats: stuffToBoom.Count);
+
+            if (sound.ON && audioClip != null) AudioSource.PlayClipAtPoint(audioClip, t.position);
+            Destroy(gameObject);
+        }
     }
 }
-

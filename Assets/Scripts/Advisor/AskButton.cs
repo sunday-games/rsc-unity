@@ -1,30 +1,33 @@
 ﻿using UnityEngine.UI;
 using IngameAdvisor;
 
-public class AskButton : Core
+namespace SG.RSC
 {
-    public Text mainText;
-    Advisor.Reply reply;
-
-    public AskButton Copy(Advisor.Reply reply)
+    public class AskButton : Core
     {
-        var instance = Instantiate(this);
-        instance.transform.SetParent(this.transform.parent, false);
-        instance.Setup(reply);
-        return instance;
-    }
+        public Text mainText;
+        Advisor.Reply reply;
 
-    public void Setup(Advisor.Reply reply)
-    {
-        this.reply = reply;
+        public AskButton Copy(Advisor.Reply reply)
+        {
+            var instance = Instantiate(this);
+            instance.transform.SetParent(this.transform.parent, false);
+            instance.Setup(reply);
+            return instance;
+        }
 
-        mainText.text = reply.name;
+        public void Setup(Advisor.Reply reply)
+        {
+            this.reply = reply;
 
-        gameObject.SetActive(true);
-    }
+            mainText.text = reply.name;
 
-    public void OnClick()
-    {
-        ui.advisor.OnAskButtonClick(reply);
+            gameObject.SetActive(true);
+        }
+
+        public void OnClick()
+        {
+            ui.advisor.OnAskButtonClick(reply);
+        }
     }
 }

@@ -2,17 +2,20 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PopupGetSpins : Popup
+namespace SG.RSC
 {
-    public Text spinsText;
-
-    public override void Init()
+    public class PopupGetSpins : Popup
     {
-        previous = ui.luckyWheel;
-        ui.luckyWheel.previous = ui.main;
+        public Text spinsText;
 
-        spinsText.text = (balance.shop.sausages * ui.shop.xSausages).SpaceFormat();
+        public override void Init()
+        {
+            previous = ui.luckyWheel;
+            ui.luckyWheel.previous = ui.main;
 
-        sound.Play(sound.winPrize);
+            spinsText.text = (balance.shop.sausages * ui.shop.xSausages).SpaceFormat();
+
+            sound.Play(sound.winPrize);
+        }
     }
 }

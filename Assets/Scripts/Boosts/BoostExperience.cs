@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class BoostExperience : Boost
+﻿namespace SG.RSC
 {
-    void Start()
+    public class BoostExperience : Boost
     {
-        power = 2;
-        tutorialPart = Tutorial.Part.BoostExperience;
-        avalible = () => Missions.isBoostExperience;
+        void Start()
+        {
+            power = 2;
+            tutorialPart = Tutorial.Part.BoostExperience;
+            avalible = () => Missions.isBoostExperience;
+        }
     }
 }

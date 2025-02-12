@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Events : Core
+namespace SG.RSC
+{
+    public class Events : Core
 {
     public static Event sale;
     public static Event newYear;
@@ -82,4 +84,4 @@ public class Events : Core
         }
     }
 }
-
+}

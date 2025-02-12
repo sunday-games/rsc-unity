@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FX : MonoBehaviour
+namespace SG.RSC
 {
-    public AudioSource sound;
-    public float timeToDestroy = 1;
-
-    void Start()
+    public class FX : MonoBehaviour
     {
-        if (Game.sound.ON && sound != null) sound.Play();
-        Destroy(gameObject, timeToDestroy);
+        public AudioSource sound;
+        public float timeToDestroy = 1;
+
+        void Start()
+        {
+            if (Game.sound.ON && sound != null) sound.Play();
+            Destroy(gameObject, timeToDestroy);
+        }
     }
 }

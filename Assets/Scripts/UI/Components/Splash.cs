@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Splash : MonoBehaviour
+namespace SG.RSC
 {
-    public Text loadingText;
-
-    void Start()
+    public class Splash : MonoBehaviour
     {
-        SetText(Localization.language == SystemLanguage.Russian ? "Загрузка..." : "Loading...");
-    }
+        public Text loadingText;
 
-    public void SetText(string text)
-    {
-        if (loadingText) loadingText.text = text;
+        void Start()
+        {
+            SetText(Localization.language == SystemLanguage.Russian ? "Загрузка..." : "Loading...");
+        }
+
+        public void SetText(string text)
+        {
+            if (loadingText) loadingText.text = text;
+        }
     }
 }

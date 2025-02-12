@@ -2,22 +2,25 @@
 using System.Collections;
 using DG.Tweening;
 
-public class SelfDestroy : MonoBehaviour
+namespace SG.RSC
 {
-    public bool scaleBefore = false;
-    public float timeToDestroy = 1f;
-
-    void Start()
+    public class SelfDestroy : MonoBehaviour
     {
-        Invoke("GO", timeToDestroy);
-    }
+        public bool scaleBefore = false;
+        public float timeToDestroy = 1f;
 
-    void GO()
-    {
-        if (gameObject != null)
+        void Start()
         {
-            if (scaleBefore) transform.DOScale(Vector3.zero, 0.3f).OnComplete(() => Destroy(gameObject));
-            else Destroy(gameObject);
+            Invoke("GO", timeToDestroy);
+        }
+
+        void GO()
+        {
+            if (gameObject != null)
+            {
+                if (scaleBefore) transform.DOScale(Vector3.zero, 0.3f).OnComplete(() => Destroy(gameObject));
+                else Destroy(gameObject);
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class BoostFever : Boost
+﻿namespace SG.RSC
 {
-    void Start()
+    public class BoostFever : Boost
     {
-        //tutorialPart = Tutorial.Part.BoostFever;
-        //avalible = () => Missions.isBoostFever;
+        void Start()
+        {
+            //tutorialPart = Tutorial.Part.BoostFever;
+            //avalible = () => Missions.isBoostFever;
+        }
     }
 }

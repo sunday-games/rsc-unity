@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class BoostFirework : Boost
+﻿namespace SG.RSC
 {
-    void Start()
+    public class BoostFirework : Boost
     {
-        tutorialPart = Tutorial.Part.BoostFirework;
-        avalible = () => Missions.isBoostFirework;
+        void Start()
+        {
+            tutorialPart = Tutorial.Part.BoostFirework;
+            avalible = () => Missions.isBoostFirework;
+        }
     }
 }

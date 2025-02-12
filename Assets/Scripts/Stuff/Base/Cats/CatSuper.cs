@@ -1,80 +1,61 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public enum Cats
+namespace SG.RSC
 {
-    Ginger,
-    Purple,
-    Whitey,
-    Lime,
-    Snow,
-    Zen,
-    Disco,
-    Boom,
-    Cap,
-    Joker,
-    King,
-    Flint,
-    Mage,
-    Loki,
-    Santa,
-    Lady,
-    Jack,
-    Orion,
-    Raiden,
-    Mix
-}
-public abstract class CatSuper : Stuff
-{
-    public CatItem item = null;
-    [HideInInspector]
-    public CatType type = null;
+    public enum Cats { Ginger, Purple, Whitey, Lime, Snow, Zen, Disco, Boom, Cap, Joker, King, Flint, Mage, Loki, Santa, Lady, Jack, Orion, Raiden, Mix }
 
-    public override void Activate(Vector2 sourse)
+    public abstract class CatSuper : Stuff
     {
-        if (isActivated) return;
-        else isActivated = true;
+        public CatItem item = null;
+        [HideInInspector]
+        public CatType type = null;
 
-        t.SetParent(ui.game.stuffFrontFront, false);
-
-        if (gameplay.isPlaying)
+        public override void Activate(Vector2 sourse)
         {
-            ActivatePower();
-            Missions.OnUseCats(type);
+            if (isActivated) return;
+            else isActivated = true;
 
-            if (type.onFreeAnimation != null)
+            t.SetParent(ui.game.stuffFrontFront, false);
+
+            if (gameplay.isPlaying)
             {
-                image.gameObject.SetActive(false);
-                var anim = Instantiate(type.onFreeAnimation) as BasicCatAnimation;
-                anim.transform.SetParent(t, false);
+                ActivatePower();
+                Missions.OnUseCats(type);
+
+                if (type.onFreeAnimation != null)
+                {
+                    image.gameObject.SetActive(false);
+                    var anim = Instantiate(type.onFreeAnimation) as BasicCatAnimation;
+                    anim.transform.SetParent(t, false);
 #if GAF
                 anim.clip.addTrigger(clip => { Destroy(anim.gameObject); }, anim.frameEnd);
 #endif
+                }
             }
+            else
+            {
+                shape.enabled = false;
+                ShakeAndDestroy();
+                gameplay.GetScores(t.anchoredPosition, countCats: Mathf.CeilToInt(item.level * 1.5f));
+            }
+
+            if (type.onFreeFX != null)
+            {
+                var fx = Instantiate(type.onFreeFX, t.position, t.rotation) as GameObject;
+                fx.transform.SetParent(t, true);
+                fx.layer = 11;
+            }
+
+            if (sound.ON && type.onFreeFXSound != null) AudioSource.PlayClipAtPoint(type.onFreeFXSound, t.position);
         }
-        else
+
+        public abstract void ActivatePower();
+
+        public void InputClick()
         {
-            shape.enabled = false;
-            ShakeAndDestroy();
-            gameplay.GetScores(t.anchoredPosition, countCats: Mathf.CeilToInt(item.level * 1.5f));
+            Factory.LIVE_STUFF.Remove(this);
+
+            Activate(Vector2.zero);
         }
-
-        if (type.onFreeFX != null)
-        {
-            var fx = Instantiate(type.onFreeFX, t.position, t.rotation) as GameObject;
-            fx.transform.SetParent(t, true);
-            fx.layer = 11;
-        }
-
-        if (sound.ON && type.onFreeFXSound != null) AudioSource.PlayClipAtPoint(type.onFreeFXSound, t.position);
-    }
-
-    public abstract void ActivatePower();
-
-    public void InputClick()
-    {
-        Factory.LIVE_STUFF.Remove(this);
-
-        Activate(Vector2.zero);
     }
 }

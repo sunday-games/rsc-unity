@@ -2,103 +2,106 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PopupPromoteCats : Popup
+namespace SG.RSC
 {
-    [Space(10)]
-    public GameObject add;
-    public RectTransform addWindow;
-    [Space(10)]
-    public RectTransform window;
-    public Transform catsParent;
-    public CatPromote catExpViewPrefab;
-    public GameObject nextButton;
-    [Space(10)]
-    public GameObject boost;
-
-    List<CatPromote> catExpViews = new List<CatPromote>();
-    List<CatSlot> catSlots = new List<CatSlot>();
-
-    public override void Init()
+    public class PopupPromoteCats : Popup
     {
-        add.SetActive(true);
+        [Space(10)]
+        public GameObject add;
+        public RectTransform addWindow;
+        [Space(10)]
+        public RectTransform window;
+        public Transform catsParent;
+        public CatPromote catExpViewPrefab;
+        public GameObject nextButton;
+        [Space(10)]
+        public GameObject boost;
 
-        boost.SetActive(false);
+        List<CatPromote> catExpViews = new List<CatPromote>();
+        List<CatSlot> catSlots = new List<CatSlot>();
 
-        nextButton.SetActive(false);
-        nextButton.transform.localScale = Vector3.zero;
+        public override void Init()
+        {
+            add.SetActive(true);
 
-        foreach (CatSlot slot in ui.game.catSlots)
-            if (slot.catItem != null && slot.catItem.expGame > 0) catSlots.Add(slot);
+            boost.SetActive(false);
 
-        window.localScale = new Vector3(1f, 0.1f, 1f);
-        window.sizeDelta = new Vector2(window.sizeDelta.x, 70f + 165f * catSlots.Count);
-        iTween.ScaleTo(window.gameObject, iTween.Hash("y", 1, "easeType", "easeOutBack", "time", 0.5f));
+            nextButton.SetActive(false);
+            nextButton.transform.localScale = Vector3.zero;
 
-        addWindow.localScale = new Vector3(1f, 0.1f, 1f);
-        addWindow.sizeDelta = new Vector2(addWindow.sizeDelta.x, 70f + 165f * catSlots.Count);
-        iTween.ScaleTo(addWindow.gameObject, iTween.Hash("y", 1, "easeType", "easeOutBack", "time", 0.5f));
+            foreach (CatSlot slot in ui.game.catSlots)
+                if (slot.catItem != null && slot.catItem.expGame > 0) catSlots.Add(slot);
 
-        if (!user.IsTutorialShown(Tutorial.Part.CatExperience))
-            ui.tutorial.Show(Tutorial.Part.CatExperience, new Transform[] { addWindow, window });
+            window.localScale = new Vector3(1f, 0.1f, 1f);
+            window.sizeDelta = new Vector2(window.sizeDelta.x, 70f + 165f * catSlots.Count);
+            iTween.ScaleTo(window.gameObject, iTween.Hash("y", 1, "easeType", "easeOutBack", "time", 0.5f));
 
-        StartCoroutine(Promote());
-    }
+            addWindow.localScale = new Vector3(1f, 0.1f, 1f);
+            addWindow.sizeDelta = new Vector2(addWindow.sizeDelta.x, 70f + 165f * catSlots.Count);
+            iTween.ScaleTo(addWindow.gameObject, iTween.Hash("y", 1, "easeType", "easeOutBack", "time", 0.5f));
 
-    IEnumerator Promote()
-    {
-        yield return new WaitForSeconds(0.4f);
+            if (!user.IsTutorialShown(Tutorial.Part.CatExperience))
+                ui.tutorial.Show(Tutorial.Part.CatExperience, new Transform[] { addWindow, window });
 
-        if (gameplay.boosts.experience.ON) boost.SetActive(true);
+            StartCoroutine(Promote());
+        }
 
-        foreach (CatSlot slot in catSlots)
-            if (slot.catItem != null)
+        IEnumerator Promote()
+        {
+            yield return new WaitForSeconds(0.4f);
+
+            if (gameplay.boosts.experience.ON) boost.SetActive(true);
+
+            foreach (CatSlot slot in catSlots)
+                if (slot.catItem != null)
+                {
+                    CatPromote catPromote = Instantiate(catExpViewPrefab) as CatPromote;
+                    catPromote.transform.SetParent(catsParent.transform, false);
+                    catPromote.Init(slot.catItem);
+                    catExpViews.Add(catPromote);
+                }
+            user.CollectionSave(true);
+
+            nextButton.SetActive(true);
+            iTween.ScaleTo(nextButton, iTween.Hash("x", 1f, "y", 1f, "easeType", "easeOutBack", "time", 0.3f));
+
+            sound.Play(sound.getExperience);
+            bool isAllDone = false;
+            while (!isAllDone)
             {
-                CatPromote catPromote = Instantiate(catExpViewPrefab) as CatPromote;
-                catPromote.transform.SetParent(catsParent.transform, false);
-                catPromote.Init(slot.catItem);
-                catExpViews.Add(catPromote);
+                yield return new WaitForEndOfFrame();
+
+                isAllDone = true;
+                foreach (CatPromote catExpView in catExpViews)
+                    if (!catExpView.isDone) isAllDone = false;
             }
-        user.CollectionSave(true);
+            sound.Stop(sound.getExperience);
+        }
 
-        nextButton.SetActive(true);
-        iTween.ScaleTo(nextButton, iTween.Hash("x", 1f, "y", 1f, "easeType", "easeOutBack", "time", 0.3f));
+        public override void OnEscapeKey() { Next(); }
 
-        sound.Play(sound.getExperience);
-        bool isAllDone = false;
-        while (!isAllDone)
+        public void Next()
         {
-            yield return new WaitForEndOfFrame();
+            if (gameplay.score > gameplay.oldPermanentRecord) ui.PopupShow(ui.highscore);
+            else ui.PopupShow(ui.result);
+        }
 
-            isAllDone = true;
+        public override void Reset()
+        {
+            add.SetActive(false);
+
+            sound.Stop(sound.getExperience);
+            StopAllCoroutines();
+
+            foreach (CatSlot slot in catSlots) slot.Clear();
+            catSlots.Clear();
+
             foreach (CatPromote catExpView in catExpViews)
-                if (!catExpView.isDone) isAllDone = false;
+            {
+                catExpView.catSlot.Clear();
+                Destroy(catExpView.gameObject);
+            }
+            catExpViews.Clear();
         }
-        sound.Stop(sound.getExperience);
-    }
-
-    public override void OnEscapeKey() { Next(); }
-
-    public void Next()
-    {
-        if (gameplay.score > gameplay.oldPermanentRecord) ui.PopupShow(ui.highscore);
-        else ui.PopupShow(ui.result);
-    }
-
-    public override void Reset()
-    {
-        add.SetActive(false);
-
-        sound.Stop(sound.getExperience);
-        StopAllCoroutines();
-
-        foreach (CatSlot slot in catSlots) slot.Clear();
-        catSlots.Clear();
-
-        foreach (CatPromote catExpView in catExpViews)
-        {
-            catExpView.catSlot.Clear();
-            Destroy(catExpView.gameObject);
-        }
-        catExpViews.Clear();
     }
 }

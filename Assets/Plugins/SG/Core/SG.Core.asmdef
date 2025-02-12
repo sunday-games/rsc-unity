@@ -1,0 +1,33 @@
+{
+    "name": "SG.Core",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Collections",
+        "Unity.Mathematics",
+        "Unity.TextMeshPro",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.Services.Core",
+        "Unity.Services.Core.Environments",
+        "Unity.Services.Core.Analytics",
+        "Unity.Services.Analytics",
+        "SG.Collections",
+        "ME.ECS.FPMath",
+        "DOTween.Modules",
+        "MonoHttp",
+        "MiniJson",
+        "Netherium",
+        "Nethereum.Unity.Metamask",
+        "Xsolla",
+        "com.Epic.OnlineServices",
+        "com.playeveryware.eos.core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

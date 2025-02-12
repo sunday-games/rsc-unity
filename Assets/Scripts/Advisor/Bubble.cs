@@ -2,44 +2,47 @@
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Bubble : Core
+namespace SG.RSC
 {
-    public Text bubbleText;
-    public Image bubbleContentImage;
-    public Image bubbleImage;
-
-    [Space(10)]
-    public float animationTime = 0.5f;
-
-    [Space(10)]
-    public int bubbleTextfontSizeMIN = 16;
-    public int bubbleTextfontSizeDefault = 24;
-    public int bubbleTextfontSizeMAX = 28;
-
-    public void Show(string text, Vector2 bubbleImageHeight)
+    public class Bubble : Core
     {
-        this.bubbleImageHeight = bubbleImageHeight;
+        public Text bubbleText;
+        public Image bubbleContentImage;
+        public Image bubbleImage;
 
-        bubbleText.fontSize = bubbleTextfontSizeDefault;
-        bubbleText.text = text;
+        [Space(10)]
+        public float animationTime = 0.5f;
 
-        transform.DOScale(Vector3.one, animationTime).SetEase(Ease.OutBack);
-    }
+        [Space(10)]
+        public int bubbleTextfontSizeMIN = 16;
+        public int bubbleTextfontSizeDefault = 24;
+        public int bubbleTextfontSizeMAX = 28;
 
-    public void Hide()
-    {
-        transform.DOKill();
-        transform.localScale = Vector3.zero;
+        public void Show(string text, Vector2 bubbleImageHeight)
+        {
+            this.bubbleImageHeight = bubbleImageHeight;
 
-        if (bubbleContentImage) bubbleContentImage.sprite = null;
-    }
+            bubbleText.fontSize = bubbleTextfontSizeDefault;
+            bubbleText.text = text;
 
-    Vector2 bubbleImageHeight;
-    public void Update()
-    {
-        if (bubbleImage.rectTransform.rect.height < bubbleImageHeight.x && bubbleText.fontSize < bubbleTextfontSizeMAX)
-            ++bubbleText.fontSize;
-        else if (bubbleImage.rectTransform.rect.height > bubbleImageHeight.y && bubbleText.fontSize > bubbleTextfontSizeMIN)
-            --bubbleText.fontSize;
+            transform.DOScale(Vector3.one, animationTime).SetEase(Ease.OutBack);
+        }
+
+        public void Hide()
+        {
+            transform.DOKill();
+            transform.localScale = Vector3.zero;
+
+            if (bubbleContentImage) bubbleContentImage.sprite = null;
+        }
+
+        Vector2 bubbleImageHeight;
+        public void Update()
+        {
+            if (bubbleImage.rectTransform.rect.height < bubbleImageHeight.x && bubbleText.fontSize < bubbleTextfontSizeMAX)
+                ++bubbleText.fontSize;
+            else if (bubbleImage.rectTransform.rect.height > bubbleImageHeight.y && bubbleText.fontSize > bubbleTextfontSizeMIN)
+                --bubbleText.fontSize;
+        }
     }
 }

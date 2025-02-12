@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System;
-
 using CodeStage.AntiCheat.ObscuredTypes;
 
-public class MissionList : Core
+namespace SG.RSC
+{
+    public class MissionList : Core
 {
     public MissionView[] views;
     public GameObject maxLevel;
@@ -104,4 +105,5 @@ public class MissionList : Core
     {
         if (user.isLevelOK) ui.tutorial.Show(Tutorial.Part.Missions, new Transform[] { transform });
     }
+}
 }

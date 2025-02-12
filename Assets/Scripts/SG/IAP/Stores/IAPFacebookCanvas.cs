@@ -1,4 +1,4 @@
-﻿namespace SG
+﻿namespace SG.RSC
 {
     public class IAPFacebookCanvas : IAPStore
     {
@@ -21,7 +21,7 @@
         {
             if (string.IsNullOrEmpty(urlPrefix))
             {
-                LogError("IAP - Purchase has failed. Facebook Url dont setup");
+                Log.Error("IAP - Purchase has failed. Facebook Url dont setup");
                 iapManager.PurchaseFailed();
                 return;
             }
@@ -37,22 +37,22 @@
 
                 if (result == null)
                 {
-                    LogError("IAP - Purchase Failed");
+                    Log.Error("IAP - Purchase Failed");
                     iapManager.PurchaseFailed();
                 }
                 else if (!string.IsNullOrEmpty(result.Error))
                 {
-                    LogError("IAP - Purchase Failed: " + result.Error);
+                    Log.Error("IAP - Purchase Failed: " + result.Error);
                     iapManager.PurchaseFailed();
                 }
                 else if (result.Cancelled)
                 {
-                    Log("IAP - Purchase Failed: " + result.RawResult);
+                   Log.Info(IAP - Purchase Failed: " + result.RawResult);
                     iapManager.PurchaseFailed();
                 }
                 else
                 {
-                    LogDebug("IAP - Purchase Success: " + result.RawResult);
+                    Log.Debug("IAP - Purchase Success: " + result.RawResult);
 
                     iapManager.PurchaseSucceed(new PurchaseData(
                         iap,

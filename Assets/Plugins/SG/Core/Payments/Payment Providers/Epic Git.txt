@@ -1,0 +1,1 @@
+https://github.com/PlayEveryWare/eos_plugin_for_unity_upm.git

@@ -1,0 +1,24 @@
+{
+    "name": "SG.RSC",
+    "rootNamespace": "",
+    "references": [
+        "SG.Core",
+        "SG.Ads",
+        "UnityEngine.Purchasing",
+        "UnityEngine.Purchasing.Security",
+        "UnityEngine.Purchasing.SecurityCore",
+        "AntiCheatToolkit",
+        "MiniJson",
+        "DOTween.Modules",
+        "iTween"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

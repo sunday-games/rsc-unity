@@ -2,16 +2,19 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PopupText : Popup
+namespace SG.RSC
 {
-    public Text mainText;
-
-    public override void Init()
+    public class PopupText : Popup
     {
-        mainText.text = "";
+        public Text mainText;
+
+        public override void Init()
+        {
+            mainText.text = "";
+        }
+
+        public override void Reset() { }
+
+        public override void OnEscapeKey() { }
     }
-
-    public override void Reset() { }
-
-    public override void OnEscapeKey() { }
 }

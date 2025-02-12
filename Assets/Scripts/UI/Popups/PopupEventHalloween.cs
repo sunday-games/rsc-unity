@@ -3,70 +3,73 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
-public class PopupEventHalloween : Popup
+namespace SG.RSC
 {
-    public Image batImage;
-    public Text batText;
-    public Text collectBatsText;
-    public GameObject catbox;
-    public Text timerText;
-    public GameObject buyButton;
-
-    public override void Init()
+    public class PopupEventHalloween : Popup
     {
-        batText.text = user.halloweenBats + " / " + balance.events.batsForGift;
-        buyButton.SetActive(user.halloweenBats < balance.events.batsForGift && !build.premium);
-        collectBatsText.text = Localization.Get(user.halloweenBats < balance.events.batsForGift ? "collectBatsToGetCat" : "collectBatsToGetCatDone");
+        public Image batImage;
+        public Text batText;
+        public Text collectBatsText;
+        public GameObject catbox;
+        public Text timerText;
+        public GameObject buyButton;
 
-        StartCoroutine(ShakeCatbox());
-
-        if (Events.halloween.isActive)
+        public override void Init()
         {
-            timerText.gameObject.SetActive(true);
-            StartCoroutine(Timer());
+            batText.text = user.halloweenBats + " / " + balance.events.batsForGift;
+            buyButton.SetActive(user.halloweenBats < balance.events.batsForGift && !build.premium);
+            collectBatsText.text = Localization.Get(user.halloweenBats < balance.events.batsForGift ? "collectBatsToGetCat" : "collectBatsToGetCatDone");
+
+            StartCoroutine(ShakeCatbox());
+
+            if (Events.halloween.isActive)
+            {
+                timerText.gameObject.SetActive(true);
+                StartCoroutine(Timer());
+            }
+            else
+            {
+                timerText.gameObject.SetActive(false);
+            }
         }
-        else
-        {
-            timerText.gameObject.SetActive(false);
-        }
-    }
 
-    IEnumerator Timer()
-    {
-        while (Events.halloween.isActive)
+        IEnumerator Timer()
         {
-            timerText.text = Events.halloween.timeLeft.Localize();
-            yield return new WaitForSeconds(1f);
+            while (Events.halloween.isActive)
+            {
+                timerText.text = Events.halloween.timeLeft.Localize();
+                yield return new WaitForSeconds(1f);
+            }
+            Init();
         }
-        Init();
-    }
 
-    IEnumerator ShakeCatbox()
-    {
-        while (true)
+        IEnumerator ShakeCatbox()
         {
-            yield return new WaitForSeconds(3f);
-            iTween.ShakeRotation(catbox, new Vector3(0, 0, 6), 1);
+            while (true)
+            {
+                yield return new WaitForSeconds(3f);
+                iTween.ShakeRotation(catbox, new Vector3(0, 0, 6), 1);
+            }
         }
-    }
 
-    public override void Reset()
-    {
-        StopAllCoroutines();
-    }
-
-    public void GetCat()
-    {
-        if (user.halloweenBats < balance.events.batsForGift)
+        public override void Reset()
         {
-            iTween.PunchScale(batImage.gameObject, new Vector3(0.5f, 0.5f, 0), 1);
+            StopAllCoroutines();
         }
-        else
+
+        public void GetCat()
         {
-            user.halloweenBats -= balance.events.batsForGift;
-            user.GetCat(CatType.GetCatType(Cats.Jack));
-            ui.getCatbox.Setup(ui.getCatbox.catboxHW);
-            ui.PopupShow(ui.getCatbox);
+            if (user.halloweenBats < balance.events.batsForGift)
+            {
+                iTween.PunchScale(batImage.gameObject, new Vector3(0.5f, 0.5f, 0), 1);
+            }
+            else
+            {
+                user.halloweenBats -= balance.events.batsForGift;
+                user.GetCat(CatType.GetCatType(Cats.Jack));
+                ui.getCatbox.Setup(ui.getCatbox.catboxHW);
+                ui.PopupShow(ui.getCatbox);
+            }
         }
     }
 }

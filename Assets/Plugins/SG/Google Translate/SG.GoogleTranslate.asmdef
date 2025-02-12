@@ -1,0 +1,17 @@
+{
+    "name": "SG.GoogleTranslate",
+    "rootNamespace": "",
+    "references": [
+        "SG.Core",
+        "MiniJson"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 
-public class Analytic : SG.Analytic
+namespace SG.RSC
 {
-    public static void EventLevelUp(int level)
+    public class Analytic : AnalyticSG
     {
-        EventPropertiesImportant(AnalyticsManager.Names.Level, new Dictionary<string, object> {
+        public static void EventLevelUp(int level)
+        {
+            EventPropertiesImportant(AnalyticsManager.Names.Level, new Dictionary<string, object> {
             { AnalyticsManager.Names.Level, level },
             { "FirstDate", user.firstDate },
             { "FirstVersion", user.firstVersion },
@@ -16,13 +18,14 @@ public class Analytic : SG.Analytic
             { "AverageCatLevel", user.averageCatLevel },
             { "Collection", user.collection.Count },
         });
-    }
+        }
 
-    public static void EventAchievement(string achievement)
-    {
-        EventPropertiesImportant(AnalyticsManager.Names.Achievements, new Dictionary<string, object> {
+        public static void EventAchievement(string achievement)
+        {
+            EventPropertiesImportant(AnalyticsManager.Names.Achievements, new Dictionary<string, object> {
             { AnalyticsManager.Names.Name, achievement },
             { AnalyticsManager.Names.Level, user.level },
         });
+        }
     }
 }

@@ -1,43 +1,44 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 
-public class ParticleVisibleController : Core
+namespace SG.RSC
 {
-    public ParticleSystem[] particleSystems;
-
-    RectTransform parent;
-    RectTransform t;
-    void Awake()
+    public class ParticleVisibleController : Core
     {
-        parent = ui.prepare.catItemsBackImage.transform as RectTransform;
-        t = transform as RectTransform;
-    }
+        public ParticleSystem[] particleSystems;
 
-    void Update()
-    {
-        if ((parent.position - t.position).sqrMagnitude > 14f)
-            foreach (var ps in particleSystems) { if (!ps.isStopped) ps.Stop(); }
-        else
-            foreach (var ps in particleSystems) { if (!ps.isPlaying) ps.Play(); }
-    }
-
-    public void ON(bool watch)
-    {
-        if (watch)
+        RectTransform parent;
+        RectTransform t;
+        void Awake()
         {
-            enabled = true;
+            parent = ui.prepare.catItemsBackImage.transform as RectTransform;
+            t = transform as RectTransform;
+        }
+
+        void Update()
+        {
             if ((parent.position - t.position).sqrMagnitude > 14f)
-                foreach (var ps in particleSystems) ps.Stop();
+                foreach (var ps in particleSystems) { if (!ps.isStopped) ps.Stop(); }
+            else
+                foreach (var ps in particleSystems) { if (!ps.isPlaying) ps.Play(); }
+        }
+
+        public void ON(bool watch)
+        {
+            if (watch)
+            {
+                enabled = true;
+                if ((parent.position - t.position).sqrMagnitude > 14f)
+                    foreach (var ps in particleSystems) ps.Stop();
+                else
+                    foreach (var ps in particleSystems) ps.Play();
+            }
             else
                 foreach (var ps in particleSystems) ps.Play();
         }
-        else
-            foreach (var ps in particleSystems) ps.Play();
-    }
-    public void OFF()
-    {
-        enabled = false;
-        foreach (var ps in particleSystems) ps.Stop();
+        public void OFF()
+        {
+            enabled = false;
+            foreach (var ps in particleSystems) ps.Stop();
+        }
     }
 }

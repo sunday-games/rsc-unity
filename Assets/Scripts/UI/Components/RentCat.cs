@@ -4,116 +4,119 @@ using System.Collections;
 using System.Collections.Generic;
 using CodeStage.AntiCheat.ObscuredTypes;
 
-public class RentCat : Core
+namespace SG.RSC
 {
-    public Transform catParent;
-    public Text descriptionText;
-
-    public CatItem catItem;
-    CatItemView catView;
-
-    public int rentCatNextSession
+    public class RentCat : Core
     {
-        get { return ObscuredPrefs.GetInt("rentCatNextSession", balance.rentCat.frequency); }
-        set { ObscuredPrefs.SetInt("rentCatNextSession", value); }
-    }
+        public Transform catParent;
+        public Text descriptionText;
 
-    public bool isTimeToRentCat
-    {
-        get
+        public CatItem catItem;
+        CatItemView catView;
+
+        public int rentCatNextSession
         {
-            return user.level > balance.rentCat.startLevel &&
-                user.gameSessions > rentCatNextSession &&
-                ui.prepare.freeCatSlot != null;
+            get { return ObscuredPrefs.GetInt("rentCatNextSession", balance.rentCat.frequency); }
+            set { ObscuredPrefs.SetInt("rentCatNextSession", value); }
         }
-    }
 
-    public void Show(CatSlot slot)
-    {
-        if (!AddCat()) return;
-
-        rentCatNextSession = user.gameSessions + balance.rentCat.frequency +
-            rentCats[catItem.type] * (int)((float)balance.rentCat.frequency * 0.3f);
-
-        descriptionText.text = Localization.Get("rentCat", catItem.type.localizedName, catItem.level);
-
-        catView = Instantiate(catItem.type.itemViewPrefab);
-        catView.transform.SetParent(catParent, false);
-        catView.transform.localScale = 2 * Vector3.one;
-        catView.footer.SetActive(false);
-
-        gameObject.SetActive(true);
-
-        Analytic.EventProperties("RentCat", catItem.type.name, "RENT");
-    }
-
-    public void Hide()
-    {
-        Destroy(catView.gameObject);
-
-        gameObject.SetActive(false);
-    }
-
-    public bool AddCat()
-    {
-        if (rentCats == null) LoadRentCats();
-
-        CatType catType = null;
-        int min = int.MaxValue;
-        foreach (var rentCat in rentCats)
-            if (!user.isOwned(rentCat.Key) && min > rentCat.Value)
+        public bool isTimeToRentCat
+        {
+            get
             {
-                catType = rentCat.Key;
-                min = rentCat.Value;
+                return user.level > balance.rentCat.startLevel &&
+                    user.gameSessions > rentCatNextSession &&
+                    ui.prepare.freeCatSlot != null;
             }
+        }
 
-        if (catType == null) return false;
+        public void Show(CatSlot slot)
+        {
+            if (!AddCat()) return;
 
-        catItem = new CatItem(catType, Random.Range(5, 8), 0);
+            rentCatNextSession = user.gameSessions + balance.rentCat.frequency +
+                rentCats[catItem.type] * (int)((float)balance.rentCat.frequency * 0.3f);
 
-        // TODO Кажется можно просто вызвать ui.prepare.freeCatSlot
-        for (int i = 0; i < ui.prepare.catSlots.Length; i++)
-            if (ui.prepare.catSlots[i].gameObject.activeSelf && ui.prepare.catSlots[i].catItem == null)
-            {
-                catItem.isInstalled = i;
-                ui.prepare.catSlots[i].Init(catItem);
-                return true;
-            }
+            descriptionText.text = Localization.Get("rentCat", catItem.type.localizedName, catItem.level);
 
-        return false;
-    }
+            catView = Instantiate(catItem.type.itemViewPrefab);
+            catView.transform.SetParent(catParent, false);
+            catView.transform.localScale = 2 * Vector3.one;
+            catView.footer.SetActive(false);
 
-    public void RemoveCat()
-    {
-        if (catItem == null) return;
+            gameObject.SetActive(true);
 
-        ++rentCats[catItem.type];
-        SaveRentCats();
+            Analytic.EventProperties("RentCat", catItem.type.name, "RENT");
+        }
 
-        ui.prepare.catSlots[catItem.isInstalled].Clear();
-        catItem = null;
-    }
+        public void Hide()
+        {
+            Destroy(catView.gameObject);
 
-    Dictionary<CatType, int> rentCats = null;
-    void LoadRentCats()
-    {
-        var rentCatsDict = Json.Deserialize(ObscuredPrefs.GetString("rentCatsDict", "{}")) as Dictionary<string, object>;
+            gameObject.SetActive(false);
+        }
 
-        if (rentCatsDict.Count == 0)
-            foreach (var cat in balance.rentCat.cats) rentCatsDict.Add(cat.ToString(), 0);
+        public bool AddCat()
+        {
+            if (rentCats == null) LoadRentCats();
 
-        rentCats = new Dictionary<CatType, int>();
-        foreach (var pair in rentCatsDict)
-            rentCats.Add(CatType.GetCatType(pair.Key), System.Convert.ToInt32(pair.Value));
-    }
-    void SaveRentCats()
-    {
-        if (rentCats == null) return;
+            CatType catType = null;
+            int min = int.MaxValue;
+            foreach (var rentCat in rentCats)
+                if (!user.isOwned(rentCat.Key) && min > rentCat.Value)
+                {
+                    catType = rentCat.Key;
+                    min = rentCat.Value;
+                }
 
-        var dict = new Dictionary<string, object>();
+            if (catType == null) return false;
 
-        foreach (var rentCat in rentCats) dict.Add(rentCat.Key.name, rentCat.Value);
+            catItem = new CatItem(catType, Random.Range(5, 8), 0);
 
-        ObscuredPrefs.SetString("rentCatsDict", Json.Serialize(dict));
+            // TODO Кажется можно просто вызвать ui.prepare.freeCatSlot
+            for (int i = 0; i < ui.prepare.catSlots.Length; i++)
+                if (ui.prepare.catSlots[i].gameObject.activeSelf && ui.prepare.catSlots[i].catItem == null)
+                {
+                    catItem.isInstalled = i;
+                    ui.prepare.catSlots[i].Init(catItem);
+                    return true;
+                }
+
+            return false;
+        }
+
+        public void RemoveCat()
+        {
+            if (catItem == null) return;
+
+            ++rentCats[catItem.type];
+            SaveRentCats();
+
+            ui.prepare.catSlots[catItem.isInstalled].Clear();
+            catItem = null;
+        }
+
+        Dictionary<CatType, int> rentCats = null;
+        void LoadRentCats()
+        {
+            var rentCatsDict = Json.Deserialize(ObscuredPrefs.GetString("rentCatsDict", "{}")) as Dictionary<string, object>;
+
+            if (rentCatsDict.Count == 0)
+                foreach (var cat in balance.rentCat.cats) rentCatsDict.Add(cat.ToString(), 0);
+
+            rentCats = new Dictionary<CatType, int>();
+            foreach (var pair in rentCatsDict)
+                rentCats.Add(CatType.GetCatType(pair.Key), System.Convert.ToInt32(pair.Value));
+        }
+        void SaveRentCats()
+        {
+            if (rentCats == null) return;
+
+            var dict = new Dictionary<string, object>();
+
+            foreach (var rentCat in rentCats) dict.Add(rentCat.Key.name, rentCat.Value);
+
+            ObscuredPrefs.SetString("rentCatsDict", Json.Serialize(dict));
+        }
     }
 }

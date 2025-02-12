@@ -1,4 +1,7 @@
-﻿public class Catbox : Core
+﻿namespace SG.RSC
 {
-    public CatSlot catSlot;
+    public class Catbox : Core
+    {
+        public CatSlot catSlot;
+    }
 }

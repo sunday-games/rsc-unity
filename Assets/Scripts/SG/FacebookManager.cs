@@ -8,35 +8,37 @@ using Facebook.Unity;
 using Facebook.Unity.Settings;
 #endif
 
-public class FacebookManager : Core
+namespace SG.RSC
 {
-    [Space(10)]
-    public float timeout = 10f;
-
-    [Space(10)]
-    public string appId;
-    // Main 776966945678883
-    // TNT 917276901670067
-
-    public string userAccessToken
+    public class FacebookManager : Core
     {
-        get { return PlayerPrefs.GetString("facebookAccessToken", string.Empty); }
-        set { PlayerPrefs.SetString("facebookAccessToken", value); }
-    }
+        [Space(10)]
+        public float timeout = 10f;
 
-    [Space(10)]
-    public SharePicLinks sharePicLinks;
-    [Serializable]
-    public class SharePicLinks
-    {
-        public string cat;          // share/cat{0}.jpg
-        public string highscore;    // share/highscore.jpg
-        public string leagueUp;     // share/leagueUp.jpg
-        public string tournament;   // share/tournament.jpg
-    }
+        [Space(10)]
+        public string appId;
+        // Main 776966945678883
+        // TNT 917276901670067
 
-    public void Setup()
-    {
+        public string userAccessToken
+        {
+            get { return PlayerPrefs.GetString("facebookAccessToken", string.Empty); }
+            set { PlayerPrefs.SetString("facebookAccessToken", value); }
+        }
+
+        [Space(10)]
+        public SharePicLinks sharePicLinks;
+        [Serializable]
+        public class SharePicLinks
+        {
+            public string cat;          // share/cat{0}.jpg
+            public string highscore;    // share/highscore.jpg
+            public string leagueUp;     // share/leagueUp.jpg
+            public string tournament;   // share/tournament.jpg
+        }
+
+        public void Setup()
+        {
 #if FACEBOOK
         if (Resources.FindObjectsOfTypeAll<FacebookSettings>().Length == 0) return;
 
@@ -50,13 +52,13 @@ public class FacebookManager : Core
 #endif
 
 #endif
-    }
+        }
 
-    [HideInInspector]
-    public bool isInit = false;
+        [HideInInspector]
+        public bool isInit = false;
 
 #if FACEBOOK
-    #region LOGIN
+        #region LOGIN
     bool error = false;
     public AccessToken token { get { return AccessToken.CurrentAccessToken; } }
 
@@ -65,7 +67,7 @@ public class FacebookManager : Core
 
     public void TryInit(Action<bool> callback = null)
     {
-        Log("Facebook - Try Init...");
+       Log.Info(Facebook - Try Init...");
 
         if (isInit) callback(isInit);
         else StartCoroutine(InitCoroutine(callback));
@@ -81,11 +83,11 @@ public class FacebookManager : Core
     }
     void OnInit()
     {
-        Log("Facebook - Init Success");
+       Log.Info(Facebook - Init Success");
 
         isInit = true;
 
-        if (platform == Platform.AppStore || platform == Platform.GooglePlay)
+        if (platform == Platform.iOS || platform == Platform.Android)
         {
             FB.ActivateApp();
             FB.Mobile.FetchDeferredAppLinkData(OnDeeplinkCaught);
@@ -98,7 +100,7 @@ public class FacebookManager : Core
 
     public void TryLogin(Action<IDictionary<string, object>> callback = null)
     {
-        Log("Facebook - Trying Login...");
+       Log.Info(Facebook - Trying Login...");
 
         if (FB.IsLoggedIn)
             StartCoroutine(GetDataCoroutine(callback));
@@ -127,16 +129,16 @@ public class FacebookManager : Core
     }
     void LoginCallback(ILoginResult result)
     {
-        if (result != null) Log("Facebook - Login Response: " + result.RawResult);
+        if (result != null)Log.Info(Facebook - Login Response: " + result.RawResult);
 
         if (FB.IsLoggedIn)
         {
-            Log("Facebook - Login Success as PlayerId: " + token.UserId);
-            foreach (string permission in token.Permissions) Log("Facebook - Permission: " + permission);
+           Log.Info(Facebook - Login Success as PlayerId: " + token.UserId);
+            foreach (string permission in token.Permissions)Log.Info(Facebook - Permission: " + permission);
         }
         else
         {
-            Log("Facebook - Login Failure");
+           Log.Info(Facebook - Login Failure");
             error = true;
         }
     }
@@ -151,7 +153,7 @@ public class FacebookManager : Core
         var query = "me?fields=id,name,first_name,last_name,email,friends.limit(100).fields(first_name,id,picture.width(130).height(130))";
         // query += ",invitable_friends.limit(50).fields(first_name,picture.width(130).height(130))";
 
-        Log("Facebook - Get Data...");
+       Log.Info(Facebook - Get Data...");
         FB.API(query, HttpMethod.GET, GetDataCallback);
 
         error = false;
@@ -168,16 +170,16 @@ public class FacebookManager : Core
     {
         if (result == null)
         {
-            LogError("Facebook - Get Data - Failed");
+            Log.Error("Facebook - Get Data - Failed");
             error = true;
             return;
         }
 
-        LogDebug("Facebook - Get Data - Response: " + result.RawResult);
+        Log.Debug("Facebook - Get Data - Response: " + result.RawResult);
 
         if (!string.IsNullOrEmpty(result.Error))
         {
-            LogError("Facebook - Get Data Error: " + result.Error);
+            Log.Error("Facebook - Get Data Error: " + result.Error);
             error = true;
             return;
         }
@@ -185,9 +187,9 @@ public class FacebookManager : Core
         data = result.ResultDictionary;
         isData = true;
     }
-    #endregion
+        #endregion
 
-    #region INVITE
+        #region INVITE
     Action<List<string>> callbackInviteFriends;
     public void InviteFriends(string message, string title, Action<List<string>> callback)
     {
@@ -207,22 +209,22 @@ public class FacebookManager : Core
     {
         if (result == null)
         {
-            LogError("Facebook - InviteFriends Failed");
+            Log.Error("Facebook - InviteFriends Failed");
             callbackInviteFriends(null);
         }
         else if (!string.IsNullOrEmpty(result.Error))
         {
-            LogError("Facebook - InviteFriends Error: " + result.Error);
+            Log.Error("Facebook - InviteFriends Error: " + result.Error);
             callbackInviteFriends(null);
         }
         else if (result.Cancelled)
         {
-            Log("Facebook - InviteFriends Cancelled: " + result.RawResult);
+           Log.Info(Facebook - InviteFriends Cancelled: " + result.RawResult);
             callbackInviteFriends(null);
         }
         else
         {
-            Log("Facebook - InviteFriends Success");
+           Log.Info(Facebook - InviteFriends Success");
             Analytic.EventImportant("Facebook", "InviteFriends");
 
             var facebookIds = new List<string>();
@@ -250,22 +252,22 @@ public class FacebookManager : Core
     {
         if (result == null)
         {
-            LogError("Facebook - InviteFriend Failed");
+            Log.Error("Facebook - InviteFriend Failed");
             callbackInviteFriends(null);
         }
         else if (!string.IsNullOrEmpty(result.Error))
         {
-            LogError("Facebook - InviteFriend Error: " + result.Error);
+            Log.Error("Facebook - InviteFriend Error: " + result.Error);
             callbackInviteFriends(null);
         }
         else if (result.Cancelled)
         {
-            Log("Facebook - InviteFriend Cancelled: " + result.RawResult);
+           Log.Info(Facebook - InviteFriend Cancelled: " + result.RawResult);
             callbackInviteFriends(null);
         }
         else
         {
-            Log("Facebook - InviteFriend Success");
+           Log.Info(Facebook - InviteFriend Success");
 
             Analytic.EventImportant("Facebook", "InviteFriend");
 
@@ -277,9 +279,9 @@ public class FacebookManager : Core
             callbackInviteFriends(facebookIds);
         }
     }
-    #endregion
+        #endregion
 
-    #region SHARE
+        #region SHARE
     Action<bool> callbackShare = null;
     string sourcePopupShare = null;
     public void Share(string title, string description, string picture, Action<bool> callback, string sourcePopup = null)
@@ -299,37 +301,37 @@ public class FacebookManager : Core
     {
         if (result == null)
         {
-            LogError("Facebook - Share Failed");
+            Log.Error("Facebook - Share Failed");
             callbackShare(false);
             return;
         }
 
-        Log("Facebook - Share Response: " + result.RawResult);
+       Log.Info(Facebook - Share Response: " + result.RawResult);
 
         if (!string.IsNullOrEmpty(result.Error))
         {
-            LogError("Facebook - Share Error: " + result.Error);
+            Log.Error("Facebook - Share Error: " + result.Error);
             callbackShare(false);
         }
         else if (result.Cancelled)
         {
-            Log("Facebook - Share Cancelled");
+           Log.Info(Facebook - Share Cancelled");
             callbackShare(false);
         }
         else if (result.ResultDictionary.ContainsKey("postId") || result.ResultDictionary.ContainsKey("posted") ||
             result.ResultDictionary.ContainsKey("post_id"))
         {
-            Log("Facebook - Share Success");
+           Log.Info(Facebook - Share Success");
             if (!string.IsNullOrEmpty(sourcePopupShare)) Analytic.EventImportant("Facebook", "Share " + sourcePopupShare);
             callbackShare(true);
         }
         else
         {
-            Log("Facebook - Share Failed - Unknown");
+           Log.Info(Facebook - Share Failed - Unknown");
             callbackShare(false);
         }
     }
-    #endregion
+        #endregion
 
     public void LoadFriendImgFromId(string id, int i, Action<Texture2D, int> callback)
     {
@@ -344,7 +346,7 @@ public class FacebookManager : Core
         {
             if (result.Error != null)
             {
-                LogError("Facebook - Image Load {0} - Error: {1}", id, result.Error);
+                Log.Error("Facebook - Image Load {0} - Error: {1}", id, result.Error);
                 callback(null, i);
             }
             else if (result.Texture == null)
@@ -354,56 +356,57 @@ public class FacebookManager : Core
         });
     }
 #else
-    public bool isLogin = false;
+        public bool isLogin = false;
 #endif
 
-    public enum PicType { square, small, normal, large }
-    public string GetPicURL(string facebookId, PicType type = PicType.square, int width = 130, int height = 130)
-    {
-        // https://graph.facebook.com/10204916518582922/picture?type=square&height=130&width=130
-        return "https://graph.facebook.com/" + facebookId + "/picture?type=" + type + "&width=" + width + "&height=" + height;
-    }
+        public enum PicType { square, small, normal, large }
+        public string GetPicURL(string facebookId, PicType type = PicType.square, int width = 130, int height = 130)
+        {
+            // https://graph.facebook.com/10204916518582922/picture?type=square&height=130&width=130
+            return "https://graph.facebook.com/" + facebookId + "/picture?type=" + type + "&width=" + width + "&height=" + height;
+        }
 
-    Action<IDictionary<string, object>> callbackLogin = null;
-    bool forceLogin;
+        Action<IDictionary<string, object>> callbackLogin = null;
+        bool forceLogin;
 
-    public void ProceedLogin(Action<IDictionary<string, object>> callback, bool force = true)
-    {
-        callbackLogin = callback;
-        forceLogin = force;
+        public void ProceedLogin(Action<IDictionary<string, object>> callback, bool force = true)
+        {
+            callbackLogin = callback;
+            forceLogin = force;
 
 #if FACEBOOK
         TryInit(OnFacebookInit);
 #else
-        callbackLogin(null);
+            callbackLogin(null);
 #endif
-    }
-
-    void OnFacebookInit(bool isFacebookInit)
-    {
-        if (!isFacebookInit)
-        {
-            callbackLogin(null);
-            return;
         }
 
-        if (!forceLogin && string.IsNullOrEmpty(user.facebookId))
+        void OnFacebookInit(bool isFacebookInit)
         {
-            Log("Facebook - There no Facebook login previously and forceLogin off - Don't try login");
-            callbackLogin(null);
-            return;
-        }
+            if (!isFacebookInit)
+            {
+                callbackLogin(null);
+                return;
+            }
+
+            if (!forceLogin && string.IsNullOrEmpty(user.facebookId))
+            {
+                Log.Info("Facebook - There no Facebook login previously and forceLogin off - Don't try login");
+                callbackLogin(null);
+                return;
+            }
 
 #if FACEBOOK
         TryLogin(callbackLogin);
 #else
-        callbackLogin(null);
+            callbackLogin(null);
 #endif
-    }
+        }
 
-    //void OnDeeplinkCaught(IAppLinkResult result)
-    //{
-    //    if (!string.IsNullOrEmpty(result.Url))
-    //        Log("FacebookManager - OnDeeplinkCaught: " + result.Url);
-    //}
+        //void OnDeeplinkCaught(IAppLinkResult result)
+        //{
+        //    if (!string.IsNullOrEmpty(result.Url))
+        //       Log.Info(FacebookManager - OnDeeplinkCaught: " + result.Url);
+        //}
+    }
 }

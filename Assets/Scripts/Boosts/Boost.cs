@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 
-public class Boost : Core
+namespace SG.RSC
 {
-    public Sprite sprite;
+    public class Boost : Core
+    {
+        public Sprite sprite;
 
-    public int price = 0;
+        public int price = 0;
 
-    public int power = 0;
+        public int power = 0;
 
-    [HideInInspector]
-    public int count = 0;
+        [HideInInspector]
+        public int count = 0;
 
-    [HideInInspector]
-    public bool ON = false;
+        [HideInInspector]
+        public bool ON = false;
 
-    [HideInInspector]
-    public Tutorial.Part tutorialPart;
+        [HideInInspector]
+        public Tutorial.Part tutorialPart;
 
-    public Func<bool> avalible = null;
+        public Func<bool> avalible = null;
+    }
 }
