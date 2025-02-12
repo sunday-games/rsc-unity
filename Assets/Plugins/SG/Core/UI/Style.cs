@@ -30,22 +30,22 @@ namespace SG.UI
 
         public void Update()
         {
-            foreach (var text in FindObjectsOfType<Text>())
+            foreach (var text in FindObjectsByType<Text>(FindObjectsSortMode.None))
             {
                 text.color = text.raycastTarget ? Text.normalColor : Text.normalColor;
             }
 
-            foreach (var button in FindObjectsOfType<Button>())
+            foreach (var button in FindObjectsByType<Button>(FindObjectsSortMode.None))
                 button.SetStyle(this);
 
-            foreach (var inputField in FindObjectsOfType<InputField>())
+            foreach (var inputField in FindObjectsByType<InputField>(FindObjectsSortMode.None))
                 inputField.SetStyle(this);
 
             //foreach (var item in toggles) Update(item);
 
             //foreach (var item in dropdowns) Update(item);
 
-            foreach (var item in FindObjectsOfType<Scrollbar>()) SetStyle(item, this);
+            foreach (var item in FindObjectsByType<Scrollbar>(FindObjectsSortMode.None)) SetStyle(item, this);
 
             Log.Info("Style Updated");
         }

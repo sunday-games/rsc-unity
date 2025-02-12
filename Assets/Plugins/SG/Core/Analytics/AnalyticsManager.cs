@@ -37,7 +37,7 @@ namespace SG.Analytics
 
             if (Instance.GoogleAnalytics)
             {
-                var googleAnalyticsInstance = FindObjectOfType<GoogleAnalytics>();
+                var googleAnalyticsInstance = FindFirstObjectByType<GoogleAnalytics>();
                 var id = Configurator.production ? googleAnalyticsInstance.releaseId : googleAnalyticsInstance.debugId;
 
                 if (id.IsEmpty())
@@ -65,7 +65,7 @@ namespace SG.Analytics
 
             if (Instance.FacebookAnalytics)
             {
-                var facebookAnalyticsInstance = FindObjectOfType<FacebookAnalytics>();
+                var facebookAnalyticsInstance = FindFirstObjectByType<FacebookAnalytics>();
                 var pixelId = Configurator.production ? facebookAnalyticsInstance.pixelProdId : facebookAnalyticsInstance.pixelTestId;
 
                 if (pixelId.IsEmpty())

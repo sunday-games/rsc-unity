@@ -15,7 +15,7 @@ namespace SG.RSC
         public DebugLevel debugLevel = DebugLevel.Debug;
         public enum DebugLevel { None = 0, Error = 1, Release = 2, Debug = 3 }
 
-        public Platform debugPlatform = Platform.Unknown;
+        public Platform debugPlatform;
         public bool balanceDebug = false;
         public bool serverDebug = false;
         public bool unlockAll = false;
@@ -181,8 +181,8 @@ namespace SG.RSC
             EditorBuildSettings.scenes = new EditorBuildSettingsScene[] { new EditorBuildSettingsScene(currentScene.path, true) };
 #endif // UNITY_EDITOR
 
-            var googleAnalyticsManager = FindObjectOfType<SG.GoogleAnalyticsManager>();
-            googleAnalyticsManager?.Setup();
+            //var googleAnalyticsManager = FindObjectOfType<SG.GoogleAnalyticsManager>();
+            //googleAnalyticsManager?.Setup();
 
             var facebookManager = FindObjectOfType<FacebookManager>();
             facebookManager?.Setup();
@@ -210,11 +210,11 @@ namespace SG.RSC
         EditorUtility.SetDirty(chartboostProvider.settings);
 #endif
 
-            if (SG.AppMetricaManager.instance != null) SG.AppMetricaManager.instance.Setup();
+            //if (SG.AppMetricaManager.instance != null) SG.AppMetricaManager.instance.Setup();
 
-            (FindObjectOfType(typeof(ExceptionWatcher)) as ExceptionWatcher).enabled = exceptionWatcher;
+            //(FindObjectOfType(typeof(ExceptionWatcher)) as ExceptionWatcher).enabled = exceptionWatcher;
 
-            (FindObjectOfType(typeof(FPSWatcher)) as FPSWatcher).enabled = FPSWatcher;
+            //(FindObjectOfType(typeof(FPSWatcher)) as FPSWatcher).enabled = FPSWatcher;
 
             // Почему то это не работает
             //var achievements = game.GetComponent<Achievements>();

@@ -93,7 +93,7 @@ namespace SG.RSC
             //watchButton.interactable = false;
             //watchButtonImage.color = unactiveColor;
             //watchButtonText.color = unactiveColor;
-            if (ads.isReadyVideoRewarded())
+            if (ads.isReadyRewarded)
             {
                 watchButton.interactable = true;
                 watchButtonImage.color = Color.white;
@@ -109,7 +109,7 @@ namespace SG.RSC
 
         public void WatchAds()
         {
-            ads.ShowVideoRewarded(() =>
+            ads.ShowRewarded(() =>
             {
                 user.UpdateCoins(balance.reward.coinsForAdView, true);
                 Refresh(adCoinsCountText.transform.position);

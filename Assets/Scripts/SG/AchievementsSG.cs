@@ -43,7 +43,7 @@ namespace SG.RSC
 
         public void AchievementComplete(Achievement achievement)
         {
-            if (Utils.IsPlatform(Platform.Mobile) && socialUser.authenticated)
+            if (Utils.IsPlatformMobile() && socialUser.authenticated)
             {
                 string id = Utils.IsPlatform(Platform.iOS) ? achievement.appleGameCenterId : achievement.googleGamesId;
 

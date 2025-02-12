@@ -100,7 +100,7 @@ namespace SG.UI
         public static bool control => Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl);
         public static bool command => Input.GetKeyDown(KeyCode.LeftCommand) || Input.GetKeyDown(KeyCode.RightCommand);
 
-        public static bool copy => Utils.isMac ? command : control;
+        public static bool copy => Utils.IsPlatform(Platform.Mac) ? command : control;
 
         public static bool a => Input.GetKeyDown(KeyCode.A);
         public static bool b => Input.GetKeyDown(KeyCode.B);

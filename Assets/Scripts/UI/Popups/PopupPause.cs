@@ -74,7 +74,7 @@ namespace SG.RSC
 
         public override void OnEscapeKey()
         {
-            if (platform == Platform.Tizen) gameplay.RestartGame();
+            if (Utils.IsStore(Store.Tizen)) gameplay.RestartGame();
             else ui.PopupClose();
         }
 

@@ -9,7 +9,7 @@ namespace SG.Push
     public class PushManager : MonoBehaviour
     {
         static PushManager _instance;
-        public static PushManager instance => _instance ? _instance : _instance = FindObjectOfType<PushManager>();
+        public static PushManager instance => _instance ? _instance : _instance = FindFirstObjectByType<PushManager>();
 
 #if UNITY_EDITOR
         public DebugData debug;
@@ -17,12 +17,10 @@ namespace SG.Push
         public class DebugData
         {
             public float confirmTime = 2f;
-            public Dictionary<string, object> subscription = new Dictionary<string, object> {
-                { "endpoint", "https://updates.push.services.mozilla.com/wpush/v2/xxx" },
-                { "keys", new Dictionary<string, object> {
-                    { "auth", "xxx" },
-                    { "p256dh", "xxx" } }
-                }
+            public Dictionary<string, object> subscription = new Dictionary<string, object>
+            {
+                ["endpoint"] = "https://updates.push.services.mozilla.com/wpush/v2/xxx",
+                ["keys"] = new Dictionary<string, object> { ["auth"] = "xxx", ["p256dh"] = "xxx" }
             };
         }
 #endif

@@ -358,13 +358,13 @@ namespace SG.RSC
                     timeUTC = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
                     //lastUpdateTime = DateTime.Now;
 
-                    Log.Info("Server - UpdateTime - Success. Time Shift: {0}", (DateTime.UtcNow - timeUTC).TotalSeconds);
+                    Log.Info("Server - UpdateTime - Success. Time Shift: " + (DateTime.UtcNow - timeUTC).TotalSeconds);
                     callback(true);
                     return;
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Server - UpdateTime - {0} - Error: {1}", url, e);
+                    Log.Error($"Server - UpdateTime - {url} - Error: {e}");
                 }
             }
 
@@ -439,7 +439,7 @@ namespace SG.RSC
 
         public void CheckConnection(Action<bool> callback)
         {
-            if (platform == Platform.Facebook) { callback(true); return; }
+            if (Utils.IsStore(Store.Facebook)) { callback(true); return; }
 
             Download.Create(gameObject).Run("Check Connection", links.checkConnection,
                 download => { callback(download.isSuccess); });
@@ -455,7 +455,7 @@ namespace SG.RSC
                 { "Key", (request + build.s).MD5() },
             };
 
-            Log.Debug("Server - {0} - Url: '{1}', Key: '{2}', Request: {3}", name, url, headers["Key"], request);
+            Log.Debug($"Server - {name} - Url: '{url}', Key: '{headers["Key"]}', Request: {request}");
 
             Download.Create(gameObject).Run(name, new WWW(url, Encoding.UTF8.GetBytes(request), headers), download =>
             {

@@ -41,13 +41,13 @@ namespace SG.RSC
 
             versionText.text = Localization.Get("version", build.version + "." + build.versionCode);
 
-            rateButton.SetActive(Utils.IsPlatform(Platform.Mobile));
+            rateButton.SetActive(Utils.IsPlatformMobile());
 
-            likeButton.SetActive(server.links.fbGroup.IsNotEmpty() && Utils.IsPlatform(Platform.Facebook));
+            likeButton.SetActive(server.links.fbGroup.IsNotEmpty() && Utils.IsStore(Store.Facebook));
 
-            facebookButton.SetActive(server.links.fbGroupShort.IsNotEmpty() && !Utils.IsPlatform(Platform.Facebook);
+            facebookButton.SetActive(server.links.fbGroupShort.IsNotEmpty() && !Utils.IsStore(Store.Facebook));
 
-            vkButton.SetActive(server.links.vkGroup.IsNotEmpty() && Localization.language == SystemLanguage.Russian && platform != Platform.Facebook);
+            vkButton.SetActive(server.links.vkGroup.IsNotEmpty() && Localization.language == SystemLanguage.Russian && !Utils.IsStore(Store.Facebook));
 
             twitterButton.SetActive(server.links.twitter.IsNotEmpty());
 
@@ -133,7 +133,7 @@ namespace SG.RSC
                 link = (SystemInfo.operatingSystem.Contains(" 6.") ? "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" : "itms-apps://itunes.apple.com/app/id") + build.APPLE_ID;
             else if (platform == Platform.Android)
                 link = "market://details?id=" + build.ID;
-            else if (platform == Platform.Amazon)
+            else if (Utils.IsStore(Store.Amazon))
                 link = "amzn://apps/android?p=" + build.ID;
             else
                 link = server.links.landingPage;
@@ -145,7 +145,7 @@ namespace SG.RSC
 
         public void SendEmail()
         {
-            if (platform == Platform.Facebook)
+            if (Utils.IsStore(Store.Facebook))
             {
                 SG_Utils.OpenLink(server.links.contactsPage, "SiteContacts");
                 return;

@@ -13,7 +13,7 @@ namespace SG.BlockchainPlugin.SundayWalletUI
     {
         public static UI Setup()
         {
-            var instance = FindObjectOfType<UI>();
+            var instance = FindFirstObjectByType<UI>();
             if (instance == null)
             {
                 const string canvasName = "SundayWallet Canvas";

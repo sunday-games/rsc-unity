@@ -15,7 +15,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using SG.UI;
 using DG.Tweening;
 using DictSO = System.Collections.Generic.Dictionary<string, object>;
 using ListO = System.Collections.Generic.List<object>;
@@ -23,7 +22,6 @@ using Text = TMPro.TextMeshProUGUI;
 using Dropdown = TMPro.TMP_Dropdown;
 using InputField = TMPro.TMP_InputField;
 using float3 = ME.ECS.Mathematics.float3;
-// using sfloat = Deterministics.Math.Fp;
 using Object = UnityEngine.Object;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -31,22 +29,21 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace SG
 {
-    public enum Platform { Editor, WebGL, Mobile, iOS, Android, tvOS }
-    public enum AndroidStore { GooglePlay, Amazon, Tizen }
-    public enum WebStore { Site, Facebook }
+    public enum Platform { Windows, Mac, Linux, iOS, Android, Web, tvOS, Editor }
+    public enum Store { AppStore, GooglePlay, Amazon, Tizen, Facebook, Epic, Steam, Xsolla }
     public enum RenderPipeline { Buildin, Universal, HighDefinition }
 
     public static class Utils
     {
         public static DateTime EPOCH = new DateTime(1970, 1, 1);
         public static DateTime ToDateTime(this long timestamp) => EPOCH.AddMilliseconds(timestamp);
-        public static long ToTimestamp(this DateTime dateTime) => (long) (dateTime - EPOCH).TotalMilliseconds;
+        public static long ToTimestamp(this DateTime dateTime) => (long)(dateTime - EPOCH).TotalMilliseconds;
 
         public static bool IsEnum<T>(this string data)
         {
             try
             {
-                var value = (T) Enum.Parse(typeof(T), data, true);
+                var value = (T)Enum.Parse(typeof(T), data, true);
                 return true;
             }
             catch
@@ -57,9 +54,9 @@ namespace SG
         public static T ToEnum<T>(this object data)
         {
             if (data is int || data is long)
-                return (T) Enum.ToObject(typeof(T), data.ToInt());
+                return (T)Enum.ToObject(typeof(T), data.ToInt());
             if (data is string)
-                return (T) Enum.Parse(typeof(T), data.ToString(), true);
+                return (T)Enum.Parse(typeof(T), data.ToString(), true);
             return default;
         }
 
@@ -108,7 +105,7 @@ namespace SG
         public static long ToLong(this BigInteger data, long defaultValue = default)
         {
             try
-            { return (long) data; }
+            { return (long)data; }
             catch { Log.Error($"Can't convert '{data}' to long/int64"); return defaultValue; }
         }
         public static ulong ToULong(this object data, ulong defaultValue = default)
@@ -155,7 +152,7 @@ namespace SG
             { return float.Parse(data.ToString(), CultureInfo.InvariantCulture); }
             catch { Log.Error($"Can't convert '{data}' to float"); return defaultValue; }
         }
-        public static float Round(this sfloat data, int digits = 2) => ((float) data).Round(digits);
+        public static float Round(this sfloat data, int digits = 2) => ((float)data).Round(digits);
         #endregion
 
         #region float3
@@ -170,7 +167,7 @@ namespace SG
                 return new float3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2]));
             }
 
-            return (float3) data;
+            return (float3)data;
         }
         public static string ToStringFormatted(this float3 data, string delimeter = "x", int digits = 2) =>
             $"{data.x.Round(digits)}{delimeter}{data.y.Round(digits)}{delimeter}{data.z.Round(digits)}";
@@ -179,8 +176,8 @@ namespace SG
         #region byte[]
         public static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
         public static string FromBytes(this byte[] data) => Encoding.UTF8.GetString(data);
-        public static DictSO ToDict(this byte[] data) => (DictSO) Json.Deserialize(data.FromBytes());
-        public static ListO ToList(this byte[] data) => (ListO) Json.Deserialize(data.FromBytes());
+        public static DictSO ToDict(this byte[] data) => (DictSO)Json.Deserialize(data.FromBytes());
+        public static ListO ToList(this byte[] data) => (ListO)Json.Deserialize(data.FromBytes());
 
         public static byte[] ToBytes(this DictSO data) => Json.Serialize(data).ToBytes();
         public static byte[] ToBytes(this ListO data) => Json.Serialize(data).ToBytes();
@@ -228,9 +225,9 @@ namespace SG
             if (!dict.IsValue(key))
                 return default;
             if (dict[key] is int || dict[key] is long)
-                return (T) Enum.ToObject(typeof(T), dict[key].ToInt());
+                return (T)Enum.ToObject(typeof(T), dict[key].ToInt());
             if (dict[key] is string)
-                return (T) Enum.Parse(typeof(T), dict[key].ToString(), true);
+                return (T)Enum.Parse(typeof(T), dict[key].ToString(), true);
             return default;
         }
         public static T GetClass<T>(this DictSO dictionary, string key) where T : IDictionarizable<T> => dictionary.IsValue(key) ? dictionary[key].ToClass<T>() : default;
@@ -264,7 +261,7 @@ namespace SG
         {
             if (dict != null && dict.TryGetValue(key, out object obj) && obj != null)
             {
-                value = (T) obj;
+                value = (T)obj;
                 return true;
             }
 
@@ -364,7 +361,7 @@ namespace SG
         {
             if (dict != null && dict.IsValue(key) && dict[key] is DictSO)
             {
-                value = (DictSO) dict[key];
+                value = (DictSO)dict[key];
                 return true;
             }
 
@@ -375,7 +372,7 @@ namespace SG
         {
             if (dict != null && dict.IsValue(key) && dict[key] is ListO)
             {
-                value = (ListO) dict[key];
+                value = (ListO)dict[key];
                 return true;
             }
 
@@ -412,7 +409,7 @@ namespace SG
                 return new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2]));
             }
 
-            return (Vector3) v;
+            return (Vector3)v;
         }
 
         public static bool IsNear(this Vector3 v, Vector3 other, float distance = 0)
@@ -441,9 +438,9 @@ namespace SG
         public static Quaternion Round(this Quaternion q, int d) => new Quaternion(q.x.Round(d), q.y.Round(d), q.z.Round(d), q.w.Round(d));
         #endregion
 
-        public static float Round(this float f, int digits) => (float) Math.Round(f, digits);
+        public static float Round(this float f, int digits) => (float)Math.Round(f, digits);
         public static double Round(this double f, int digits) => Math.Round(f, digits);
-        public static float RoundToNearestHalf(this float f) => (float) Math.Round(f * 2f) * 0.5f;
+        public static float RoundToNearestHalf(this float f) => (float)Math.Round(f * 2f) * 0.5f;
 
         public static string ToStringRGB(this Color color) => ColorUtility.ToHtmlStringRGB(color);
         public static Color SetAlpha(this Color color, float alpha) => new Color(color.r, color.g, color.b, alpha);
@@ -501,7 +498,7 @@ namespace SG
             formatter.Serialize(ms, obj);
             ms.Position = 0;
 
-            return (T) formatter.Deserialize(ms);
+            return (T)formatter.Deserialize(ms);
         }
 
         public static void DestroyAndClear<T>(this IList<T> list) where T : Component
@@ -584,7 +581,7 @@ namespace SG
         public static bool RandomChance(float chance) => Random.value < chance;
         public static int RandomRange(int min, int max) => Random.Range(min, max);
         public static float RandomRange(float min, float max) => Random.Range(min, max);
-        public static float RandomRange(double min, double max) => Random.Range((float) min, (float) max);
+        public static float RandomRange(double min, double max) => Random.Range((float)min, (float)max);
         public static string RandomString(int length, string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
         {
             var random = new System.Random();
@@ -683,7 +680,7 @@ namespace SG
             for (int i = 0; i < list.Count; ++i)
                 if (match(list[i]))
                 {
-                    item = (T2) list[i];
+                    item = (T2)list[i];
                     return true;
                 }
             return false;
@@ -929,10 +926,10 @@ namespace SG
 
         public static void Shake(this Component component, float strength = 50f)
         {
-            if (component.gameObject.GetComponent<Shaker>() != null)
+            if (component.gameObject.GetComponent<SG.UI.Shaker>() != null)
                 return;
 
-            var shaker = component.gameObject.AddComponent<Shaker>();
+            var shaker = component.gameObject.AddComponent<SG.UI.Shaker>();
             shaker.Strength = strength;
         }
 
@@ -1163,33 +1160,27 @@ namespace SG
             {
                 int propertyIndex = int.Parse(property.propertyPath[property.propertyPath.Length - 2].ToString());
 
-                return ((IList<T>) @object)[propertyIndex];
+                return ((IList<T>)@object)[propertyIndex];
             }
 
-            return (T) @object;
+            return (T)@object;
         }
 #endif
 
-        public static bool IsPlatform(Platform platform)
+        public static bool IsStore(Store store) => Configurator.Instance.Store == store;
+
+        public static bool IsPlatform(Platform platform) => Application.platform == PlatformToRPlatform[platform];
+        public static Dictionary<Platform, RuntimePlatform> PlatformToRPlatform = new Dictionary<Platform, RuntimePlatform>
         {
-            switch (platform)
-            {
-                case Platform.Editor:
-                    return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor;
-                case Platform.WebGL:
-                    return Application.platform == RuntimePlatform.WebGLPlayer;
-                case Platform.Mobile:
-                    return Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
-                case Platform.iOS:
-                    return Application.platform == RuntimePlatform.IPhonePlayer;
-                case Platform.tvOS:
-                    return Application.platform == RuntimePlatform.tvOS;
-                case Platform.Android:
-                    return Application.platform == RuntimePlatform.Android;
-                default:
-                    return false;
-            }
-        }
+            [Platform.Windows] = RuntimePlatform.WindowsPlayer,
+            [Platform.Mac] = RuntimePlatform.OSXPlayer,
+            [Platform.Linux] = RuntimePlatform.LinuxPlayer,
+            [Platform.Web] = RuntimePlatform.WebGLPlayer,
+            [Platform.iOS] = RuntimePlatform.IPhonePlayer,
+            [Platform.Android] = RuntimePlatform.Android,
+            [Platform.tvOS] = RuntimePlatform.tvOS,
+        };
+
         public static bool IsPlatform(params Platform[] platforms)
         {
             foreach (var platform in platforms)
@@ -1204,7 +1195,17 @@ namespace SG
                     return true;
             return false;
         }
-        public static bool isMac => SystemInfo.operatingSystem.Contains("Mac");
+
+        public static bool IsPlatformEditor()
+        {
+#if UNITY_EDITOR
+            return true;
+#else
+            return false;
+#endif
+        }
+        public static bool IsPlatformMobile() => IsPlatform(RuntimePlatform.IPhonePlayer, RuntimePlatform.Android);
+        public static bool IsPlatformDesktop() => IsPlatform(RuntimePlatform.WindowsPlayer, RuntimePlatform.OSXPlayer, RuntimePlatform.LinuxPlayer);
 
         public static string ActiveSceneName => SceneManager.GetActiveScene().name;
 

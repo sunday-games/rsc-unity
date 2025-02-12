@@ -74,7 +74,7 @@ namespace SG.RSC
 
                 Vector2 to = askButtonsPositionKeyboardNone;
 
-                if (askInputField.isFocused && Utils.IsPlatform(Platform.Mobile))
+                if (askInputField.isFocused && Utils.IsPlatformMobile())
                     to = askButtonsPositionKeyboard
                         - (askButtonsRectTransform.childCount - 2) * new Vector2(0f, askButtonsGrid.cellSize.y + askButtonsGrid.spacing.y);
 
@@ -92,7 +92,7 @@ namespace SG.RSC
             askBubble.Hide();
             if (!string.IsNullOrEmpty(ask)) askBubble.Show(ask, replyBubbleHeight);
 
-            if (!Utils.IsPlatform(Platform.Mobile))
+            if (!Utils.IsPlatformMobile())
             {
                 askInputField.Select();
                 askInputField.ActivateInputField();

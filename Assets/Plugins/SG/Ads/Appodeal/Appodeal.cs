@@ -79,7 +79,7 @@ namespace SG.Ads
             //Appodeal.setSegmentFilter("newDouble", 123.123456789);
             //Appodeal.setSegmentFilter("newString", "newStringFromSDK");
 
-            var appKey = platform == Platform.iOS ? appStore.key : (platform == Platform.Android ? googlePlay.key : amazon.key);
+            var appKey = platform == Platform.AppStore ? appStore.key : (platform == Platform.GooglePlay ? googlePlay.key : amazon.key);
             var userHasAgreedToProvidePersonalData = true;
             Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO, userHasAgreedToProvidePersonalData);
 #endif
@@ -96,7 +96,7 @@ namespace SG.Ads
             if (statusInterstitial != StatusInterstitial.Loaded)
                 Appodeal.cache(Appodeal.INTERSTITIAL);
 
-            Log.Debug("Ads - Appodeal - Interstitial isReady - " + (statusInterstitial == StatusInterstitial.Loaded ? "YES" : "NO"));
+            LogDebug("Ads - Appodeal - Interstitial isReady - " + (statusInterstitial == StatusInterstitial.Loaded ? "YES" : "NO"));
 
             Analytic.EventProperties("Ads", "Appodeal Interstitial", statusInterstitial == StatusInterstitial.Loaded ? "YES" : "NO");
 
@@ -131,7 +131,7 @@ namespace SG.Ads
 
             if (statusInterstitial == StatusInterstitial.ClosedAfterClicked)
             {
-               Log.Info(Ads - Appodeal - Interstitial Result - Click");
+                Log("Ads - Appodeal - Interstitial Result - Click");
 
                 Analytic.EventProperties("Ads", "Appodeal Interstitial Result", "Click");
 
@@ -139,7 +139,7 @@ namespace SG.Ads
             }
             else
             {
-               Log.Info(Ads - Appodeal - Interstitial Result - Dismiss");
+                Log("Ads - Appodeal - Interstitial Result - Dismiss");
 
                 Analytic.EventProperties("Ads", "Appodeal Interstitial Result", "Dismiss");
 
@@ -150,35 +150,35 @@ namespace SG.Ads
         // Вызывается, когда полноэкранная реклама загрузилась. Флаг precache указывает, является ли реклама прекешем.
         public void onInterstitialLoaded(bool isPrecache)
         {
-            Log.Debug($"Ads - Appodeal - onInterstitialLoaded (precache: {isPrecache})");
+            LogDebug($"Ads - Appodeal - onInterstitialLoaded (precache: {isPrecache})");
         }
         // Вызывается, когда полноэкранная реклама не загрузилась
         public void onInterstitialFailedToLoad()
         {
-            Log.Debug("Ads - Appodeal - Interstitial failed to load");
+            LogDebug("Ads - Appodeal - Interstitial failed to load");
         }
         // Вызывается после показа полноэкранной рекламы
         public void onInterstitialShown()
         {
-            Log.Debug("Ads - Appodeal - Interstitial shown");
+            LogDebug("Ads - Appodeal - Interstitial shown");
             statusInterstitial = StatusInterstitial.Shown;
         }
         // Вызывается при клике на полноэкранную рекламу
         public void onInterstitialClicked()
         {
-            Log.Debug("Ads - Appodeal - Interstitial clicked");
+            LogDebug("Ads - Appodeal - Interstitial clicked");
             statusInterstitial = StatusInterstitial.Clicked;
         }
         // Вызывается при закрытии полноэкранной рекламы
         public void onInterstitialClosed()
         {
-            Log.Debug("Ads - Appodeal - Interstitial closed");
+            LogDebug("Ads - Appodeal - Interstitial closed");
             statusInterstitial = statusInterstitial == StatusInterstitial.Clicked ? StatusInterstitial.ClosedAfterClicked : StatusInterstitial.Closed;
         }
         // Вызывается, когда полноэкранная реклама больше не доступна
         public void onInterstitialExpired()
         {
-            Log.Debug("Ads - Appodeal - Interstitial expired");
+            LogDebug("Ads - Appodeal - Interstitial expired");
         }
 
 
@@ -192,7 +192,7 @@ namespace SG.Ads
             if (statusVideoRewarded != StatusVideoRewarded.Loaded)
                 Appodeal.cache(Appodeal.REWARDED_VIDEO);
 
-            Log.Debug("Ads - Appodeal - VideoRewarded Request - " + (statusVideoRewarded == StatusVideoRewarded.Loaded ? "YES" : "NO"));
+            LogDebug("Ads - Appodeal - VideoRewarded Request - " + (statusVideoRewarded == StatusVideoRewarded.Loaded ? "YES" : "NO"));
 
             Analytic.EventProperties("Ads", "Appodeal VideoRewarded Request", statusVideoRewarded == StatusVideoRewarded.Loaded ? "YES" : "NO");
 
@@ -211,14 +211,14 @@ namespace SG.Ads
             ui.Block();
             music.SetVolume(0f);
 
-           Log.Info(Ads - Appodeal - Predicted eCPM for Rewarded Video: " + Appodeal.getPredictedEcpm(Appodeal.REWARDED_VIDEO));
-           Log.Info$"Ads - Appodeal - Reward currency: {Appodeal.getRewardParameters().Key}, amount: {Appodeal.getRewardParameters().Value}");
+            Log("Ads - Appodeal - Predicted eCPM for Rewarded Video: " + Appodeal.getPredictedEcpm(Appodeal.REWARDED_VIDEO));
+            Log($"Ads - Appodeal - Reward currency: {Appodeal.getRewardParameters().Key}, amount: {Appodeal.getRewardParameters().Value}");
 
             Appodeal.show(Appodeal.REWARDED_VIDEO);
 
             while (statusVideoRewarded != StatusVideoRewarded.Closed) yield return null;
 
-           Log.Info(Ads - Appodeal Result Finished");
+            Log("Ads - Appodeal Result Finished");
 
             Analytic.EventPropertiesImportant("Ads", "Appodeal VideoRewarded Result", "Finished");
 
@@ -230,50 +230,50 @@ namespace SG.Ads
 
         public void onRewardedVideoLoaded(bool isPrecache)
         {
-            Log.Debug($"Ads - Appodeal - RewardedVideo loaded (precache: {isPrecache})");
+            LogDebug($"Ads - Appodeal - RewardedVideo loaded (precache: {isPrecache})");
         }
         public void onRewardedVideoFailedToLoad()
         {
-            Log.Debug("Ads - Appodeal - RewardedVideo failed to load");
+            LogDebug("Ads - Appodeal - RewardedVideo failed to load");
         }
         public void onRewardedVideoShown()
         {
-            Log.Debug("Ads - Appodeal - RewardedVideo shown");
+            LogDebug("Ads - Appodeal - RewardedVideo shown");
             statusVideoRewarded = StatusVideoRewarded.Shown;
         }
         public void onRewardedVideoClosed(bool finished)
         {
-            Log.Debug($"Ads - Appodeal - RewardedVideo closed (finished: {finished})");
+            LogDebug($"Ads - Appodeal - RewardedVideo closed (finished: {finished})");
             statusVideoRewarded = StatusVideoRewarded.Closed;
         }
         public void onRewardedVideoFinished(double amount, string name)
         {
-            Log.Debug($"Ads - Appodeal - RewardedVideo finished (amount: {amount}, name: {name})");
+            LogDebug($"Ads - Appodeal - RewardedVideo finished (amount: {amount}, name: {name})");
             statusVideoRewarded = StatusVideoRewarded.Finished;
         }
         public void onRewardedVideoExpired()
         {
-            Log.Debug("Ads - Appodeal - RewardedVideo expired");
+            LogDebug("Ads - Appodeal - RewardedVideo expired");
         }
         public void onRewardedVideoClicked()
         {
-            Log.Debug("Ads - Appodeal - RewardedVideo clicked");
+            LogDebug("Ads - Appodeal - RewardedVideo clicked");
         }
 
 
         public void writeExternalStorageResponse(int result)
         {
             if (result == 0)
-               Log.Info(Ads - Appodeal - WRITE_EXTERNAL_STORAGE permission granted");
+                Log("Ads - Appodeal - WRITE_EXTERNAL_STORAGE permission granted");
             else
-               Log.Info(Ads - Appodeal - WRITE_EXTERNAL_STORAGE permission grant refused");
+                Log("Ads - Appodeal - WRITE_EXTERNAL_STORAGE permission grant refused");
         }
         public void accessCoarseLocationResponse(int result)
         {
             if (result == 0)
-               Log.Info(Ads - Appodeal - ACCESS_COARSE_LOCATION permission granted");
+                Log("Ads - Appodeal - ACCESS_COARSE_LOCATION permission granted");
             else
-               Log.Info(Ads - Appodeal - ACCESS_COARSE_LOCATION permission grant refused");
+                Log("Ads - Appodeal - ACCESS_COARSE_LOCATION permission grant refused");
         }
 #endif
     }

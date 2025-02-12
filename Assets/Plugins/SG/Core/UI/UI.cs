@@ -168,7 +168,7 @@ namespace SG.UI
         {
             isTablet = Helpers.aspectRatio < 1.34f;
 
-            // inputMode = platform == Platform.iOS || platform == Platform.Android ? InputMode.Touch : InputMode.Mouse;
+            // inputMode = platform == Platform.iOS || platform == Platform.GooglePlay ? InputMode.Touch : InputMode.Mouse;
 
             Screen.AnimationsSetup(height: 1024f, aspectRatio: Helpers.aspectRatio);
 
@@ -259,7 +259,7 @@ namespace SG.UI
 
         public void Quit()
         {
-            if (!Utils.IsPlatform(Platform.WebGL))
+            if (!Utils.IsPlatform(Platform.Web))
             {
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;

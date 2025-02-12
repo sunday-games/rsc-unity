@@ -37,17 +37,17 @@ namespace SG.Ads
                 providerInterstitial = iOS.interstitial;
                 providerRewarded = iOS.videoRewarded;
             }
-            else if (Utils.IsPlatform(Platform.Android) && Configurator.Instance.androidStore == AndroidStore.GooglePlay)
+            else if (Utils.IsStore(Store.GooglePlay))
             {
                 providerInterstitial = android.interstitial;
                 providerRewarded = android.videoRewarded;
             }
-            else if (Utils.IsPlatform(Platform.Android) && Configurator.Instance.androidStore == AndroidStore.Amazon)
+            else if (Utils.IsStore(Store.Amazon))
             {
                 providerInterstitial = amazon.interstitial;
                 providerRewarded = amazon.videoRewarded;
             }
-            else if (Utils.IsPlatform(Platform.WebGL) && Configurator.Instance.webStore == WebStore.Facebook)
+            else if (Utils.IsStore(Store.Facebook))
             {
                 providerInterstitial = facebook.interstitial;
                 providerRewarded = facebook.videoRewarded;

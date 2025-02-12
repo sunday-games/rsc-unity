@@ -56,7 +56,7 @@ namespace SG.RSC
 
         void Awake()
         {
-            Log.Info("Game Init - Version {0}.{1}", build.version, build.versionCode);
+            Log.Info($"Game Init - Version {build.version}.{build.versionCode}");
 
             gameplay = this;
             config = GetComponent<Config>();

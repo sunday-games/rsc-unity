@@ -20,7 +20,7 @@ namespace SG.RSC
 
             needShow = true;
 
-            if (ads.isReadyVideoRewarded()) Show();
+            if (ads.isReadyRewarded) Show();
         }
 
         void Show()
@@ -54,7 +54,7 @@ namespace SG.RSC
         {
             Analytic.EventProperties("Ads", "VideoRewarded Label", "Click");
 
-            ads.ShowVideoRewarded(
+            ads.ShowRewarded(
                 () =>
                 {
                     ++showedTimes;

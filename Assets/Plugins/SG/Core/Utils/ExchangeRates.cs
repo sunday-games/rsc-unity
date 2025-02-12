@@ -10,7 +10,7 @@ namespace SG
     public class ExchangeRates : MonoBehaviour
     {
         static ExchangeRates _instance;
-        public static ExchangeRates instance => _instance ? _instance : _instance = FindObjectOfType<ExchangeRates>();
+        public static ExchangeRates instance => _instance ? _instance : _instance = FindFirstObjectByType<ExchangeRates>();
 
         public static Action onRatesUpdate;
 

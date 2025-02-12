@@ -26,7 +26,7 @@ namespace SG
         {
             GoogleTranslator.apiKey = apiKey;
 
-            instance = FindObjectOfType<GoogleTranslator>();
+            instance = FindFirstObjectByType<GoogleTranslator>();
 
             if (instance == null)
             {

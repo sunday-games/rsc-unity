@@ -22,7 +22,7 @@ namespace SG.RSC
 
         void Start()
         {
-            if (platform != Platform.Facebook)
+            if (!Utils.IsStore(Store.Facebook))
             {
                 if (undergroundAdd != null) undergroundAdd.SetActive(false);
                 gameObject.SetActive(false);

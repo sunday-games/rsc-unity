@@ -30,8 +30,7 @@ namespace SG
 
         public Settings Settings;
 
-        [Space] public AndroidStore androidStore = AndroidStore.GooglePlay;
-        public WebStore webStore = WebStore.Site;
+        [Space] public Store Store;
         public RenderPipeline renderPipeline = RenderPipeline.Buildin;
 
         [Space] public UI.Style style;
@@ -590,7 +589,7 @@ namespace SG
 #endif
 #if SG_BLOCKCHAIN
             if (blockchain)
-                yield return FindObjectOfType<BlockchainPlugin.BlockchainManager>().Init(InitResult);
+                yield return FindFirstObjectByType<BlockchainPlugin.BlockchainManager>().Init(InitResult);
 #else
             yield return null;
 #endif
