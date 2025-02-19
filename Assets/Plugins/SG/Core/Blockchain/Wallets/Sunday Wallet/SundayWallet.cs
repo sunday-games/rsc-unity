@@ -25,7 +25,7 @@ namespace SG.BlockchainPlugin
             name = Names.SundayWallet;
             nameToView = "Sunday Wallet";
 
-            supportedBlockchains = new Blockchain[] { Blockchain.ethereum, Blockchain.polygon, Blockchain.bsc, Blockchain.NeoX };
+            supportedBlockchains = new Blockchain[] { Blockchain.ethereum, Blockchain.polygon, Blockchain.bsc, Blockchain.NeoX, Blockchain.Immutable };
 
             deepUrls = new Dictionary<RuntimePlatform, string>();
 

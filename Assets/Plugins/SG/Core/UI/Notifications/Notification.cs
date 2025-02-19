@@ -48,7 +48,7 @@ namespace SG.UI
         public Notification SetProgress(float value, Color color, float time, bool animation = true, string progressText = null)
         {
             _progressTime = time;
-            Progress.ValueText.text = progressText ?? string.Empty;
+            Progress.ValueText?.SetText(progressText ?? string.Empty);
 
             if (Progress.ActivateIf(value >= 0f))
             {

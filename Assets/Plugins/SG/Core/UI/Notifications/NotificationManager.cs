@@ -49,12 +49,17 @@ namespace SG.UI
                     .SetDescription(description)
                     .SetProgress(progress, progressColor, progressTime, progressAnim, progressText)
                     .SetMainButton(mainAction)
-                    .SetActionButton(notification.ActionButtons[0], buttonData1)
-                    .SetActionButton(notification.ActionButtons[1], buttonData2)
                     .SetAutoHide(autoHideTime);
 
-                notification.ActionButtons[0].transform.parent.gameObject.SetActive(
-                    buttonData1 != null || buttonData2 != null);
+                if (notification.ActionButtons.Length > 0)
+                {
+                    notification.SetActionButton(notification.ActionButtons[0], buttonData1);
+
+                    if (notification.ActionButtons.Length > 1)
+                        notification.SetActionButton(notification.ActionButtons[1], buttonData2);
+
+                    notification.ActionButtons[0].transform.parent.gameObject.SetActive(buttonData1 != null || buttonData2 != null);
+                }
 
                 return notification;
             }

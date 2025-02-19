@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-//#if FACEBOOK
-//using Facebook.Unity;
-//#endif
+#if FACEBOOK
+using Facebook.Unity;
+#endif
 
 namespace SG.Analytics
 {

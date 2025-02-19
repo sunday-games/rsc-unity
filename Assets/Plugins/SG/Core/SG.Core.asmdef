@@ -19,7 +19,10 @@
         "Nethereum.Unity.Metamask",
         "Xsolla",
         "com.Epic.OnlineServices",
-        "com.playeveryware.eos.core"
+        "com.playeveryware.eos.core",
+        "Immutable.Passport.Runtime.Public",
+        "Immutable.Passport.Runtime.Private",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

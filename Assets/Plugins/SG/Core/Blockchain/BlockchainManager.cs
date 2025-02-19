@@ -63,6 +63,8 @@ namespace SG.BlockchainPlugin
                 defines += "-define:TRONLINK" + Const.lineBreak;
             if (IsSupported(Wallet.Names.Scatter))
                 defines += "-define:SCATTER" + Const.lineBreak;
+            if (IsSupported(Wallet.Names.Immutable))
+                defines += "-define:IMMUNTABLE" + Const.lineBreak;
             if (IsSupported(Wallet.Names.MeetOne))
                 defines += "-define:MEETONE" + Const.lineBreak;
             if (IsSupported(Wallet.Names.LumiCollect))
@@ -173,6 +175,11 @@ namespace SG.BlockchainPlugin
                 Blockchain.bsc = new BSC();
                 Blockchain.bsc.Setup();
             }
+            if (Blockchain.Immutable == null && IsSupported(Blockchain.Names.Immutable))
+            {
+                Blockchain.Immutable = new ImmutableEVM();
+                Blockchain.Immutable.Setup();
+            }
             if (Blockchain.NeoX == null && IsSupported(Blockchain.Names.NeoX))
             {
                 Blockchain.NeoX = new NeoX();
@@ -232,6 +239,7 @@ namespace SG.BlockchainPlugin
             Blockchain.polygon = null;
             Blockchain.bsc = null;
             Blockchain.wax = null;
+            Blockchain.Immutable = null;
             Blockchain.current = null;
         }
     }

@@ -22,6 +22,7 @@ namespace SG.BlockchainPlugin
         //public static FreeTON FreeTON;
         public static BSC bsc;
         public static NeoX NeoX;
+        public static ImmutableEVM Immutable;
 
         public static Blockchain current;
 
@@ -48,6 +49,8 @@ namespace SG.BlockchainPlugin
                 return bsc;
             else if (name.Contains("wax"))
                 return wax;
+            else if (name.Contains("immutable"))
+                return Immutable;
             else
                 return null;
         }
@@ -65,7 +68,7 @@ namespace SG.BlockchainPlugin
 
         [HideInInspector]
         public Names name;
-        public enum Names { EOSIO, Tron, Ethereum, NEO, Polygon, WAX, FreeTON, BSC, NeoX }
+        public enum Names { EOSIO, Tron, Ethereum, NEO, Polygon, WAX, FreeTON, BSC, NeoX, Immutable }
 
         public int id => (int) name;
 

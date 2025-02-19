@@ -11,13 +11,9 @@ namespace SG.BlockchainPlugin
         {
             var types = new List<Type>();
 
+#if SG_BLOCKCHAIN
             if (blockchain == Blockchain.ethereum)
             {
-#if SG_BLOCKCHAIN
-                //types.Add(typeof(Immutable));
-                types.Add(typeof(SundayWallet));
-#endif
-
 #if ARKANE && (UNITY_WEBGL || UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
                 types.Add(typeof(ArkaneWallet));
 #endif
@@ -29,14 +25,11 @@ namespace SG.BlockchainPlugin
 #if LUMI && (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
                 types.Add(typeof(LumiWallet));
 #endif
+
+                types.Add(typeof(SundayWallet));
             }
             else if (blockchain == Blockchain.polygon)
             {
-#if SG_BLOCKCHAIN
-                //types.Add(typeof(Immutable));
-                types.Add(typeof(SundayWallet));
-#endif
-
 #if ARKANE && (UNITY_WEBGL || UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
                 types.Add(typeof(ArkaneWallet));
 #endif
@@ -44,14 +37,11 @@ namespace SG.BlockchainPlugin
 #if METAMASK && UNITY_WEBGL && !UNITY_EDITOR
                 types.Add(typeof(MetaMask));
 #endif
+
+                types.Add(typeof(SundayWallet));
             }
             else if (blockchain == Blockchain.bsc)
             {
-#if SG_BLOCKCHAIN
-                //types.Add(typeof(Immutable));
-                types.Add(typeof(SundayWallet));
-#endif
-
 #if ARKANE && (UNITY_WEBGL || UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
                 types.Add(typeof(ArkaneWallet));
 #endif
@@ -59,17 +49,16 @@ namespace SG.BlockchainPlugin
 #if METAMASK && UNITY_WEBGL && !UNITY_EDITOR
                 types.Add(typeof(MetaMask));
 #endif
+
+                types.Add(typeof(SundayWallet));
             }
             else if (blockchain == Blockchain.NeoX)
             {
-#if SG_BLOCKCHAIN
-                //types.Add(typeof(Immutable));
-                types.Add(typeof(SundayWallet));
-#endif
-
 #if METAMASK && UNITY_WEBGL && !UNITY_EDITOR
                 types.Add(typeof(MetaMask));
 #endif
+
+                types.Add(typeof(SundayWallet));
             }
             else if (blockchain == Blockchain.eosio)
             {
@@ -107,6 +96,15 @@ namespace SG.BlockchainPlugin
                 types.Add(typeof(TronLinkWallet));
 #endif
             }
+            else if (blockchain == Blockchain.Immutable)
+            {
+#if IMMUNTABLE
+                types.Add(typeof(Immutable));
+#endif
+
+                types.Add(typeof(SundayWallet));
+            }
+#endif // SG_BLOCKCHAIN
 
             return types;
         }

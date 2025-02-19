@@ -10,7 +10,7 @@ namespace SG
         public static void DeletePlayerPrefs() => Configurator.DeletePlayerPrefs();
 
         //[MenuItem("Sunday/Delete Zone Save")]
-        //public static void DeleteZoneSave() => Utils.DeleteFile(Constants.INIT_STATES_EXTERNAL_PATH);
+        //public static void DeleteZoneSave() => Utils.DeleteFile(SG.RolePlaying.Constants.INIT_STATES_EXTERNAL_PATH);
 
         [MenuItem("Sunday/Configurator")]
         public static void ShowWindow()

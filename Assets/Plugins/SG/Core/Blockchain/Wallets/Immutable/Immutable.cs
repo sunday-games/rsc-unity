@@ -1,354 +1,421 @@
 ﻿#if IMMUNTABLE
 using System;
+using System.Numerics;
+using System.Globalization;
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using DictSO = System.Collections.Generic.Dictionary<string, object>;
 using UnityEngine;
-
-using Nethereum.Hex.HexTypes;
-using Nethereum.Unity.Rpc;
-using Nethereum.Unity.Metamask;
+using DictSO = System.Collections.Generic.Dictionary<string, object>;
+using Immutable.Passport;
+using Immutable.Passport.Model;
+using Model = Immutable.Passport.Model;
+using Cysharp.Threading.Tasks;
 
 namespace SG.BlockchainPlugin
 {
     public class Immutable : Wallet
     {
-        private string _account;
-        private void AccountChanged(string account)
+        private static string CLIENT_ID, REDIRECT_URL, LOGOUT_REDIRECT_URL;
+        public static void Setup(string clientId, string redirectUrl = null, string logoutRedirectUrl = null)
         {
-            _account = account;
+            CLIENT_ID = clientId;
+            REDIRECT_URL = redirectUrl ?? "test://callback";
+            LOGOUT_REDIRECT_URL = logoutRedirectUrl ?? "test://logout";
         }
 
-        private string _chainId;
-        private Blockchain _blockchain;
-        private void OnChainChanged(string chainId)
-        {
-            _chainId = chainId;
-            _blockchain = supportedBlockchains.Find(b => b.network.Id == _chainId);
-        }
+        private string _environment => Configurator.production ? Model.Environment.PRODUCTION : Model.Environment.SANDBOX;
+
+        private Passport _passport;
+        private List<string> _accounts;
 
         public Immutable()
         {
             name = Names.Immutable;
             nameToView = "Immutable";
 
-            supportedBlockchains = new Blockchain[] { Blockchain.ethereum, Blockchain.polygon, Blockchain.bsc, Blockchain.NeoX };
+            supportedBlockchains = new Blockchain[] { Blockchain.Immutable };
 
             deepUrls = new Dictionary<RuntimePlatform, string>();
 
-            downloadUrls = new Dictionary<RuntimePlatform, string>
-            {
-                [RuntimePlatform.WebGLPlayer] = "https://metamask.io"
-            };
+            downloadUrls = new Dictionary<RuntimePlatform, string>();
         }
 
         public override IEnumerator Login(Blockchain requestedBlockchain, string requestedAddress = null, Action<Result> callback = null)
         {
             onProgressStart?.Invoke(Messages.LoginApprove);
 
-            Result loginResult = null;
+            Result result = null;
 
             if (!supportedBlockchains.Contains(requestedBlockchain))
             {
-                loginResult = new Result().SetError(Errors.BlockchainUnsupported);
-                onProgressEnd?.Invoke(loginResult);
-                callback?.Invoke(loginResult);
+                result = Result.Error(Errors.BlockchainUnsupported);
+                onProgressEnd?.Invoke(result);
+                callback?.Invoke(result);
                 yield break;
             }
 
-            //// BlockchainManager.Web3.Login(r => loginResult = r, AccountChanged, OnChainChanged);
-            //while (loginResult == null)
-            //    yield return null;
+            yield return Login().ToCoroutine(r => result = r);
 
-            //if (_blockchain != null)
-            //{
-            //    loginResult.data["chainId"] = _chainId;
-            //    loginResult.data["blockchain"] = _blockchain;
-            //}
-            //else
-            //{
-            //    Log.Error($"Now MetaMask has selected a network with id {_chainId}, which is not supported");
-            //    // yield return SwitchChain(requestedBlockchain);
-            //}
+            if (result.success &&
+                result.data.TryGetString("account", out string address) &&
+                result.data.TryGetString("email", out string email))
+            {
+                if (!requestedAddress.IsEmpty() && !address.IsEqualIgnoreCase(requestedAddress))
+                {
+                    result = Result.Error(Errors.AccountWrong);
+                    result.errorLocalized = result.error.Localize(nameToView, requestedAddress.CutMiddle(4, 4));
+                    onProgressEnd?.Invoke(result);
+                    callback?.Invoke(result);
+                    yield break;
+                }
 
-            //if (loginResult.success && loginResult.data.TryGetString("account", out string address))
-            //{
-            //    AccountChanged(address);
+                foreach (var supportedBlockchain in supportedBlockchains)
+                    loginedAccounts[supportedBlockchain] = new Account(supportedBlockchain, address);
+            }
 
-            //    if (!requestedAddress.IsEmpty() && !address.IsEqualIgnoreCase(requestedAddress))
-            //    {
-            //        loginResult = new Result().SetError(Errors.AccountWrong);
-            //        loginResult.errorLocalized = loginResult.error.Localize(nameToView, requestedAddress.CutMiddle(4, 4));
-            //        onProgressEnd?.Invoke(loginResult);
-            //        callback?.Invoke(loginResult);
-            //        yield break;
-            //    }
+            onProgressEnd?.Invoke(result);
 
-            //    foreach (var supportedBlockchain in supportedBlockchains)
-            //        loginedAccounts[supportedBlockchain] = new Account(supportedBlockchain, address);
-            //}
-
-            //if (loginResult.error.IsNotEmpty())
-            //    loginResult.errorLocalized = GetErrorLocalized(requestedBlockchain, loginResult.error);
-
-            onProgressEnd?.Invoke(loginResult);
-
-            callback?.Invoke(loginResult);
+            callback?.Invoke(result);
         }
 
         public override IEnumerator AccountGetInfo(Blockchain blockchain, string address = null, Action<Result<decimal>> callback = null)
         {
-            var result = new Result();
-            yield return NethereumManager.AccountUpdateBalance(blockchain,
-                address ?? loginedAccounts[blockchain].Address,
-                GetRequestClientFactory(), result);
-
-            if (!result.success)
+            yield return GetBalance(address ?? loginedAccounts[blockchain].Address).ToCoroutine(result =>
             {
-                result.data["blockchain"] = blockchain;
-                onError?.Invoke(result);
-                callback?.Invoke(new Result<decimal>(error: result.error));
-                yield break;
-            }
+                //if (!result.Success)
+                //    onError?.Invoke(Result.Error(result.Error));
 
-            //onAccountInfoUpdated?.Invoke(blockchain, result);
+                //onAccountInfoUpdated?.Invoke(blockchain, result);
 
-            callback?.Invoke(new Result<decimal>(value: result.data["balance"].ToDecimal()));
+                callback?.Invoke(result);
+            });
         }
-
-        //public IEnumerator GetBlockNumber(Action<Result> callback = null)
-        //{
-        //    var request = new EthBlockNumberUnityRequest(GetRequestClientFactory());
-        //    yield return request.SendRequest();
-
-        //    var result = new Result();
-        //    if (request.Exception != null)
-        //        result.SetError(ParseMessage(request.Exception.Message));
-        //    else
-        //        result.SetSuccess(new DictSO { ["blockNumber"] = request.Result.Value });
-        //}
 
         public override IEnumerator MessageSign(Blockchain blockchain, string message, Action<Result> callback = null)
         {
             onProgressStart?.Invoke(Messages.MessageSignApprove);
 
-            var request = new EthPersonalSignUnityRequest(GetRequestClientFactory());
-            yield return request.SendRequest(new HexUTF8String(message));
+            yield return SignTypedData(message).ToCoroutine(result =>
+            {
+                onProgressEnd?.Invoke(result);
 
-            var result = new Result();
-            if (request.Exception != null)
-                result.SetError(ParseMessage(request.Exception.Message));
-            else
-                result.SetSuccess(new DictSO { ["signature"] = request.Result });
-
-            onProgressEnd?.Invoke(result);
-
-            callback?.Invoke(result);
+                callback?.Invoke(result);
+            });
         }
 
         public override IEnumerator MessageSignEIP712(Blockchain blockchain, Nethereum.ABI.EIP712.TypedData<Nethereum.ABI.EIP712.Domain> typedData, Action<Result> callback = null)
         {
             onProgressStart?.Invoke(Messages.MessageSignApprove);
 
-            var request = new EthSignTypedDataV4UnityRequest(GetRequestClientFactory());
-            yield return request.SendRequest(Nethereum.ABI.EIP712.TypedDataRawJsonConversion.ToJson(typedData));
+            yield return SignTypedData(Nethereum.ABI.EIP712.TypedDataRawJsonConversion.ToJson(typedData)).ToCoroutine(result =>
+            {
+                onProgressEnd?.Invoke(result);
 
-            var result = new Result();
-            if (request.Exception != null)
-                result.SetError(ParseMessage(request.Exception.Message));
-            else
-                result.SetSuccess(new DictSO { ["signature"] = request.Result });
-
-            onProgressEnd?.Invoke(result);
-
-            callback?.Invoke(result);
+                callback?.Invoke(result);
+            });
         }
 
         public override IEnumerator TransactionSignAndSend(Transaction tx, Action<Transaction> callback = null)
         {
             Log.Info($"Blockchain - TransactionSignAndSend: " + tx.ToString());
 
-            if (tx.Blockchain != _blockchain)
+            if (!supportedBlockchains.Contains(tx.Blockchain))
             {
-                yield return SwitchChain(tx.Blockchain);
-
-                if (tx.Blockchain != _blockchain)
-                {
-                    Log.Error($"Blockchain - TransactionSignAndSend - Wrong Network: current is {_chainId}, but {tx.Blockchain.network.Id} required)");
-                    tx.error = Errors.NetworkWrong;
-                    tx.SetStatus(Transaction.Status.REJECTED);
-                    callback?.Invoke(tx);
-                    yield break;
-                }
+                Log.Error($"Blockchain - TransactionSignAndSend - Wrong Network: current is {supportedBlockchains[0]}, but {tx.Blockchain.network.Id} required)");
+                tx.error = Errors.NetworkWrong;
+                tx.SetStatus(Transaction.Status.REJECTED);
+                callback?.Invoke(tx);
+                yield break;
             }
 
-            if (_account.IsNotEmpty() && !tx.From.IsEqualIgnoreCase(_account))
+            if (_accounts.Count == 0 || !_accounts.Contains(tx.From))
             {
-                Log.Error($"Blockchain - TransactionSignAndSend - Wrong Account: current is {_account}, but {tx.From} required)");
+                Log.Error($"Blockchain - TransactionSignAndSend - Wrong Account: current is {(_accounts.Count > 0 ? _accounts[0] : "null")}, but {tx.From} required)");
                 tx.error = Errors.AccountWrong;
                 tx.SetStatus(Transaction.Status.REJECTED);
                 callback?.Invoke(tx);
                 yield break;
             }
 
-            onProgressStart?.Invoke(Messages.TransactionEstimate);
+            //onProgressStart?.Invoke(Messages.TransactionEstimate);
 
-            //if (tx.Function.FeeModifier != null && supportedBlockchains.Contains(tx.Blockchain))
-            //{
+            //if (tx.gasEstimation == default)
             //    yield return TransactionEstimate(tx);
-            //    if (!tx.error.IsEmpty())
-            //    {
-            //        tx.SetStatus(Transaction.Status.REJECTED);
-            //        onProgressEnd?.Invoke(tx.Blockchain, new Result().SetError(tx.error)); // TODO Move tx.error to Result
-            //        callback?.Invoke(tx);
-            //        yield break;
-            //    }
-            //}
-
-            if (tx.gasEstimation == default)
-                yield return TransactionEstimate(tx);
-            tx.gasLimit = new BigInteger((decimal) tx.gasEstimation * tx.Blockchain.gasMultiplier);
+            //tx.gasLimit = new BigInteger((decimal)tx.gasEstimation * tx.Blockchain.gasMultiplier);
 
             onProgressStart?.Invoke(Messages.TransactionSignApprove);
 
-            yield return NethereumManager.TransactionSignAndSend(tx, GetTransactionRequest());
+            yield return SendTransaction(tx).ToCoroutine();
 
             if (tx.error.IsNotEmpty())
             {
-                tx.errorLocalized = GetErrorLocalized(tx.Blockchain, tx.error);
                 tx.SetStatus(Transaction.Status.REJECTED);
-                onProgressEnd?.Invoke(new Result().SetError(tx.error)); // TODO Move tx.error to Result
+                onProgressEnd?.Invoke(Result.Error(tx.error)); // TODO Move tx.error to Result
                 callback?.Invoke(tx);
                 yield break;
             }
 
             tx.SetStatus(Transaction.Status.PENDING);
-            onProgressEnd?.Invoke(new Result().SetSuccess()); // TODO Move tx.error to Result
+            onProgressEnd?.Invoke(Result.Success()); // TODO Move tx.error to Result
 
             callback?.Invoke(tx);
         }
 
-        public override IEnumerator TransactionEstimate(Transaction tx)
-        {
-            if (!supportedBlockchains.Contains(tx.Blockchain))
-                throw new NotImplementedException();
+        //public override IEnumerator TransactionEstimate(Transaction tx)
+        //{
+        //    if (!supportedBlockchains.Contains(tx.Blockchain))
+        //        throw new NotImplementedException();
 
-            yield return NethereumManager.TransactionEstimate(tx, GetRequestClientFactory());
+        //    yield return NethereumManager.TransactionEstimate(tx, GetRequestClientFactory());
 
-            // TODO Remove?
-            tx.errorLocalized = GetErrorLocalized(tx.Blockchain, tx.error);
-        }
+        //    // TODO Remove?
+        //    tx.errorLocalized = GetErrorLocalized(tx.Blockchain, tx.error);
+        //}
 
         public override IEnumerator TransactionSetStatus(Transaction tx, Action<Result> callback = null)
         {
             if (!supportedBlockchains.Contains(tx.Blockchain))
                 throw new NotImplementedException();
 
-            yield return NethereumManager.TransactionSetStatus(tx, GetRequestClientFactory(), callback);
+            yield return GetTxStatus(tx).ToCoroutine(callback);
         }
 
-        //private IEnumerator SwitchChain(Blockchain blockchain)
-        //{
-        //    onProgressStart?.Invoke(Messages.NetworkWrong_AddApprove(blockchain.network));
-
-        //    var addChainRequest = new WalletAddEthereumChainUnityRequest(GetRequestClientFactory());
-        //    yield return addChainRequest.SendRequest(
-        //        new Nethereum.RPC.HostWallet.AddEthereumChainParameter
-        //        {
-        //            ChainId = new HexBigInteger(BigInteger.Parse(blockchain.network.Id)),
-        //            BlockExplorerUrls = new List<string> { blockchain.network.explorer.Url },
-        //            ChainName = blockchain.network.Name,
-        //            NativeCurrency = new Nethereum.RPC.HostWallet.NativeCurrency()
-        //            {
-        //                Name = blockchain.NativeToken.Name,
-        //                Symbol = blockchain.NativeToken.Name,
-        //                Decimals = blockchain.NativeToken.Decimals.ToUInt(),
-        //            },
-        //            RpcUrls = new List<string> { blockchain.network.Node.OriginalString },
-        //        });
-        //}
-
-        private IEnumerator SwitchChain(Blockchain blockchain)
+        public override IEnumerator Logout(Blockchain blockchain, Action<Result> callback = null)
         {
-            onProgressStart?.Invoke(Messages.NetworkWrong_SwitchApprove(blockchain.network));
+            onProgressStart?.Invoke(Messages.LoginApprove); // TODO
 
-            var chainIdRequest = new WalletSwitchEthereumChainUnityRequest(GetRequestClientFactory());
-            yield return chainIdRequest.SendRequest(
-                new Nethereum.RPC.HostWallet.SwitchEthereumChainParameter { ChainId = new HexBigInteger(BigInteger.Parse(blockchain.network.Id)) });
-            yield return new WaitForSeconds(1f);
-
-            if (chainIdRequest.Exception != null)
+            yield return Logout().ToCoroutine(result =>
             {
-                Log.Error("EthChainIdUnityRequest Error " + chainIdRequest.Exception.Message);
+                onProgressEnd?.Invoke(result);
 
-                onProgressStart?.Invoke(Messages.NetworkWrong_AddApprove(blockchain.network));
+                callback?.Invoke(result);
+            });
+        }
 
-                var addChainRequest = new WalletAddEthereumChainUnityRequest(GetRequestClientFactory());
-                yield return addChainRequest.SendRequest(
-                    new Nethereum.RPC.HostWallet.AddEthereumChainParameter
+        private async UniTask<Result> Init()
+        {
+            if (_passport != null)
+            {
+                Log.Blockchain.Warning("Blockchain - Immutable - Fail to Init because already inited");
+                return Result.Success();
+            }
+
+            if (CLIENT_ID == null)
+            {
+                Log.Blockchain.Error("Blockchain - Immutable - Fail to Init because CLIENT_ID = null. Please Call Setup first");
+                return Result.Error("CLIENT_ID = null");
+            }
+
+            // Passport.LogLevel = Immutable.Passport.Core.Logging.LogLevel.Info;
+
+            _passport = await Passport.Init(CLIENT_ID, _environment, REDIRECT_URL, LOGOUT_REDIRECT_URL);
+            Log.Blockchain.Info("Blockchain - Immutable - Init: " + (_passport != null));
+            return Result.Success();
+        }
+
+        private bool IsPKCESupported()
+        {
+#if (UNITY_ANDROID && !UNITY_EDITOR_WIN) || (UNITY_IPHONE && !UNITY_EDITOR_WIN) || UNITY_STANDALONE_OSX || UNITY_WEBGL
+            return true;
+#else
+            return false;
+#endif
+        }
+
+        private async UniTask<Result> Login()
+        {
+            if (_passport == null)
+            {
+                var initResult = await Init();
+
+                if (!initResult.success)
+                    return initResult;
+            }
+
+            if (await _passport.HasCredentialsSaved())
+            {
+                Log.Blockchain.Info($"Blockchain - Immutable - Login(useCachedSession: true)");
+                await _passport.Login(useCachedSession: true);
+            }
+            else
+            {
+                try
+                {
+                    if (IsPKCESupported())
                     {
-                        ChainId = new HexBigInteger(BigInteger.Parse(blockchain.network.Id)),
-                        BlockExplorerUrls = new List<string> { blockchain.network.explorer.Url },
-                        ChainName = blockchain.network.Name,
-                        NativeCurrency = new Nethereum.RPC.HostWallet.NativeCurrency()
-                        {
-                            Name = blockchain.NativeToken.Name,
-                            Symbol = blockchain.NativeToken.Name,
-                            Decimals = blockchain.NativeToken.Decimals.ToUInt(),
-                        },
-                        RpcUrls = new List<string> { blockchain.network.Node.OriginalString },
-                    });
-                yield return new WaitForSeconds(1f);
+                        Log.Blockchain.Info($"Blockchain - Immutable - LoginPKCE()");
+                        await _passport.LoginPKCE();
+                    }
+                    else
+                    {
+                        Log.Blockchain.Info($"Blockchain - Immutable - Login(useCachedSession: false)");
+                        await _passport.Login(useCachedSession: false);
+                    }
 
-                if (addChainRequest.Exception == null)
+                }
+                catch (OperationCanceledException)
                 {
-                    onProgressStart?.Invoke(Messages.NetworkWrong_AddedSwitchApprove(blockchain.network));
-                    chainIdRequest = new WalletSwitchEthereumChainUnityRequest(GetRequestClientFactory());
-                    yield return chainIdRequest.SendRequest(
-                        new Nethereum.RPC.HostWallet.SwitchEthereumChainParameter { ChainId = new HexBigInteger(BigInteger.Parse(blockchain.network.Id)) });
-                    yield return new WaitForSeconds(1f);
+                    return Result.Error(Errors.OperationCanceled);
+                    ;
+                }
+                catch (Exception ex)
+                {
+                    await Logout();
+                    return Result.Error(ex.Message);
                 }
             }
 
-            onProgressEnd?.Invoke(blockchain != _blockchain ? new Result().SetError(Errors.OperationCanceled) : new Result().SetSuccess());
-        }
+            var email = await _passport.GetEmail();
+            Log.Blockchain.Info($"Blockchain - Immutable - GetEmail: {email}");
 
-        private string GetErrorLocalized(Blockchain blockchain, string error)
-        {
-            string errorLocalized = null;
+            await _passport.ConnectEvm();
 
-            if (error.IsNotEmpty())
+            _accounts = await _passport.ZkEvmRequestAccounts();
+            Log.Blockchain.Info("Blockchain - Immutable - ZkEvmRequestAccounts: " + (_accounts.Count > 0 ? string.Join(", ", _accounts) : "No accounts found"));
+
+            if (_accounts == null || _accounts.Count == 0)
             {
-                if (error == Errors.NetworkWrong)
-                {
-                    errorLocalized = error.Localize(nameToView, blockchain.network.Name);
-                    if (!(blockchain is Ethereum))
-                        errorLocalized += Const.doubleLineBreak +
-                            (error + "_ADD").Localize($"\nNew RPC URL = {blockchain.network.Node}\nChainID = {blockchain.network.Id}\nSymbol = {blockchain.NativeToken.Name}");
-                }
-                else if (error == Errors.WalletLocked || error == Errors.WalletNotInstalled)
-                {
-                    errorLocalized = error.Localize(nameToView);
-                }
+                // TODO
+                return Result.Error("No accounts found");
             }
 
-            return errorLocalized;
+            return Result.Success(new DictSO { ["email"] = email, ["account"] = _accounts[0] });
         }
 
-        private MetamaskRequestRpcClientFactory GetRequestClientFactory() =>
-            new MetamaskRequestRpcClientFactory(_account, null, 60000);
-
-        private MetamaskTransactionUnityRequest GetTransactionRequest() =>
-            new MetamaskTransactionUnityRequest(_account, GetRequestClientFactory());
-
-        private string ParseMessage(string message)
+        private async UniTask<Result> Logout()
         {
-            if (message.Contains("User denied message signature"))
-                return Errors.OperationCanceled;
+            try
+            {
+                if (IsPKCESupported())
+                {
+                    Log.Blockchain.Info($"Blockchain - Immutable - LogoutPKCE()");
+                    await _passport.LogoutPKCE();
+                    return Result.Success();
+                }
+                else
+                {
+                    Log.Blockchain.Info($"Blockchain - Immutable - Logout()");
+                    await _passport.Logout();
+                    return Result.Success();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Result.Error(ex.Message);
+            }
+        }
 
-            return message;
+        private async UniTask<Result<decimal>> GetBalance(string address)
+        {
+            try
+            {
+                string balanceHex = await _passport.ZkEvmGetBalance(address);
+
+                var balance = BigInteger.Parse(balanceHex.Replace("0x", ""), NumberStyles.HexNumber);
+                if (balance < 0)
+                    balance = BigInteger.Parse("0" + balanceHex.Replace("0x", ""), NumberStyles.HexNumber);
+
+
+
+                return new Result<decimal>(Blockchain.Immutable.NativeToken.FromMin(balance));
+            }
+            catch (Exception ex)
+            {
+                Log.Blockchain.Error("Blockchain - Immutable - GetBalance Error: " + ex.Message);
+                return new Result<decimal>(ex.Message);
+            }
+        }
+
+        private async UniTask<Result> SignTypedData(string data)
+        {
+            try
+            {
+                string signature = await _passport.ZkEvmSignTypedDataV4(data);
+                return Result.Success(new DictSO { ["signature"] = signature });
+            }
+            catch (Exception ex)
+            {
+                Log.Blockchain.Error($"Failed to retrieve transaction receipt: {ex.Message}");
+                return Result.Error(ex.Message);
+            }
+        }
+
+        private async UniTask<Transaction> SendTransaction(Transaction tx)
+        {
+            try
+            {
+                var input = tx.GetInput();
+                var request = new TransactionRequest
+                {
+                    to = input.To,
+                    value = input.Value.ToString(),
+                    data = input.Data
+                };
+
+                //var response = await _passport.ZkEvmSendTransactionWithConfirmation(request);
+                //tx.Hash = response.transactionHash;
+                //tx.SetStatus(await GetTxStatus(tx));
+                // Log.Blockchain.Info($"Blockchain - Immutable - Transaction hash: {tx.Hash}\nStatus: {tx.status}");
+
+                tx.Hash = await _passport.ZkEvmSendTransaction(request);
+                Log.Blockchain.Info($"Blockchain - Immutable - Transaction hash: {tx.Hash}");
+            }
+            catch (Exception ex)
+            {
+                Log.Blockchain.Error($"Failed to send transaction: {ex.Message}");
+                tx.error = ex.Message;
+            }
+
+            return tx;
+        }
+
+        private async UniTask<Result> GetTxStatus(Transaction tx)
+        {
+            tx.status = ParseStarus(await PollStatus(tx.Hash));
+
+            return Result.Success(new DictSO { ["status"] = tx.status.ToString() });
+
+            Transaction.Status ParseStarus(string status)
+            {
+                switch (status)
+                {
+                    case "1":
+                    case "0x1": return Transaction.Status.SUCCESS;
+                    case "0":
+                    case "0x0": return Transaction.Status.FAIL;
+                    case null: return Transaction.Status.PENDING;
+                    default: return Transaction.Status.UNKNOWN;
+                }
+            }
+        }
+
+        private static async UniTask<string> PollStatus(string txHash)
+        {
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            try
+            {
+                while (!cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    var response = await Passport.Instance.ZkEvmGetTransactionReceipt(txHash);
+                    if (response.status == null)
+                    {
+                        // The transaction is still being processed, poll for status again
+                        await UniTask.Delay(delayTimeSpan: TimeSpan.FromSeconds(1), cancellationToken: cancellationTokenSource.Token);
+                    }
+                    else
+                    {
+                        return response.status;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Task was canceled due to timeout
+            }
+
+            return null; // Timeout or could not get transaction receipt
         }
     }
 }
-#endif // METAMASK && UNITY_WEBGL
+#endif // IMMUNTABLE
