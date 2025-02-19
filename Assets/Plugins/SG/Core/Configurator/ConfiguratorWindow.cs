@@ -1,7 +1,6 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
-using SG.Core;
 
 namespace SG
 {
@@ -10,8 +9,8 @@ namespace SG
         [MenuItem("Sunday/Delete Player Prefs")]
         public static void DeletePlayerPrefs() => Configurator.DeletePlayerPrefs();
 
-        [MenuItem("Sunday/Delete Zone Save")]
-        public static void DeleteZoneSave() => Utils.DeleteFile(Constants.INIT_STATES_EXTERNAL_PATH);
+        //[MenuItem("Sunday/Delete Zone Save")]
+        //public static void DeleteZoneSave() => Utils.DeleteFile(Constants.INIT_STATES_EXTERNAL_PATH);
 
         [MenuItem("Sunday/Configurator")]
         public static void ShowWindow()

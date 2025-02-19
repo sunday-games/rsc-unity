@@ -442,7 +442,7 @@ namespace SG.RSC
 
             server.SyncUser(data, download =>
             {
-                if (download.isSuccess && download.responseDict != null)
+                if (download.success && download.responseDict != null)
                     ServerToLocal(download.responseDict);
 
                 if (callback != null) callback();

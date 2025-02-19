@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-
 using System.Net;
 using System.Net.Sockets;
+using DictSO = System.Collections.Generic.Dictionary<string, object>;
+using ListO = System.Collections.Generic.List<object>;
 
 namespace SG.RSC
 {
@@ -52,7 +52,7 @@ namespace SG.RSC
             public string[] timeServers = new[] { "pool.ntp.org", "time1.google.com" };
         }
 
-        public void SyncUser(Dictionary<string, object> userData, Action<Download> callback)
+        public void SyncUser(DictSO userData, Action<Download> callback)
         {
             RequestDict("Sync User", links.server + links.syncUser, userData, callback);
         }
@@ -60,44 +60,42 @@ namespace SG.RSC
         public void DeleteUser(string facebookId, Action<Download> callback)
         {
             RequestDict("Delete User", links.server + links.deleteUser,
-                new Dictionary<string, object> { { "facebookId", facebookId } }, callback);
+                new DictSO { ["facebookId"] = facebookId }, callback);
         }
 
         public void VerifyPromocode(string code, Action<Download> callback)
         {
             RequestDict("Verify Promocode", links.server + links.verifyPromocode,
-                new Dictionary<string, object> { { "code", code }, { "deviceId", user.deviceId } }, callback);
+                new DictSO { ["code"] = code, ["deviceId"] = user.deviceId }, callback);
         }
 
         public void GetTournament(Action<List<Rival>, long, List<Rival>, int> callback)
         {
-            var players = new List<object>();
-            players.Add(user.facebookId);
-            foreach (var friend in user.friends) players.Add(friend.facebookID);
+            var players = new ListO { user.facebookId };
+            foreach (var friend in user.friends)
+                players.Add(friend.facebookID);
 
-            var request = new Dictionary<string, object>()
+            var request = new DictSO
             {
-                { "userId", string.IsNullOrEmpty(user.id) ? "me" : user.id},
-                { "record", user.record },
-                { "players", players },
-                { "currentTournamentEndDate", user.recordTimestamp },
+                ["userId"] = string.IsNullOrEmpty(user.id) ? "me" : user.id,
+                ["record"] = user.record,
+                ["players"] = players,
+                ["currentTournamentEndDate"] = user.recordTimestamp,
             };
 
             RequestDict("Get Tournament", links.server + links.tournament, request, download =>
             {
-                if (!download.isSuccess)
+                if (!download.success)
                 {
                     callback(null, 0, null, 0);
                     return;
                 }
 
-                Log.Debug("Server - Get Tournament - Server response: {0}", download.www.text);
+                Log.Debug("Server - Get Tournament - Server response: " + download.responseText);
 
-                var response = Json.Deserialize(download.www.text) as Dictionary<string, object>;
-
-                if (response == null || !response.ContainsKey("currentTournamentEndDate"))
+                if (download.responseDict == null || !download.responseDict.ContainsKey("currentTournamentEndDate"))
                 {
-                    Log.Error("Server - Get Tournament - Cant parse response: {0}", download.www.text);
+                    Log.Error("Server - Get Tournament - Cant parse response: " + download.responseText);
                     callback(null, 0, null, 0);
                     return;
                 }
@@ -105,18 +103,19 @@ namespace SG.RSC
                 object temp;
 
                 List<Rival> tournamentPlayers = null;
-                if (response.TryGetValue("tournamentPlayers", out temp) && temp != null)
+                if (download.responseDict.TryGetValue("tournamentPlayers", out temp) && temp != null)
                 {
                     tournamentPlayers = new List<Rival>();
-                    var tournamentPlayersList = temp as List<object>;
-                    foreach (Dictionary<string, object> rival in tournamentPlayersList)
+                    var tournamentPlayersList = temp as ListO;
+                    foreach (DictSO rival in tournamentPlayersList)
                     {
-                        tournamentPlayers.Add(new Rival(
-                            (string)rival["userId"],
-                            (string)rival["name"],
-                            Convert.ToInt32(rival["level"]),
-                            (string)rival["fbId"],
-                            Convert.ToInt32(rival["record"])));
+                        tournamentPlayers.Add(
+                            new Rival(
+                                rival["userId"].ToString(),
+                                rival["name"].ToString(),
+                                rival["level"].ToInt(),
+                                rival["fbId"].ToString(),
+                                rival["record"].ToInt()));
 
                         if (tournamentPlayers.Count > 200) break;
                     }
@@ -125,18 +124,19 @@ namespace SG.RSC
                 StartCoroutine(DownloadAtlas(tournamentPlayers, () =>
                 {
                     List<Rival> currentTournamentPlayers = null;
-                    if (response.TryGetValue("currentTournamentPlayers", out temp) && temp != null)
+                    if (download.responseDict.TryGetValue("currentTournamentPlayers", out temp) && temp != null)
                     {
                         currentTournamentPlayers = new List<Rival>();
-                        var playersList = temp as List<object>;
-                        foreach (Dictionary<string, object> rival in playersList)
+                        var playersList = temp as ListO;
+                        foreach (DictSO rival in playersList)
                         {
-                            currentTournamentPlayers.Add(new Rival(
-                                (string)rival["userId"],
-                                (string)rival["name"],
-                                Convert.ToInt32(rival["level"]),
-                                (string)rival["fbId"],
-                                Convert.ToInt32(rival["record"])));
+                            currentTournamentPlayers.Add(
+                                new Rival(
+                                    rival["userId"].ToString(),
+                                    rival["name"].ToString(),
+                                    rival["level"].ToInt(),
+                                    rival["fbId"].ToString(),
+                                    rival["record"].ToInt()));
 
                             if (currentTournamentPlayers.Count > 200) break;
                         }
@@ -148,9 +148,9 @@ namespace SG.RSC
                     {
                         callback(
                             currentTournamentPlayers,
-                            Convert.ToInt64(response["currentTournamentEndDate"]),
+                            Convert.ToInt64(download.responseDict["currentTournamentEndDate"]),
                             tournamentPlayers,
-                            Convert.ToInt32(response["tournamentCoins"]));
+                            Convert.ToInt32(download.responseDict["tournamentCoins"]));
                     }));
                 }));
             }, hashValidation: false);
@@ -158,33 +158,31 @@ namespace SG.RSC
 
         public void GetChampionship(Action<List<Rival>> callback)
         {
-            var request = new Dictionary<string, object>()
+            var request = new DictSO
             {
-                { "permanentRecord", user.permanentRecord },
-                { "userId", string.IsNullOrEmpty(user.id) ? "me" : user.id},
+                ["permanentRecord"] = user.permanentRecord,
+                ["userId"] = user.id.IsEmpty() ? "me" : user.id,
             };
 
             RequestDict("Get Championship", links.server + links.championship, request, download =>
              {
-                 if (!download.isSuccess)
+                 if (!download.success)
                  {
                      callback(null);
                      return;
                  }
 
-                 Log.Debug("Server - Get Championship - Server response: {0}", download.www.text);
+                 Log.Debug("Server - Get Championship - Server response: " + download.responseText);
 
-                 var rivalsDict = Json.Deserialize(download.www.text) as List<object>;
-
-                 if (rivalsDict == null)
+                 if (download.responseList == null)
                  {
-                     Log.Error("Server - Get Championship - Cant parse response: {0}", download.www.text);
+                     Log.Error("Server - Get Championship - Cant parse response: " + download.responseText);
                      callback(null);
                      return;
                  }
 
                  var rivals = new List<Rival>();
-                 foreach (Dictionary<string, object> rivalDict in rivalsDict)
+                 foreach (DictSO rivalDict in download.responseList)
                  {
                      Rival rival = null;
 
@@ -239,64 +237,64 @@ namespace SG.RSC
              }, hashValidation: false);
         }
 
-        public void VerifyPurchase(PurchaseData data, Action<bool?> callback)
-        {
-            var url = links.server;
+        //public void VerifyPurchase(PurchaseData data, Action<bool?> callback)
+        //{
+        //    var url = links.server;
 
-            var request = new Dictionary<string, object>()
-            {
-                { "productId", data.iap.sku },
-                { "orderId", data.transaction },
-                { "deviceId", user.deviceId },
-                { "userId", user.id },
-            };
+        //    var request = new DictSO()
+        //    {
+        //        { "productId", data.iap.sku },
+        //        { "orderId", data.transaction },
+        //        { "deviceId", user.deviceId },
+        //        { "userId", user.id },
+        //    };
 
-            if (platform == Platform.iOS || platform == Platform.tvOS)
-            {
-                url += links.verifyPurchaseApple;
+        //    if (platform == Platform.iOS || platform == Platform.tvOS)
+        //    {
+        //        url += links.verifyPurchaseApple;
 
-                request.Add("base64EncodedReceipt", data.receipt);
-                request.Add("debug", isDebug);
-            }
-            else if (platform == Platform.Android)
-            {
-                url += links.verifyPurchaseGoogle;
+        //        request.Add("base64EncodedReceipt", data.receipt);
+        //        request.Add("debug", isDebug);
+        //    }
+        //    else if (platform == Platform.Android)
+        //    {
+        //        url += links.verifyPurchaseGoogle;
 
-                request.Add("packageName", build.ID);
-                request.Add("purchaseToken", (Json.Deserialize(data.receipt) as Dictionary<string, object>)["purchaseToken"]);
-                request.Add("developerPayload", data.receipt);
-            }
+        //        request.Add("packageName", build.ID);
+        //        request.Add("purchaseToken", (Json.Deserialize(data.receipt) as DictSO)["purchaseToken"]);
+        //        request.Add("developerPayload", data.receipt);
+        //    }
 
-            RequestDict("Verify Purchase", url, request, download =>
-            {
-                if (download.isSuccess && download.responseDict != null)
-                {
-                    if (download.responseDict.ContainsKey("valid") && (bool)download.responseDict["valid"])
-                    {
-                        callback?.Invoke(true);
-                        if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Success");
-                    }
-                    else
-                    {
-                        if (download.responseDict.ContainsKey("message"))
-                            Log.Error("Server - Verify Purchase - Store Error: " + download.responseDict["message"]);
+        //    RequestDict("Verify Purchase", url, request, download =>
+        //    {
+        //        if (download.success && download.responseDict != null)
+        //        {
+        //            if (download.responseDict.ContainsKey("valid") && (bool)download.responseDict["valid"])
+        //            {
+        //                callback?.Invoke(true);
+        //                if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Success");
+        //            }
+        //            else
+        //            {
+        //                if (download.responseDict.ContainsKey("message"))
+        //                    Log.Error("Server - Verify Purchase - Store Error: " + download.responseDict["message"]);
 
-                        callback?.Invoke(false);
-                        if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Failed");
-                    }
-                }
-                else if (download.isCorrupted)
-                {
-                    Log.Error("Server - Verify Purchase - Corrupted");
-                    callback?.Invoke(false);
-                }
-                else
-                {
-                    Log.Error("Server - Verify Purchase - Unknown Error");
-                    callback?.Invoke(null);
-                }
-            });
-        }
+        //                callback?.Invoke(false);
+        //                if (!string.IsNullOrEmpty(data.transaction)) PlayerPrefs.SetString("Purchase " + data.transaction, "Failed");
+        //            }
+        //        }
+        //        else if (download.isCorrupted)
+        //        {
+        //            Log.Error("Server - Verify Purchase - Corrupted");
+        //            callback?.Invoke(false);
+        //        }
+        //        else
+        //        {
+        //            Log.Error("Server - Verify Purchase - Unknown Error");
+        //            callback?.Invoke(null);
+        //        }
+        //    });
+        //}
 
         //DateTime utcDataTime = DateTime.MinValue;
         //DateTime updateDataTime = DateTime.MinValue;
@@ -314,7 +312,7 @@ namespace SG.RSC
         //        {
         //            Log.Debug("Server - Get Time ({0}) - Server response: {1}", download.time, download.www.text);
 
-        //            var response = Json.Deserialize(download.www.text) as Dictionary<string, object>;
+        //            var response = Json.Deserialize(download.www.text) as DictSO;
 
         //            if (response != null && response.ContainsKey("millis"))
         //            {
@@ -371,7 +369,7 @@ namespace SG.RSC
             callback(false);
         }
 
-        IEnumerator DownloadAtlas(List<Rival> rivals, Action callback)
+        private IEnumerator DownloadAtlas(List<Rival> rivals, Action callback)
         {
             if (rivals != null && rivals.Count > 0)
             {
@@ -406,80 +404,68 @@ namespace SG.RSC
 
             callback();
         }
-        void DownloadPic(string url, int i, Action<Texture2D, int> callback)
+
+        private void DownloadPic(string url, int i, Action<Texture2D, int> callback)
         {
-            Download.Create(gameObject).Run("Downloading Pic", url,
-                download => { if (download.isSuccess) callback(download.www.texture, i); });
+            new Download(url)
+                .SetLoadingName("Downloading Pic")
+                .SetCallback(download =>
+                {
+                    if (download.success) callback(download.responseTexture, i);
+                })
+                .Run();
         }
 
         public void DownloadPic(UnityEngine.UI.RawImage image, string url)
         {
-            Download.Create(gameObject).Run("Downloading Pic", url, download =>
-            {
-                if (download.isSuccess)
+            new Download(url)
+                .SetLoadingName("Downloading Pic")
+                .SetCallback(download =>
                 {
-                    var texture = download.www.texture;
-                    if (texture != null) image.texture = texture;
-                }
-            });
+                    if (download.success)
+                    {
+                        var texture = download.responseTexture;
+                        if (texture != null) image.texture = texture;
+                    }
+                })
+                .Run();
         }
 
         public void DownloadPic(UnityEngine.UI.Image image, string url)
         {
-            Download.Create(gameObject).Run("Downloading Pic", url, download =>
-            {
-                if (download.isSuccess)
+            new Download(url)
+                .SetLoadingName("Downloading Pic")
+                .SetCallback(download =>
                 {
-                    var texture = download.www.texture;
-                    if (texture != null)
-                        image.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                }
-            });
+                    if (download.success)
+                    {
+                        var texture = download.responseTexture;
+                        if (texture != null)
+                            image.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                    }
+                })
+                .Run();
         }
 
         public void CheckConnection(Action<bool> callback)
         {
             if (Utils.IsStore(Store.Facebook)) { callback(true); return; }
 
-            Download.Create(gameObject).Run("Check Connection", links.checkConnection,
-                download => { callback(download.isSuccess); });
+            new Download(links.checkConnection)
+                .SetLoadingName("Check Connection")
+                .SetCallback(download => callback?.Invoke(download.success))
+                .Run();
         }
 
-        void RequestDict(string name, string url, Dictionary<string, object> requestDict, Action<Download> callback, bool hashValidation = true)
+        private void RequestDict(string name, string url, DictSO requestDict, Action<Download> callback, bool hashValidation = true)
         {
-            var request = Json.Serialize(requestDict);
+            //{ "Version", build.version },
 
-            var headers = new Dictionary<string, string>() {
-                { "Content-Type", "application/json" },
-                { "Version", build.version },
-                { "Key", (request + build.s).MD5() },
-            };
-
-            Log.Debug($"Server - {name} - Url: '{url}', Key: '{headers["Key"]}', Request: {request}");
-
-            Download.Create(gameObject).Run(name, new WWW(url, Encoding.UTF8.GetBytes(request), headers), download =>
-            {
-                if (!download.isSuccess || string.IsNullOrEmpty(download.www.text))
-                {
-                    callback(download);
-                    return;
-                }
-
-                if (hashValidation)
-                {
-                    if (!download.www.responseHeaders.ContainsKey("KEY") || download.www.responseHeaders["KEY"] != (download.www.text + build.s).MD5())
-                    {
-                        Log.Error("Server - {0} - Hash validation failed. Response: {1}", name, download.www.text);
-                        download.status = Download.Status.Corrupted;
-                        callback(download);
-                        return;
-                    }
-                }
-
-                download.responseDict = Json.Deserialize(download.www.text) as Dictionary<string, object>;
-
-                callback(download);
-            });
+            new Download(url, requestDict)
+                .SetLoadingName(name)
+                .SetValidation(build.s)
+                .SetCallback(callback)
+                .Run();
         }
     }
 }

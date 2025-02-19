@@ -89,7 +89,24 @@ namespace SG.RSC
                     ui.header.UpdateCoins(force: true);
             }
 
-            ads.ShowInterstitial(true, true, true, OpenPrepareOrRateApp, OpenPrepareOrRateApp, OpenPrepareOrRateApp);
+            if (user.revenue > 0f)
+            {
+                Debug.Log("Ads - User is premium guy - No ads served");
+                OpenPrepareOrRateApp();
+            }
+            else if (user.level < user.minLevelAds)
+            {
+                Debug.Log("Ads - User's level less than " + user.minLevelAds + " - No ads served");
+                OpenPrepareOrRateApp();
+            }
+            else
+            {
+                ads.ShowInterstitial(
+                    considerSessions: true,
+                    success: OpenPrepareOrRateApp,
+                    failed: OpenPrepareOrRateApp,
+                    dontReady: OpenPrepareOrRateApp);
+            }
         }
 
         public void OpenPrepareOrRateApp()

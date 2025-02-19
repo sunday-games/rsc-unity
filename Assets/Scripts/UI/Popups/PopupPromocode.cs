@@ -56,7 +56,7 @@ namespace SG.RSC
             loading.SetActive(false);
             resultText.gameObject.SetActive(true);
 
-            if (download == null || !download.isSuccess || download.responseDict == null)
+            if (download == null || !download.success || download.responseDict == null)
             {
                 resultText.text = Localization.Get("promocodeInvalid");
             }

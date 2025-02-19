@@ -18,41 +18,43 @@ namespace SG.RSC
             if (build.premium) tableName += " Premium";
             tableName += " v2";
 
-            Download.Create(gameObject).Run("Config", string.Format(webServiceUrl, spreadsheetId, tableName),
-                download =>
+            new Download(string.Format(webServiceUrl, spreadsheetId, tableName))
+                .SetLoadingName("Config")
+                .SetCallback(download =>
                 {
-                    if (!download.isSuccess)
+                    if (!download.success)
                         return;
 
-                    var rows = Json.Deserialize(download.www.text) as List<object>;
+                    var rows = download.responseList;
                     if (rows == null || rows.Count == 0)
                     {
-                        Log.Error("Config - Response parsing failed. Response: " + download.www.text);
+                        Log.Error("Config - Response parsing failed. Response: " + download.responseText);
                         return;
                     }
 
                     var firstRowDict = rows[0] as Dictionary<string, object>;
                     if (firstRowDict == null)
                     {
-                        Log.Error("Config - Response parsing failed. Response: " + download.www.text);
+                        Log.Error("Config - Response parsing failed. Response: " + download.responseText);
                         return;
                     }
 
                     var hash = (string)firstRowDict["hash"];
                     firstRowDict.Remove("hash");
-                    if (hash != (Json.Serialize(new List<object>() { firstRowDict }) + build.s).MD5())
+                    if (hash != (Json.Serialize(new List<object> { firstRowDict }) + build.s).MD5())
                     {
-                        Log.Error("Config - Hash validation failed. Response: " + download.www.text);
+                        Log.Error("Config - Hash validation failed. Response: " + download.responseText);
                         return;
                     }
 
-                    Log.Info("Config - Loading Success.Json: " + download.www.text);
+                    Log.Info("Config - Loading Success.Json: " + download.responseText);
 
                     data = firstRowDict;
                     ObscuredPrefs.SetString("config", Json.Serialize(data));
 
                     Setup();
-                });
+                })
+                .Run();
         }
 
         public void Setup()
@@ -71,7 +73,7 @@ namespace SG.RSC
 
             if (data.ContainsKey("serverPurchaseVerification")) build.serverPurchaseVerification = Convert.ToBoolean(data["serverPurchaseVerification"]);
 
-            if (data.ContainsKey("adMinLevel")) ads.minLevel = Convert.ToInt32(data["adMinLevel"]);
+            if (data.ContainsKey("adMinLevel")) user.minLevelAds = Convert.ToInt32(data["adMinLevel"]);
             if (data.ContainsKey("adInterstitialFrequency")) ads.interstitialFrequency = Convert.ToInt32(data["adInterstitialFrequency"]);
             ads.sessions = ads.interstitialFrequency / 2;
 

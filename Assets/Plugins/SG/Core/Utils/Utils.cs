@@ -21,7 +21,6 @@ using ListO = System.Collections.Generic.List<object>;
 using Text = TMPro.TextMeshProUGUI;
 using Dropdown = TMPro.TMP_Dropdown;
 using InputField = TMPro.TMP_InputField;
-using float3 = ME.ECS.Mathematics.float3;
 using Object = UnityEngine.Object;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -144,34 +143,6 @@ namespace SG
             { return data as List<T>; }
             catch { Log.Error($"Can't convert '{data}' to List {typeof(T)}"); return defaultValue; }
         }
-
-        #region sfloat
-        public static sfloat ToSFloat(this object data, sfloat defaultValue = default)
-        {
-            try
-            { return float.Parse(data.ToString(), CultureInfo.InvariantCulture); }
-            catch { Log.Error($"Can't convert '{data}' to float"); return defaultValue; }
-        }
-        public static float Round(this sfloat data, int digits = 2) => ((float)data).Round(digits);
-        #endregion
-
-        #region float3
-        public static float3 ToFloat3(this object data)
-        {
-            if (data is string stringValue)
-            {
-                if (stringValue.StartsWith("(") && stringValue.EndsWith(")"))
-                    stringValue = stringValue.Substring(1, stringValue.Length - 2);
-
-                var values = stringValue.Split(',');
-                return new float3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2]));
-            }
-
-            return (float3)data;
-        }
-        public static string ToStringFormatted(this float3 data, string delimeter = "x", int digits = 2) =>
-            $"{data.x.Round(digits)}{delimeter}{data.y.Round(digits)}{delimeter}{data.z.Round(digits)}";
-        #endregion
 
         #region byte[]
         public static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);

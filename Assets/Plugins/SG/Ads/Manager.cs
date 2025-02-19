@@ -67,23 +67,9 @@ namespace SG.Ads
             providerRewarded?.Init();
         }
 
-        public void ShowInterstitial(bool considerRevenue = false, bool considerLevel = false, bool considerSessions = false,
+        public void ShowInterstitial(bool considerSessions = false,
             Action success = null, Action failed = null, Action dontReady = null)
         {
-            //if (considerRevenue && user.revenue > 0f)
-            //{
-            //    Debug.Log("Ads - User is premium guy - No ads served");
-            //    dontReady?.Invoke();
-            //    return;
-            //}
-
-            //if (considerLevel && user.level < minLevel)
-            //{
-            //    Debug.Log("Ads - User's level less than " + minLevel + " - No ads served");
-            //    dontReady?.Invoke();
-            //    return;
-            //}
-
             if (interstitialFrequency < 0)
             {
                 Debug.Log("Ads - Ads is OFF - No ads served");

@@ -139,7 +139,7 @@ namespace SG.RSC
             SyncServer(force: true);
         }
 
-
+        public int minLevelAds = 6;
         public int level
         {
             get { return Convert.ToInt32(data["level"]); }
