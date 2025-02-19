@@ -6,7 +6,7 @@
 
         public override void Init()
         {
-            iapManager.isInitialized = true;
+            IAPManager_SG.isInitialized = true;
 
             foreach (var iap in IAP.IAPs)
             {

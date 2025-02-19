@@ -113,8 +113,8 @@ namespace SG.RSC
         {
             previous = ui.prepare;
 
-            if (user.gameSessions - PlayerPrefs.GetInt("RateApp", 0) > balance.showRateAppEveryGame && // Показывать Rate App раз в 50 сессий
-                (platform == Platform.iOS || platform == Platform.Android))
+            // Показывать Rate App раз в 50 сессий
+            if (user.gameSessions - PlayerPrefs.GetInt("RateApp", 0) > balance.showRateAppEveryGame && Utils.IsPlatformMobile())
                 previous = ui.rateApp;
 
             ui.PopupClose();

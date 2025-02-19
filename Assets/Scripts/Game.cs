@@ -56,17 +56,14 @@ namespace SG.RSC
 
         void Awake()
         {
-            Log.Info($"Game Init - Version {build.version}.{build.versionCode}");
-
             gameplay = this;
-            config = GetComponent<Config>();
-            ui = GetComponent<UI>();
             factory = GetComponent<Factory>();
+            config = GetComponent<Config>();
+            ui = GetComponent<UI>(); // SG.UI.UI.Instance
             fb = GetComponent<FacebookManager>();
             iapManager = GetComponentInChildren<IAPManager>();
             notifications = GetComponent<Notifications>();
             server = GetComponentInChildren<Server>();
-            analytic = GetComponentInChildren<Analytic>();
             ads = GetComponentInChildren<Ads.Manager>();
             achievements = GetComponent<Achievements>();
             sound = GetComponentInChildren<Sound>();
@@ -75,57 +72,19 @@ namespace SG.RSC
             advisor = GetComponentInChildren<IngameAdvisor.Advisor>();
             balance = build.balanceDebug ? balanceDebug : balanceMain;
 
-#if UNITY_EDITOR
-            platform = Platform.Editor;
-#elif UNITY_WEBGL
-        platform = Platform.Facebook;
-#elif UNITY_TIZEN
-	    platform = Platform.Tizen;
-#elif UNITY_IOS
-	    platform = Platform.iOS;
-#elif UNITY_ANDROID
-        if (build.androidStore == BuildSettings.AndroidStore.GooglePlay) platform = Platform.Android;
-        else platform = Platform.Amazon;
-#endif
-            // if (build.debugPlatform != Platform.Unknown) platform = build.debugPlatform;
+            Init(() =>
+            {
+                user = gameObject.AddComponent<User>();
+                user.Init();
 
-            UnityEngine.Screen.sleepTimeout = SleepTimeout.NeverSleep;
+                factory.Init();
 
-            ObscuredPrefs.lockToDevice = ObscuredPrefs.DeviceLockLevel.None;
-            //if (platform != Platform.iOS) ObscuredPrefs.lockToDevice = ObscuredPrefs.DeviceLockLevel.Soft;
-            ObscuredPrefs.CryptoKey = build.s;
+                if (build.unlockAll) ui.ProgressMAX();
 
-            if (build.maxFPS > 0) Application.targetFrameRate = build.maxFPS;
+                ui.splash.SetText("checkConnection".Localize());
 
-            Localization.Init();
-
-            achievements.Init();
-
-            ads.Init();
-
-            analytic.Init();
-
-            Events.Init();
-
-            config.Setup();
-
-            Missions.Init();
-
-            ui.Init();
-
-            user = gameObject.AddComponent<User>();
-            user.Init();
-        }
-
-        void Start()
-        {
-            factory.Init();
-
-            if (build.unlockAll) ui.ProgressMAX();
-
-            ui.splash.SetText(Localization.Get("checkConnection"));
-
-            LoginAtStartup(ShowUI);
+                LoginAtStartup(ShowUI);
+            });
         }
 
         void LoginAtStartup(Action callback)
@@ -146,7 +105,13 @@ namespace SG.RSC
             Status socialStatus = Status.Trying;
             Status facebookStatus = Status.Trying;
 
-            achievements.Login(success => { socialStatus = success ? Status.Success : Status.Fail; });
+            string id = null; // TODO
+            if (Utils.IsPlatform(Platform.iOS, Platform.tvOS))
+                id = user.gameCenterId;
+            else if (Utils.IsPlatform(Platform.Android))
+                id = user.googleGamesId;
+
+            achievements.Login(id, success => { socialStatus = success ? Status.Success : Status.Fail; });
             fb.ProceedLogin(facebookData =>
             {
                 user.SetFacebookData(facebookData);
@@ -154,9 +119,10 @@ namespace SG.RSC
             }, force: false);
 
             var startTime = Time.time;
-            while (Time.time - startTime < 5f && (socialStatus == Status.Trying || facebookStatus == Status.Trying)) yield return null;
+            while (Time.time - startTime < 5f && (socialStatus == Status.Trying || facebookStatus == Status.Trying))
+                yield return null;
 
-            user.SyncServer(true, callback);
+            user.SyncServer(force: true, callback);
         }
 
         public void ShowUI()

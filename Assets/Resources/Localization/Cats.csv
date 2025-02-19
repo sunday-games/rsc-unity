@@ -1,0 +1,471 @@
+KEY,English,Russian,TAG
+achievementCatLevel,Coach,Тренер,Achievements
+achievementCatLevelBonus,Supercats come into the game box {0}% faster,Cуперкотики появляются в игре на {0}% быстрее,Achievements
+achievementCatLevelGet,Upgrade your supercat to level {0},"Улучши суперкотика
+до {0} уровня",Achievements
+achievementCombo,Virtuoso,Виртуоз,Achievements
+achievementComboBonus,Cats joined to the chain can be placed {0}% further ,Коты в цепочке могут находиться на {0}% дальше,Achievements
+achievementComboGet,Build a chain of {0} or more cats,Объедини в цепочку {0} или больше котиков,Achievements
+achievementGetGameSessions,Hard worker,Трудяга,Achievements
+achievementGetGameSessionsBonus,Disco mode runs {0}% faster,"Диско запускается
+на {0}% быстрее",Achievements
+achievementGetGameSessionsGet,Play {0} times,Сыграй {0} раз,Achievements
+achievementGetSuperCats,Collector,Коллекционер,Achievements
+achievementGetSuperCatsBonus,Supercat's fish price is {0}% less,Cуперкотикам нужно на {0}% меньше рыбок для игры,Achievements
+achievementGetSuperCatsGet,Complete collection of {0} supercats,"Собери коллекцию
+из {0} суперкотиков",Achievements
+achievementGoldfishes,Moneybag,Толстосум,Achievements
+achievementGoldfishesBonus,League levelup gives {0} extra seconds,Награда за повышение лиги больше на {0} [секунд|секунду|секунды],Achievements
+achievementGoldfishesGet,Save up {0} goldfish,"Накопи {0}
+золотых рыбок",Achievements
+achievementInviteFriends,True friend,Настоящий друг,Achievements
+achievementInviteFriendsBonus,Goldfish frequency is {0}% higher,"Золотые рыбки выпадают
+на {0}% чаще",Achievements
+achievementInviteFriendsGet,Invite {0} friends to join the game,Пригласи {0} [друзей|друга|друзей] в игру,Achievements
+achievementLeague,Hero,Герой,Achievements
+achievementLeagueBonus,Disco mode is {0} seconds longer,"Диско длится на
+{0} [секунд|секунду|секунды] дольше",Achievements
+achievementLeagueGet,Enter Legendary league,Войди в Легендарную лигу,Achievements
+achievementLevel,Guru,Гуру,Achievements
+achievementLevelBonus,Multipliers frequency is {0}% higher,"Множители выпадают
+на {0}% чаще",Achievements
+achievementLevelGet,Achieve level {0},Достигни {0} уровня,Achievements
+achievementTournamentWonFriends,Winner,Победитель,Achievements
+achievementTournamentWonFriendsBonus,Supercats get {0}% more experience,"Суперкотики получают
+на {0}% больше опыта",Achievements
+achievementTournamentWonFriendsGet,Beat {0} friends in a Tournament,Победи {0} [друзей|друга|друзей] в Турнире,Achievements
+achievementUseSausages,Gourmet,Гурман,Achievements
+achievementUseSausagesBonus,Free sausage becomes available {0} hours earlier,"Cарделька появляется
+на {0} [часов|час|часа] раньше",Achievements
+achievementUseSausagesGet,Use {0} sausages,Используй {0} сарделек,Achievements
+howToGet,HOW TO GET,КАК ПОЛУЧИТЬ,Achievements
+newMedal,NEW MEDAL,НОВАЯ МЕДАЛЬ,Achievements
+boosterbox,BOOSTER BOX,КОРОБКА БОНУСОВ,Boosts
+boostsDescription,Use boosters to improve your game results!,"Возьми в игру бонусы, чтобы улучшить свои результаты!",Boosts
+choiseBoosts,CHOOSE BOOSTERS,ВЫБЕРИ БОНУСЫ,Boosts
+left,LEFT: {0},ОСТАЛОСЬ: {0},Boosts
+remove,LEAVE,УБРАТЬ,Boosts
+take,TAKE,ВЗЯТЬ,Boosts
+tutorialBoostExperience,This booster increases supercats' experience two times,"Этот бонус увеличивает в 2 раза опыт, получаемый суперкотиками",Boosts
+tutorialBoostFirework,This booster gives you a Colorful petard in the beginning of the game,Этот бонус дает Цветную петарду с самого начала игры,Boosts
+tutorialBoostMultiplier,This booster gives you a cat with x2 multiplier in the beginning of the game,Этот бонус дает котика с множителем с самого начала игры,Boosts
+tutorialBoostTime,This booster adds 10 seconds to your timer,Этот бонус прибавляет 10 секунд к таймеру,Boosts
+unlockBoostExperience,Double experience booster unlocked,Открыт бонус Двойной опыт,Boosts
+unlockBoostFirework,Petard booster unlocked,Открыт бонус Петарда,Boosts
+unlockBoostMultiplier,Multiplier booster unlocked,Открыт бонус Множитель,Boosts
+unlockBoostTime,Time booster unlocked,Открыт бонус Время,Boosts
+Cat,Cat,котик,Cats
+nameCatBoom,Boom,Бум,Cats
+nameCatCap,Cap,Кэп,Cats
+nameCatDisco,Disco,Диско,Cats
+nameCatFlint,Flint,Флинт,Cats
+nameCatJack,Jack,Джек,Cats
+nameCatJoker,Joker,Джокер,Cats
+nameCatKing,King,Царь,Cats
+nameCatLady,Lady,Леди,Cats
+nameCatLoki,Loki,Локи,Cats
+nameCatMage,Mage,Маг,Cats
+nameCatMix,Mix,Микс,Cats
+nameCatOrion,Orion,Орион,Cats
+nameCatRaiden,Raiden,Рейден,Cats
+nameCatSanta,Santa,Мороз,Cats
+nameCatSnow,Snow,Снежок,Cats
+nameCatZen,Zen,Дзен,Cats
+powerCatBoom,Releases cats within {0} radius around himself,Разгоняет котиков в радиусе {0} вокруг себя,Cats
+powerCatCap,Sweeps cats away on his way. Cat's size is {0},Сметает котиков на своем пути. Размер котика {0},Cats
+powerCatDisco,Starts Disco mode for {0} seconds immediately,Запускает Диско режим на {0} [секунд|секунду|секунды],Cats
+powerCatFlint,Collects {0} goldfish,Собирает {0} [золотых рыбок|золотую рыбку|золотые рыбки],Cats
+powerCatJack,Turns each touched cat into a pumpkin with {0} bonus points,При соприкосновении с котом превращает его в тыкву с бонусом {0} очков,Cats
+powerCatJoker,Can join any chain and gives {0} bonus points,Может стать частью любой цепочки и дает бонус {0} очков,Cats
+powerCatKing,Gives {0} goldfish to cats in the box,Раздает котикам {0} [золотых рыбок|золотую рыбку|золотые рыбки],Cats
+powerCatLady,Draws {0} cats of chosen color to her,Притягивает {0} [котиков|котика|котиков] выбранного цвета,Cats
+powerCatLoki,Casts petards within the box,Разбрасывает пeтарды по коробке,Cats
+powerCatMage,Turns {0} cats into cats of hat's color,Меняет цвет {0} соседних [котиков|котика|котиков] на текущий цвет шляпы,Cats
+powerCatMix,Mixes cats in the box,Перемешивает коробку,Cats
+powerCatOrion,Generates black hole for {0} seconds,Создает черную дыру на {0} сек.,Cats
+powerCatRaiden,Releases cats around himself. Clones himself {0} times,Разгоняет котиков вокруг себя. Клонирует себя {0} [раз|раз|раза],Cats
+powerCatSanta,Applies ability of another random supercat,Использует способность другого случайного суперкотика,Cats
+powerCatSnow,Freezes the timer for {0} seconds,Замораживает таймер на {0} [секунд|секунду|секунды],Cats
+powerCatZen,Gives additional {0} seconds,Добавляет {0} [секунд|секунду|секунды],Cats
+championshipError,"Sorry, the Championship is
+temporarily unavailable","Извини, но Чемпионат
+временно недоступен",Championship
+league,LEAGUE,ЛИГА,Championship
+leagueAim,Score {0} points for promotion,Для повышения набери {0},Championship
+leagueBoiling,BOILING,БУРЛЯЩАЯ,Championship
+leagueDiamond,DIAMOND,АЛМАЗНАЯ,Championship
+leagueEmerald,EMERALD,ИЗУМРУДНАЯ,Championship
+leagueFlame,FLAME,ОГНЕННАЯ,Championship
+leagueGold,GOLD,ЗОЛОТАЯ,Championship
+leagueGreen,GREEN,ЗЕЛЕНАЯ,Championship
+leagueLegendary,LEGENDARY,ЛЕГЕНДАРНАЯ,Championship
+leagueLegendaryDescription,Best of the best!,Лучшие из лучших!,Championship
+leagueRuby,RUBY,РУБИНОВАЯ,Championship
+leagueSapphire,SAPPHIRE,САПФИРОВАЯ,Championship
+leagueWhite,WHITE,БЕЛАЯ,Championship
+player,Player,Игрок,Championship
+reward,REWARD,НАГРАДА,Championship
+timerReward,"{0} sec
+to timer","{0} сек
+к таймеру",Championship
+maximum,maximum,максимальный,Collection
+digitalStarOffer84650,Half price Magic Box,Волшебная коробка за полцены,Digital Star
+bonus,BONUS,БОНУС,Facebook
+challengeFriendMessage,Try to beat my score of {0} points,Попробуй-ка побить мой рекорд {0},Facebook
+challengeFriendTitle,You have challenged a friend!,Вызов брошен!,Facebook
+gameName,READY SET CAT,КОТИКИ,Facebook
+inviteFriendMessage,This game is awesome! Give it a try and play with me!,"Отличная игра! Присоединяйся, будем играть вместе!",Facebook
+inviteFriends,INVITE FRIENDS,ПОЗВАТЬ ДРУЗЕЙ,Facebook
+inviteFriendTitle,Invite to READY SET CAT,Приглашение в игру КОТИКИ,Facebook
+newCatDescription,Now I have {0} of {1} supercats! My collection will be complete soon!,Теперь у меня {0} из {1} суперкотиков и уже скоро я соберу всю коллекцию!,Facebook
+newCatDescriptionFull,I have a full collection of supercats!,Я собрал всю коллекцию супер котиков!,Facebook
+newCatTitle,{0} has been caught!,{0} пойман!,Facebook
+shareBeatMeFemale,I set a new high score - {0} points - try to beat me! This game is awesome!,Я установила новый рекорд! {0} очков - попробуй обойти! Игра отличная!,Facebook
+shareBeatMeMale,I set a new high score - {0} points - try to beat me! This game is awesome!,Я установил новый рекорд! {0} очков - попробуй обойти! Игра отличная!,Facebook
+shareBeatMeUnknown,I set a new high score - {0} points - try to beat me! This game is awesome!,Установлен новый рекорд! {0} очков - попробуй обойти! Игра отличная!,Facebook
+shareLeagueUp,LEAGUE PROMOTION,ПОВЫШЕНИЕ В ЛИГЕ,Facebook
+shareLeagueUpDescription,{0} achieved! Try to climb even higher!,"{0} достигнута! Попробуй-ка, поднимись так высоко!",Facebook
+shareTournament,BRILLIANT VICTORY,ЯРКАЯ ПОБЕДА,Facebook
+shareTournamentDescriptionFemale,I have beaten {0} friends in today's tournament! Join us!,Я обошла {0} [друзей|друга|друзей] в сегодняшнем турнире! Присоединяйтесь!,Facebook
+shareTournamentDescriptionMale,I have beaten {0} friends in today's tournament! Join us!,Я обошел {0} [друзей|друга|друзей] в сегодняшнем турнире! Присоединяйтесь!,Facebook
+shareTournamentDescriptionUnknown,I have beaten {0} friends in today's tournament! Join us!,Я обошел {0} [друзей|друга|друзей] в сегодняшнем турнире! Присоединяйтесь!,Facebook
+beforeGameCat,CAT!,МЯУ!,Game
+beforeGameReady,READY,НА СТАРТ,Game
+beforeGameSet,SET,ВНИМАНИЕ,Game
+comboLoopX,{0}x LOOP,{0}x ПЕТЛЯ,Game
+comboX,{0}x CHAIN,{0}x ЦЕПОЧКА,Game
+fever,DISCO,ДИСКО,Game
+timeIsUp,TIME UP,"ВРЕМЯ
+ВЫШЛО",Game
+collectBatsToGetCat,Collect 100 bats and exchange them for a unique cat!,"Собери сто летучих мышей
+и обменяй их на уникального котика!",Halloween
+collectBatsToGetCatDone,Exchange bats for a unique cat!,Обменяй летучих мышей на уникального котика!,Halloween
+happyHalloweenDay,HAPPY HALLOWEEN!,С ХЭЛЛОУИНОМ!,Halloween
+moreBats,BUY BATS,КУПИТЬ МЫШЕЙ,Halloween
+nextCatbox,Next catbox is on level {0},"Следующая коробка
+на {0} уровне",Level Up
+checkConnection,Fishing...,Ловим рыбу...,Loading
+loadLocal,Waking the cats up...,Будим котиков...,Loading
+loginFacebook,Filling the bowls...,Наполняем миски...,Loading
+loginParse,Setting the boxes...,Расставляем коробки...,Loading
+luckyWheelCaps,LUCKY WHEEL,КОЛЕСО УДАЧИ,Lucky Wheel
+nextFreeSpinIsIn,Next free sausage is in,Бесплатная сарделька через,Lucky Wheel
+noConnection,To start the wheel connect your device to Internet,"Чтобы запустить колесо, подключите к интернету свое устройство",Lucky Wheel
+sausage,SAUSAGE,САРДЕЛЬКА,Lucky Wheel
+sausages,SAUSAGES,САРДЕЛЬКИ,Lucky Wheel
+timeIncorrect,To start the wheel set exact time on your device,"Чтобы запустить колесо, установите точное время на своем устройстве",Lucky Wheel
+yourPrize,Your Prize!,Твой приз!,Lucky Wheel
+championship,Championship,Чемпионат,Main Menu
+fbLoginToChalangeFriends,"Log into Facebook
+to challenge your friends!","Подключи Facebook, чтобы
+соревноваться с друзьями!",Main Menu
+getBonus,On first login you'll get,Получи бонус,Main Menu
+login,LOGIN,ВОЙТИ,Main Menu
+play,PLAY,ИГРАТЬ,Main Menu
+shop,SHOP,МАГАЗИН,Main Menu
+tournament,Tournament,Турнир,Main Menu
+aquariumSmall,{0} goldfish,{0} золотых рыбок,Missions
+congratulations,CONGRATULATIONS!,ПОЗДРАВЛЯЕМ!,Missions
+get,GET,ПОЛУЧИТЬ,Missions
+level,LEVEL {0},{0} УРОВЕНЬ,Missions
+maxLevel,"Congratulations!
+The highest level
+has been achieved!","Поздравляем!
+Достигнут высший уровень!",Missions
+missionChainLength,Build a chain of {0} or more cats,Объедини в цепочку {0} или больше котиков,Missions
+missionChainSequence,Build a chain of 6 or more cats {0} times sequentially,Объедини в цепочку 6 или больше котиков {0} [раз|раз|раза] подряд,Missions
+missionGameSessions,Play {0} times,Сыграй {0} [раз|раз|раза],Missions
+missionGetCats,Release {0} cats,Разгони {0} [котиков|котика|котика],Missions
+missionGetCatsAtOneGame,Release {0} cats during a play,Разгони {0} [котиков|котика|котика] за игру,Missions
+missionGetFever,Run Disco mode {0} times,Запусти Диско режим {0} [раз|раз|раза],Missions
+missionGetFeverAtOneGame,Run Disco mode {0} times during a play,Запусти Диско режим {0} [раз|раз|раза] за игру,Missions
+missionGetGoldfishes,Collect {0} goldfish,Собери {0} [золотых рыбок|золотую рыбку|золотые рыбки],Missions
+missionGetGoldfishesAtOneGame,Collect {0} goldfish during a play,Собери {0} [золотых рыбок|золотую рыбку|золотые рыбки] за игру,Missions
+missionGetLoops,Build a chain-loop {0} times,Сделай цепочку-петлю {0} [раз|раз|раза],Missions
+missionGetLoopsAtOneGame,Build a chain-loop {0} times during a play,Сделай цепочку-петлю {0} [раз|раз|раза] за игру,Missions
+missionGetMultiplier,Get x{0} multiplier,Набери множитель x{0},Missions
+missionGetScore,Score {0} points,Набери {0} очков,Missions
+missionGetScoreWithoutGinger,Score {0} points without building ginger cat chains,"Набери {0} очков, не делая цепочки с рыжими котами",Missions
+missionGetScoreWithoutLime,Score {0} points without building green cat chains,"Набери {0} очков, не делая цепочки с зелеными котами",Missions
+missionGetScoreWithoutMultipliers,Score {0} points without multiplier usage,"Набери {0} очков, не используя множители",Missions
+missionInviteFriends,Invite {0} friends to join the game,Пригласи {0} [друзей|друга|друзей] в игру,Missions
+missionInviteFriendsLogout,"Connect to Facebook using the ""Login"" button and invite {0} friends into the game","Подключи Facebook, нажав на кнопку ""Войти"", и пригласи {0} [друзей|друга|друзей] в игру",Missions
+missionLevelUpCat,Upgrade your supercat to level {0},Прокачай суперкотика до {0} уровня,Missions
+missionLoopLength,Build a chain-loop of {0} or more cats,Объедини в цепочку-петлю {0} или больше котиков,Missions
+missionUseBoost,Use a booster {0} times,Воспользуйся бонусом {0} [раз|раз|раза],Missions
+missionUseCats,Use your supercats {0} times,Используй своих суперкотиков {0} [раз|раз|раза],Missions
+missionUseCatsAtOneGame,Use your supercats {0} times during a play,Используй своих суперкотиков {0} [раз|раз|раза] за игру,Missions
+missionUseFireworkBoomBig,Detonate {0} Big petards,Взорви {0} [Больших петард|Большую петарду|Большие петарды],Missions
+missionUseFireworkBoomSmall,Detonate {0} Small petards,Взорви {0} [Небольших петард|Небольшую петарду|Небольшие петарды],Missions
+missionUseFireworkColor,Detonate {0} Colourful petards,Взорви {0} [Цветных петард|Цветную петарду|Цветные петарды],Missions
+missionUseFireworkRocket,Detonate {0} Rockets,Взорви {0} [Ракет|Ракету|Ракеты],Missions
+missionUseFireworksAtOneGame,Detonate {0} petards during a play,Взорви {0} [любых петард|любую петарду|любые петарды] за игру,Missions
+missionUseSausage,Run Lucky Wheel {0} times,Покрути Колесо удачи {0} [раз|раз|раза],Missions
+missionWinTournament,Beat {0} friends in a Tournament,Победи {0} [друзей|друга|друзей] в Турнире,Missions
+tasks,TASKS,ЗАДАЧИ,Missions
+tutorialChainLengthTip,"To build a long chain try to release cats of other colors as long as you can, leaving just cats of necessary color in the box. Then release them all at once. You might find these supercats useful: Mage, Joker, Lady","Чтобы сделать длинную цепочку, старайся как можно дольше разгонять котиков других цветов, оставляй в коробке только нужного цвета - после чего разгони всех за один раз. Так же тебе могут пригодиться суперкоты Маг, Джокер и Леди",Missions
+tutorialChainSequenceTip,"To build a long chain try to release cats of other colors as long as you can, leaving just cats of necessary color in the box. Then release them all at once. You might find these supercats useful: Mage, Joker, Lady. To complete the task prepare {0} long chains and then release each of them sequentially not being interrupted with short chains","Чтобы сделать длинную цепочку, старайся как можно дольше разгонять котиков других цветов, оставляя в коробке только нужного цвета. Так же тебе могут пригодиться суперкоты Маг, Джокер и Леди. Для выполнения задания подготовь {0} длинных цепочек, а затем разгони их одну за другой, не отвлекаясь на короткие цепочки",Missions
+tutorialGameSessionsTip,Complete game session {0} times. Number of completed games is available in your game profile - press the button with silhouette to access it,Закончи игровую сессию {0} [раз|раз|раза]. Количество законченных игр можно посмотреть в твоем игровом профиле - для этого нажми на кнопку с силуэтом человечка,Missions
+tutorialGetCatsTip,"There are few ways to release cats: build a chain, detonate petards, use superabilities of Loki, Boom, Cap, Jack, Orion. The task considers all cats leaving the box due to those actions","Разогнать котиков можно разными способами: строить цепочки, взрывать петарды, использовать суперспособности Локи, Бума, Кэпа, Джека и Ориона. Все котики, покинувшие коробку при этих действиях, засчитываются",Missions
+tutorialGetFeverTip,"When the scale located around the box is full the Disco mode starts. This means all goldfish and score points will be multiplied 3 times during next 7 seconds. The scale becomes full faster when you do longer chains more frequently. Next Disco is harder to run than previous. You might find these supercats useful: Loki, Boom, Cap, Orion, Disco","Когда заполняется вся шкала по периметру коробки, включается режим Диско. Это значит, что в течении следующих 7 секунд все рыбки и очки будут утраиваться. Шкала наполняется быстрее, если ты делаешь цепочки длиннее и чаще. Каждое следующее Диско вызвать сложнее предыдущего. Так же тебе могут помочь суперкоты Локи, Бум, Кэп, Орион и Диско",Missions
+tutorialGetGoldfishesTip,"To gather golfish faster try to release cats with goldfish in their paws firstly. Run Disco mode more frequently as during it the number of goldfish is three times higher. You might find these supercats useful: King, Flint, Disco","Чтобы быстрее собирать рыбок, старайся в первую очередь разгонять котиков, которые держат их в лапах. Чаще вызывай режим Диско, ведь пока он активен количество собранных рыб утраивается. Так же тебе помогут суперкоты Флинт, Царь и Диско",Missions
+tutorialGetLoopsTip,"Loop — is a chain of 6 or more cats, where start and end cats are located nearby. Such chains will give you three times more score points. You might find these supercats useful: Mage, Lady, Joker","Петля – это такая цепочка длиною 6 и больше, в которой первый и последний котики находятся рядом. За петлю-цепочку дают в три раза больше очков. Чаще делать петли помогут суперкоты Маг, Леди и Джокер",Missions
+tutorialGetMultiplierTip,"Multiplier is the ball in cat's paws. As soon as you gather it, your score points will be multiplied by specified number till the end of the game. Until you gather current multiplier another one with bigger number won't become available. The longer chains you build the sooner next multiplier falls into the box. You might find these supercats useful: Mage, Lady, Joker","Множитель - это клубок с цифрой в лапах котика. Как только ты возьмешь его, твои очки будут умножаться на указанное число все время до конца игры. Пока не будет собран предыдущий, более крупный множитель не выпадет. Чем длиннее цепочки ты делаешь, тем быстрее появится новый множитель. В этом деле тебе помогут суперкоты Маг, Леди и Джокер",Missions
+tutorialGetScoreTip,"The longer chains you build the more score points you gain. Multipliers, disco-mode, loops and supercats Loki, Boom, Cap, Jack, Orion will also help you to earn more score points","Чем длиннее цепочки ты делаешь, тем больше очков получишь. Множители, диско-режим, петли и суперкоты Локи, Бум, Кэп, Джек и Орион так же помогут заработать больше очков",Missions
+tutorialGetScoreWithoutGingerTip,"The longer chains you build the more score points you gain. Multipliers, disco-mode, loops and supercats Loki, Boom, Cap, Jack, Orion will also help you to earn more score points. To get the task completed you should not build chains of ginger cats!","Чем длиннее цепочки, тем больше очков они приносят. Множители, диско-режим, петли и суперкоты Локи, Бум, Кэп, Джек и Орион так же помогут заработать больше очков. Чтобы задание считалось выполненным, в течение игры нельзя делать цепочки из рыжих котов!",Missions
+tutorialGetScoreWithoutLimeTip,"The longer chains you build the more score points you gain. Multipliers, disco-mode, loops and supercats Loki, Boom, Cap, Jack, Orion will also help you to earn more score points. To get the task completed you should not build chains of green cats!","Чем длиннее цепочки, тем больше очков они приносят. Множители, диско-режим, петли и суперкоты Локи, Бум, Кэп, Джек и Орион так же помогут заработать больше очков. Чтобы задание считалось выполненным, в течение игры нельзя делать цепочки из зеленых котов!",Missions
+tutorialGetScoreWithoutMultipliersTip,"The longer chains you build the more score points you gain. Multipliers, disco-mode, loops and supercats Loki, Boom, Cap, Jack, Orion will also help you to earn more score points. To get the task completed you should not touch cats with multiplier (cats with x2 ball in the paws) during the game","Чем длиннее цепочки, тем больше очков они приносят. Диско-режим, петли и суперкоты Локи, Бум, Кэп, Джек и Орион так же помогут заработать больше очков. Чтобы задание считалось выполненным, в течение игры нельзя активировать множители, т.е. трогать котика с клубком x2",Missions
+tutorialInviteFriendsLogoutTip,"Connect your Facebook account to the game using ""Login"" button and invite {0} friends with the button ""Invite Friends"" on the tournament screen","Подключи свой аккаунт Facebook к игре, нажав на кнопку ""Войти"", и, используя кнопку ""Пригласить друзей"" на экране турнира, позови в игру {0} друзей",Missions
+tutorialInviteFriendsTip,"Invite {0} friends into the game with the button ""Invite Friends"" on the tournament screen","Используя кнопку ""Пригласить друзей"" на экране турнира, позови в игру {0} друзей",Missions
+tutorialLevelUpCatTip,Every time supercat is used in the game his level grows up and his super power becomes stronger. To complete the task you should have at least one supercat of {0} level in your collection,"Каждый раз, когда суперкотик используется в игре, его уровень растет и его суперсила крепнет. Чтобы задание считалось выполненным, хотя бы один суперкот из твоей коллекции должен подняться до {0} уровня",Missions
+tutorialLoopLengthTip,"Loop — is a chain of 6 or more cats, where start and end cats are located nearby. Such chains will give you three times more score points. To complete the task you should build a loop of at least {0} cats! You might find these supercats useful: Mage, Lady, Joker","Петля – это такая цепочка длиною 6 и больше, в которой первый и последний котики находятся рядом. За петлю-цепочку дают в три раза больше очков. Для выполнения задачи нужно построить петлю из {0} и более котиков! Длинные петли помогут сделать суперкоты Маг, Леди и Джокер",Missions
+tutorialUseBoostTip,Bonuses are suggested before a game session starts. To complete the task you should take {0} bonuses into the game. Bonuses are given as level up reward or can be taken for goldfish,"Бонусы предлагаются перед началом игры. Для выполнения задачи нужно взять в игру {0} бонусов. Бонусы дают в награду за повышение уровня, либо их можно получить за рыбки перед началом игры  ",Missions
+tutorialUseCatsTip,"Choose supercat from the list before game starts, the cat will sit to the box. Start to play. Release the cats of the same color the bar of supercat's box has to get it filled up. When supercat falls into play box tap on it. ","Выбери суперкота из списка перед началом игры, он сядет в коробку. Начни игру. Разгоняй котиков того же цвета, что и шкала на коробке с суперкотом, чтобы ее наполнить. Когда суперкот выпадет на игровое поле, нажми на него",Missions
+tutorialUseFireworkBoomBigTip,"Big petard becomes available for the chain of 10 cats. To detonate a petard tap on it. Mage, Lady, Joker and Loki supercats can help you to build long chains","Большая петарда появляется, когда сделана цепочка из 10 котов. Чтобы петарду взорвать, на нее нужно нажать. Длинные цепочки тебе помогут сделать суперкоты Маг, Леди, Джокер и Локи",Missions
+tutorialUseFireworkBoomSmallTip,"Small petard becomes available for the chain of 6 cats. To detonate a petard tap on it. Mage, Lady, Joker and Loki supercats can help you to build long chains","Небольшая петарда появляется, когда сделана цепочка из 6 котов. Чтобы петарду взорвать, на нее нужно нажать. Длинные цепочки тебе помогут сделать суперкоты Маг, Леди, Джокер и Локи",Missions
+tutorialUseFireworkColorTip,"Colourful petard becomes available for the chain of 12 cats. To detonate a petard tap on it. Mage, Lady, Joker and Loki supercats can help you to build long chains","Цветная петарда появляется, когда сделана цепочка из 12 котов. Чтобы петарду взорвать, на нее нужно нажать. Длинные цепочки тебе помогут сделать суперкоты Маг, Леди, Джокер и Локи",Missions
+tutorialUseFireworkRocketTip,"Rocket becomes available for the chain of 8 cats. To detonate a rocket tap on it. Mage, Lady, Joker and Loki supercats can help you to build long chains","Ракета появляется, когда сделана цепочка из 8 котов. Чтобы ее взорвать, на нее нужно нажать. Длинные цепочки тебе помогут сделать суперкоты Маг, Леди, Джокер и Локи",Missions
+tutorialUseFireworksAtOneGameTip,"To complete the task you should detonate {0} rockets or/and petards of any type. To detonate a petard tap on it. The easiest way - to detonate small petards as they become available for a chain of 6 cats.  Mage, Lady, Joker and Loki supercats can help you to build long chains","Для выполнения задания нужно взорвать {0} любых петард и ракет в течение одной игры! Чтобы петарду взорвать, на нее нужно нажать. Проще всего взрывать небольшие петарды, ведь они появляются, когда сделана цепочка всего из 6 котов. Длинные цепочки тебе помогут сделать суперкоты Маг, Леди, Джокер и Локи",Missions
+tutorialUseSausageTip,Run Lucky Wheel {0} times and the task will be completed. Lucky Wheel is available on championship screen. To run it you need sausages. You can get them as a level up reward or get a free one every 8 hours or purchase it anytime in the shop,"Запусти колесо удачи {0} раз и задача будет выполнена. Колесо удачи находится на экране с чемпионатом. Для запуска колеса нужны сосиски, которые можно получить в награду за уровень, бесплатно раз в 8 часов, либо в любой момент купить в магазине",Missions
+tutorialUseSausageTipPremium,Run Lucky Wheel {0} times and the task will be completed. Lucky Wheel is available on championship screen. To run it you need sausages. You can get them as a level up reward or get a free one every 8 hours,"Запусти колесо удачи {0} раз и задача будет выполнена. Колесо удачи находится на экране с чемпионатом. Для запуска колеса нужны сосиски, которые можно получить в награду за уровень, либо бесплатно раз в 8 часов",Missions
+tutorialWinTournamentTip,"The tournament lasts 24 hours. When the time is up the results are summed up, the prizes are distributed between participants. Your friend having more than 0 score points during the tournament is considered as a participant. To complete the task you should have more score points than {0} of your friends-participants ","Tурнир длится сутки. По истечении этого времени подводятся итоги и распределяется награда среди участников. Участниками считаются твои друзья, набравшие очков больше 0 в течение этого турнира. Для выполнения задачи ты должен обойти по очкам {0} поучаствовавших друзей",Missions
+unlockCatSlot,New box for a cat,Новая коробка для котика,Missions
+unlockChampionship,Championship is unlocked,Открыт доступ в Чемпионат,Missions
+unlockFever,Disco mode is unlocked,Открыт Диско режим,Missions
+unlockFireworkBoomBig,Big petard is unlocked,Открыта Большая петарда,Missions
+unlockFireworkBoomSmall,Small petard is unlocked,Открыта Небольшая петарда,Missions
+unlockFireworkColor,Colourful petard is unlocked,Открыта Цветная петарда,Missions
+unlockFireworkRocket,Rocket is unlocked,Открыта Ракета,Missions
+unlockGoldfishes,Goldfish is unlocked,Открыты Золотые рыбки,Missions
+unlockLuckyWheel,Lucky Wheel is unlocked,Открыто Колесо удачи,Missions
+unlockMultiplier,x{0} multiplier is unlocked,Открыт множитель x{0},Missions
+unlockTournament,Tournament is unlocked,Открыт доступ в Турнир,Missions
+yourReward,Your reward,Твоя награда,Missions
+collectHatsToGetCat,Collect 100 hats and exchange them for unique xmas cat!,Собери сто шапок и обменяй их на уникального новогоднего котика!,New Year Hats
+collectHatsToGetCatDone,Exchange hats for unique xmas cat!,Обменяй шапки на уникального новогоднего котика!,New Year Hats
+happyNewYear,MERRY CHRISTMAS!,C НОВЫМ ГОДОМ!,New Year Hats
+happyNewYearSoon,MERRY CHRISTMAS!,С НАСТУПАЮЩИМ!,New Year Hats
+moreHats,PURCHASE HATS,КУПИТЬ ШАПКИ,New Year Hats
+invite,INVITE,ПОЗВАТЬ,Not Enough Goldfishes
+notEnoughGoldfishesForBoosts,To play with the chosen boosters you need {0} goldfish,Для игры с выбранными бонусами тебе не хватает {0} рыбок,Not Enough Goldfishes
+notEnoughGoldfishesForCats,To play with the chosen supercats you need {0} goldfish,Для игры с выбранными суперкотиками тебе не хватает {0} рыбок,Not Enough Goldfishes
+playWithoutBoosts,"PLAY WITHOUT
+BOOSTERS","ИГРАТЬ БЕЗ
+БОНУСОВ",Not Enough Goldfishes
+playWithoutSuperCats,"PLAY WITHOUT
+SUPERCATS","ИГРАТЬ БЕЗ
+СУПЕРКОТОВ",Not Enough Goldfishes
+watch,WATCH,СМОТРЕТЬ,Not Enough Goldfishes
+youCanBuyAquarium,You can buy the aquarium with golfish,Ты можешь приобрести целый аквариум рыбок,Not Enough Goldfishes
+youCanInviteFriends,"Or invite NEW friends
+to play together",Или пригласить НОВЫХ друзей играть вместе,Not Enough Goldfishes
+youCanViewAd,"Or watch a short
+video ad",Или посмотреть короткий видео ролик,Not Enough Goldfishes
+notificationInvite,{0} invites you to play!,{0} зовет тебя играть!,Notifications
+notificationNewSausageText,Try your luck! Win a cool prize!,Испытай удачу! Выиграй классный приз!,Notifications
+notificationNewSausageTicker,Use the sausage! Try your luck!,Используй сардельку! Испытай удачу!,Notifications
+notificationNewSausageTitle,New sausage,Свежая сарделька,Notifications
+notificationTournamentEndText,Learn the results and take the prize!,Узнай результаты и забери награду!,Notifications
+notificationTournamentEndTicker,Tournament is completed - learn the results and take the prize!,Турнир завершен - узнай результаты и забери награду!,Notifications
+notificationTournamentEndTitle,Tournament is completed,Турнир завершен,Notifications
+feedback,FEEDBACK,ОТЗЫВЫ,Options
+help,HELP,ПОМОЩЬ,Options
+mailBody,"Hello
+
+My device: {0}, {1}, Screen {2}, RAM {3} MB, CPU {4}, GPU {5} {6} MB {7}
+
+My profile: {8} (Device {9}, Facebook {10}, Game Center {11}, Google Games {12})
+
+Game version: {13}
+
+I would like to...","Здравствуйте
+
+Мое устройство: {0}, {1}, Screen {2}, RAM {3} MB, CPU {4}, GPU {5} {6} MB {7}
+
+Мой профиль: {8} (Device {9}, Facebook {10}, Game Center {11}, Google Games {12})
+
+Версия игры: {13}
+
+Я хотел бы...",Options
+mailSubject,READY SET CAT - Feedback - {0},КОТИКИ - Отзыв - {0},Options
+notifications,NOTIFICATIONS,УВЕДОМЛЕНИЯ,Options
+profile,PROFILE,ПРОФИЛЬ,Options
+version,Version {0},Версия {0},Options
+voice,VOICE,ГОЛОС,Options
+resume,RESUME,ПРОДОЛЖИТЬ,Pause
+collection,MY CATS,МОИ КОТЫ,Prerare
+cost,COST,ЦЕНА,Prerare
+skip,SKIP,ПРОПУСТИТЬ,Prerare
+start,START,СТАРТ,Prerare
+catScared,Cats released,Разогнано котиков,Profile
+friendWins,Friends beaten,Побед над друзьями,Profile
+gameEnds,Games completed,Количество игр,Profile
+highscore,High score,Рекорд,Profile
+nameNotSet,No name set,Имя не указано,Profile
+enterPromocode,INPUT PROMO CODE,ВВЕДИ ПРОМОКОД,Promocode
+promocodeDescription,Where to find a promo code? Subscribe now to game's news and you won't miss any share!,Где найти промокод? Подпишись на новости игры и ты не пропустишь ни одной раздачи!,Promocode
+promocodeInvalid,INVALID PROMO CODE,"ПРОМОКОД
+НЕ ПОДХОДИТ",Promocode
+promocodeValid,PROMO CODE ACCEPTED,ПРОМОКОД ПРИНЯТ,Promocode
+interestedInYourFeedback,Cats would be glad to know your feedback!,Котикам очень интересно твое мнение об игре!,Rate App
+rateGame,RATE IN STORE,ПОСТАВИТЬ ОЦЕНКУ,Rate App
+writeEmail,EMAIL TO AUTHORS,НАПИСАТЬ АВТОРАМ,Rate App
+rentCat,{0} wants to meet you! This supercat has already {1} level and will be with you during just one game,{0} хочет познакомиться! Этот суперкотик уже {1} уровня и будет с тобой только одну игру,Rent Cat
+rentCatBuy,"Have you liked to play
+with this supercat?
+{0} of {1} level can
+stay in your collection
+for reasonable cost!","Понравилось играть
+с этим суперкотиком?
+{0} {1} уровня может остаться в твоей коллекции
+за небольшое вознаграждение!",Rent Cat
+earned,EARNED,СОБРАНО,Result
+newHighScore,NEW HIGH SCORE,НОВЫЙ РЕКОРД,Result
+next,NEXT,ДАЛЕЕ,Result
+score,SCORE,ОЧКИ,Result
+share,SHARE,РАССКАЗАТЬ,Result
+adFree,"Having made any purchase, you won't see any ads!","Совершив любую покупку, ты больше не будешь видеть рекламу!",Shop
+aquarium,AQARIUM,АКВАРИУМ,Shop
+buy,BUY,КУПИТЬ,Shop
+buyBatsDescription,{0} bats will help you to get unique cat earlier,{0} летучих мышей помогут скорее получить уникального котика,Shop
+buyCatboxDone,"Congratulations!
+It's {0}!","Поздравляем!
+Это {0}!",Shop
+buyCatboxPremiumDescription,Magic box with NEW cat inside,"Волшебная коробка, внутри которой сидит НОВЫЙ суперкотик",Shop
+buyCatboxSimpleDescription,This is a box with a random cat inside,"Это коробка, внутри которой сидит случайный суперкотик",Shop
+buyGoldfishesDescription,{0} goldfish! Your cats will be happy!,{0} золотых рыбок! Tвои котики будут довольны!,Shop
+buyGoldfishesDone,"Great!
+The aquarium is yours!","Отлично!
+Аквариум твой!",Shop
+buyHatsDescription,{0} xmas hats will help you to get unique cat earlier,{0} новогодних шапок помогут скорее получить уникального котика,Shop
+buySausagesDescription,{0} sausages - all you need for a lucky game!,"{0} [сарделек|сарделька|сардельки] - то, что нужно для азартной игры!",Shop
+buySausagesDone,"Incredible!
+Good luck to you!","Невероятно!
+Удачи тебе!",Shop
+buyValentinesDescription,{0} valentines will help you to get unique cat earlier,{0} валентинок помогут скорее получить уникального котика,Shop
+catbox,CATBOX,КОТОКОРОБКА,Shop
+collect,COLLECT,ВЗЯТЬ,Shop
+collectionFull,Your cat collection is complete - it is really cool!,Вся коллекция супер котиков собрана! Поздравляем!,Shop
+freeCaps,FREE,БЕСПЛАТНО,Shop
+goldfishes,Goldfish,Золотые рыбки,Shop
+levelUpCat,"As you already have {0}, it will be upgraded to the next level","Так как {0} у тебя уже есть, он будет повышен до следующего уровня",Shop
+luckyWheel,Lucky Wheel,Колесо удачи,Shop
+moreSausages,MORE SAUSAGES,ЕЩЕ САРДЕЛЕК,Shop
+newCat,NEW CAT,НОВЫЙ КОТИК,Shop
+open,OPEN,ОТКРЫТЬ,Shop
+sale,HALF PRICE SALE,РАСПРОДАЖА,Shop
+shopUnavalible,Shop is temporarily unavailable,"Магазин временно
+не работает",Shop
+shopUnavalibleFacebook,Shop is not available yet for Facebook game version,"Магазин пока
+не доступен
+в Facebook версии",Shop
+collectHeartsToGetCat,Collect 100 valentines and exchange them for a unique cat!,"Собери сто валентинок
+и обменяй их на уникального котика!",St Valentine
+collectHeartsToGetCatDone,Exchange valentines for a unique cat!,Обменяй валентинки на уникального котика!,St Valentine
+happyStValentinDay,HAPPY VALENTINE'S DAY!,С ДНЕМ ВСЕХ ВЛЮБЛЕННЫХ!,St Valentine
+moreHearts,BUY VALENTINES,КУПИТЬ ВАЛЕНТИНОК,St Valentine
+placeLast,You have beaten no friends,"Ты не обошел
+ни одного друга",Tournament
+placeNotLast,"You have beaten {0} friends
+and receive","Ты обошел {0} [друзей|друга|друзей]
+и получаешь",Tournament
+placeOnlyPlayer,Your friends have not participated,"Друзья не участвовали
+в Турнире",Tournament
+prizeFund,FISH PRIZE,ПРИЗОВОЙ ФОНД,Tournament
+retry,RETRY,ПОВТОРИТЬ,Tournament
+timeLeft,TIME LEFT,ДО ЗАВЕРШЕНИЯ,Tournament
+tournamentError,"Sorry, the Tournament is
+temporarily unavailable","Извини, но Турнир
+временно недоступен",Tournament
+tournamentUpright,"T
+O
+U
+R
+N
+A
+M
+E
+N
+T","Т
+У
+Р
+Н
+И
+Р",Tournament
+you,it's you,это ты,Tournament
+completedUpright,"C
+O
+M
+P
+L
+E
+T
+E
+D","З
+А
+В
+Е
+Р
+Ш
+Е
+Н",Tutorial
+tutorialBuyCatbox,You might gain new supercats as a level up reward. But If you don't want to wait you can always buy the Magic Box in the shop!,Новых суперкотиков можно получить в награду за повышение уровня. Eсли ждать не хочется - в магазине можно купить Волшебную коробку!,Tutorial
+tutorialBuySausages,If the sausages are over and you don't want to wait you can always buy them in the shop!,"Если сардельки закончились, а ждать не хочется - в магазине ты всегда можешь купить еще!",Tutorial
+tutorialBuySkipMission,"Can't complete the task? The more difficult a mission is, the more pleasant victory becomes! If you can't find a way to get it done - don't worry, we can skip it","Не получается выполнить задачу? Чем сложнее миссия, тем слаще победа! А если совсем никак - ничего страшного, мы можем ее пропустить ",Tutorial
+tutorialCatBox,Touch the supercat - it will take its box and help you during a play!,Нажми на суперкотика - он сядет в коробку и поможет тебе в игре!,Tutorial
+tutorialCatExperience,Every play with a supercat improves cat's experience. When its experience line is full the cat becomes stronger!,За каждую игру суперкотик получает опыт. Набери достаточно опыта для повышения уровня и твой суперкотик станет круче!,Tutorial
+tutorialCatGoldfishes,Your supercats are the pets with the needs. Every time you want cats to help give them a few goldfish first,"Суперкотики - питомцы с характером и просто так помогать не станут, каждый раз их нужно задабривать золотыми рыбками",Tutorial
+tutorialCatLevelUp,"Supercat's level has grown up, this means its ability has improved! But the cat will require more goldfish for its help","Уровень котика повысился, а значит, его суперсила выросла! Но и за работу теперь он будет просить больше золотых рыбок",Tutorial
+tutorialCatUse,To summon a supercat make all the bars on cat's box filled with color. The bars become filled up when you release the cats of the same color,"Чтобы призвать суперкотика, заполни все деления на его коробке. Деления заполняются, когда ты разгоняешь котов
+того же цвета",Tutorial
+tutorialCatUseActivateBoom,Tap on Boom to make him release cats around. Explosion radius will grow up when the level increases,"Нажми на Бума, чтобы он взорвался и разогнал котиков вокруг. Радиус его взрыва будет расти с увеличением уровня",Tutorial
+tutorialCatUseActivateCap,"Tap on Cap to make him speed up and release cats on its way. Now the cat is small, but it will grow up as soon as its level increases","Нажми на Кэпа, чтобы он ускорился и разогнал котиков на своем пути. Сейчас он очень маленький, но с увеличением уровня он заметно вырастет",Tutorial
+tutorialCatUseActivateDisco,Tap on a supercat to run Disco mode. The higher cat's level is the longer Disco time lasts,"Нажми на суперкотика, чтобы он запустил режим Диско. С ростом уровня котика режим Диско будет длиться дольше",Tutorial
+tutorialCatUseActivateFlint,Tap on Flint and he will collect few goldfish. The higher cat's level is the more goldfish can be collected,"Нажми на Флинта, чтобы он собрал часть золотых рыбок. Чем выше будет его уровень, тем больше рыбок он сможет собрать",Tutorial
+tutorialCatUseActivateJack,"Tap on Jack and all pumpkins will disappear from the box, and you will earn bonus points. The more pumpkins and the higher Jack's level the more points you get","Нажми на Джека, и все тыквы исчезнут из коробки, а ты заработаешь очки. Чем больше тыкв и выше уровень Джека, тем больше очков ты получишь ",Tutorial
+tutorialCatUseActivateJoker,Include Joker into any chain and he will give you additional score bonus. With this cat you can even combine the chains of two colors!,"Включи Джокера в любую цепочку, и он принесет дополнительный бонус очков. С помощью этого котика ты сможешь связать цепочки двух разных цветов!",Tutorial
+tutorialCatUseActivateKing,Tap on King and he will distribute few goldfish around. The higher cat's level is the more goldfish will be distributed,"Нажми на Царя, чтобы он раздал несколько золотых рыбок. Чем выше будет его уровнь, тем больше рыбок он сможет раздать",Tutorial
+tutorialCatUseActivateLady,Tap on Lady and she will draw cats having the color of her scepter at that moment. The higher her level is the more cats can be drawn.,"Нажми на Леди, чтобы она приманила котиков того цвета, какого был ее скипетр в этот момент. С ростом уровня она сможет приманивать больше котиков",Tutorial
+tutorialCatUseActivateLoki,Tap on Loki and he will spread petards across the box. The higher cat's level is the more petards will be spread.,"Нажми на Локи, чтобы он разбросал петарды по коробке. Их количество будет расти вместе с увеличением уровня суперкотика",Tutorial
+tutorialCatUseActivateMage,Tap on Mage to make him change the color of nearest cats to the color of his hat. The higher his level is the more cats can be recolored,"Нажми на Мага, чтобы он изменил цвет ближайших котиков на цвет его шляпы. С ростом уровня он сможет перекрашивать больше котиков",Tutorial
+tutorialCatUseActivateMix,Tap on Mix and he will mix all cats in the box,"Нажми на Микса, и он перемешает всех котиков в коробке",Tutorial
+tutorialCatUseActivateOrion,Tap on Orion to make him generate black hole. Its life time will grow up when cat's level increases,"Нажми на Ориона, чтобы он создал черную дыру, время жизни которой будет расти с увеличением уровня",Tutorial
+tutorialCatUseActivateRaiden,Tap on Raiden and he will release cats around himself. He activates chain reaction and strikes another Raidens with lightning. He is alone in the box now but the number of Raidens will increase with cat's level,"Нажми на Рейдена, чтобы он разогнал котиков вокруг себя. Так же он активирует цепную реакцию и поразит молнией остальных Рейденов на поле. Сейчас он один, но с увеличением уровня количество Рейденов будет расти",Tutorial
+tutorialCatUseActivateSanta,Tap on Santa to activate his ability! What will happen then - is a surprise!,"Нажми на Мороза, чтобы активировать его суперспособность. Что произойдет дальше - сюрприз!",Tutorial
+tutorialCatUseActivateSnow,Tap on Snow and he will freeze the timer. The higher cat's level is the longer freeze time lasts,"Нажми на Снежка, чтобы он заморозил таймер. Длительность заморозки будет расти с увеличением уровня суперкотика",Tutorial
+tutorialCatUseActivateZen,Tap on Zen and he will add some time for the timer. Bonus time will become longer when cat's level is higher,"Нажми на Дзена, чтобы он прибавил время к таймеру. Бонусное время будет расти с увеличением уровня суперкотика",Tutorial
+tutorialChampionship,This is an overall Championship. Set the highest record and become the best player!,Это всеобщий Чемпионат. Установи самый большой рекорд и стань лучшим!,Tutorial
+tutorialCollection,This is your collection of supercats! Each of them has a unique ability. The more cats the higher chance of victory!,Это твоя коллекция суперкотиков! Каждый из них имеет уникальную способность. Больше котиков - больше шансов на победу!,Tutorial
+tutorialCollectionJack,"This is a mystic cat, you can catch him in the autumn or find in the Magic box anytime","Это мистический котик, его можно поймать осенью или найти в Волшебной коробке",Tutorial
+tutorialCollectionLady,"This is a valentine cat, you can catch him in February or find in the Magic box anytime","Это влюбленный котик, его можно поймать в феврале или найти в Волшебной коробке",Tutorial
+tutorialCollectionMix,"This is unusual cat, you can get him by a secret word or find in the Magic box","Это необычный котик, его можно получить, только если знаешь секретное слово, или найти в Волшебной коробке",Tutorial
+tutorialCollectionSanta,"This is a xmas cat, you can catch him in December or find in the Magic box anytime","Это новогодний котик, его можно поймать в декабре или найти в Волшебной коробке",Tutorial
+tutorialFever,Release cats as fast as you can to activate Disco mode. While Disco is active you gain triple amount of points and goldfish,"Чтобы активировать Диско, разгоняй котиков как можно быстрее. Во время Диско количество очков и золотых рыбок будет утраиваться",Tutorial
+tutorialFireworkBoomBig,Build a chain of 10 or more cats to get a Big petard. Tap the petard to release surrounding cats,"Cделай цепочку длиною не менее 10, чтобы получить Большую петарду. Нажми на нее, и котики вокруг разбегутся",Tutorial
+tutorialFireworkBoomSmall,Build a chain of 6 or more cats to get a Small petard. Tap the petard to release surrounding cats,"Cделай цепочку длиною не менее 6, чтобы получить Небольшую петарду. Нажми на нее, и котики вокруг разбегутся",Tutorial
+tutorialFireworkColor,Build a chain of 12 or more cats to get a Colourful petard. Tap the petard to release cats of chosen color,"Cделай цепочку длиною не менее 12, чтобы получить Цветную петарду. Нажми на нее, и все котики выбранного цвета разбегутся",Tutorial
+tutorialFireworkRocket,Build a chain of 8 or more cats to get a Rocket. Tap it to activate and the Rocket will release all cats in its path,"Cделай цепочку длиною не менее 8, чтобы получить Ракету. Нажми на нее, чтобы запустить, и она разгонит всех котиков на своем пути",Tutorial
+tutorialGameBasics,The essence of the game is simple! Connect at least three identical cats - they will scatter and you will score points,"Суть игры проста! Соедини как минимум трех одинаковых котиков и они разбегутся, а ты заработаешь очки",Tutorial
+tutorialGameClosedBox,This is a box for a supercat. Achieve level {0} to open it,"Это коробка для суперкотика. Достигни {0} уровня, чтобы открыть ее",Tutorial
+tutorialGameCombo,"And just one more important thing! The longer the cats chain, the more points you gain!","Важный момент! Чем длиннее цепочка котиков, тем больше очков ты получишь!",Tutorial
+tutorialGameComboLoop,"To create a Loop close a chain of at least 6 cats, you score 3 times more points",Замкни цепочку длиною не менее 6 котиков и получится петля - она дает в три раза больше очков,Tutorial
+tutorialGoldfishes,These cats have goldfish! Collect them as many as possible - they come in handy!,У этих котиков золотые рыбки! Собирай их как можно больше - они тебе пригодятся,Tutorial
+tutorialLeagueUp,Perfect! You have done good progress in Championship! As the reward for rise in a league your timer's time increases!,"Отлично, ты продвинулся в чемпионате! В награду за повышение лиги время твоего таймера увеличивается!",Tutorial
+tutorialLogin,Connect to Facebook to make your picture and name visible in a leaderboard. Also this will allow your game progress to be safely stored and recovered if needed,"Подключи Facebook, чтобы твои аватарка и имя были видны в таблице рекордов. А еще это позволит надежно сохранить игровой прогресс и восстановить его, если потребуется",Tutorial
+tutorialLuckyWheel,You have unlocked the Lucky Wheel! Treat me with the sausage and I'll win something for you!,"Ты открыл Колесо удачи! Угости меня сарделькой, и я выиграю для тебя что-нибудь полезное!",Tutorial
+tutorialMedals,Touch the medal and don't release your finger to get info on how to get this medal and its bonus,"Удерживай палец на медали, чтобы узнать, как ее получить, и какой бонус она дает",Tutorial
+tutorialMissions,Complete all three tasks to level up and get a gift,"Выполни все три задания, чтобы повысить свой уровень и получить подарок",Tutorial
+tutorialMultiplier,This is a cat with a multiplier! Release the cat and all the points you score within the rest time will be multiplied by 2,"Это котик с множителем! Прогони его, и все очки, которые ты заработаешь за оставшееся время, будут умножены на 2",Tutorial
+tutorialMultiplierX5,Every next multiplier requires more afforts than previous one. Try to make long chains to get it faster!,"Каждый следующий множитель получить сложнее, чем предыдущий. Старайся делать длинные цепочки, чтобы получить его быстрее!",Tutorial
+tutorialPrepareBox,These are surprise boxes. Get to {0}th level to know what is inside!,"Это коробки с сюрпризом. Получи {0} уровень и узнаешь, что в них!",Tutorial
+tutorialTournament,This is the Tournament. Here you can compete with your friends and gain goldfish. More friends - more rewards!,Это Турнир. Здесь ты сможешь соревноваться с друзьями и выигрывать золотые рыбки. Чем больше друзей участвует - тем больше приз,Tutorial
+tutorialTournamentBetterResults,Improve your result to win more goldfish!,"Улучшай свой результат, чтобы выиграть больше рыбок!",Tutorial
+tutorialTournamentInviteToCompite,Invite your friends into the game to have opponents for a Tournament! More friends - more rewards!,"Пригласи друзей в игру, чтобы было с кем соревноваться! Чем больше друзей участвует - тем больше приз",Tutorial
+tutorialTournamentInviteToMoreGoldfish,Invite more friends to increase the goldfish prize!,"Приглашай больше друзей, чтобы увеличить призовой фонд!",Tutorial
+tutorialTournamentPrizeFund,"The more players participate in a Tournament, the higher award becomes. Invite your friends and gain more goldfish!","Чем больше участников, тем больше призовой фонд турнира. Приглашай друзей и выигрывай больше золотых рыбок!",Tutorial
+tutorialTournamentTime,"When the time is up the results will be summed up, the prizes will be distributed and of course the new Tournament will begin!","Когда время закончится, будут подведены итоги, распределены призы, ну и, конечно, начнется новый Турнир!",Tutorial
+tutorialVideoRewarded,"Please note - if you watch now a short video ad of another game, you will get {0} goldfish","Обрати внимание - если ты сейчас посмотришь короткую видео рекламу, то получишь в награду {0} золотых рыбок",Tutorial
+advisorReplyError,"Sorry, I can't talk know. Please come back in an hour","Извини, сейчас не могу говорить - заходи через час",Advisor
+advisorReplyNoConnection,I need an internet access to have up-to-date information ,"Мне нужен доступ в интернет, чтобы иметь самую актуальную информацию",Advisor
+advisorReplyDefault,Hi! My name is Ginger. I can answer your questions about READY SET CAT game. What would you like to know?,Здравствуй! Меня зовут Рыжик. Я могу ответить на твои вопросы об игре КОТИКИ. Что бы ты хотел узнать?,Advisor
+ask,Ask,Спросить,Advisor

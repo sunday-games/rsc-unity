@@ -1,9 +1,86 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using CodeStage.AntiCheat.ObscuredTypes;
 
 namespace SG.RSC
 {
     public abstract class Core : MonoBehaviour
     {
+        public static void Init(Action callback = null)
+        {
+            if (Configurator.Instance != null)
+            {
+                Log.Error("Configurator is already inited");
+                return;
+            }
+
+#if UNITY_EDITOR
+            platform = Platform.Editor;
+#elif UNITY_WEBGL
+            platform = Platform.Facebook;
+#elif UNITY_TIZEN
+	        platform = Platform.Tizen;
+#elif UNITY_IOS
+	        platform = Platform.iOS;
+#elif UNITY_ANDROID
+            if (build.androidStore == BuildSettings.AndroidStore.GooglePlay) platform = Platform.Android;
+            else platform = Platform.Amazon;
+#endif
+
+            // if (build.debugPlatform != Platform.Unknown) platform = build.debugPlatform;
+
+            ObscuredPrefs.lockToDevice = ObscuredPrefs.DeviceLockLevel.None;
+            //if (platform != Platform.iOS) ObscuredPrefs.lockToDevice = ObscuredPrefs.DeviceLockLevel.Soft;
+            ObscuredPrefs.CryptoKey = build.s;
+
+            Configurator.Init(result =>
+            {
+                // Settings = Resources.Load<Settings>("Settings");
+
+                //if (!Settings.Load())
+                //{
+                //    Settings.SetDefaults();
+                //    Settings.ApplyAndSave();
+                //}
+
+                if (build.maxFPS > 0) Application.targetFrameRate = build.maxFPS;
+
+                achievements.Init();
+                SG.Achievements.OnAuthenticate += localUser =>
+                {
+                    if (Utils.IsPlatform(Platform.iOS))
+                    {
+                        if (user.gameCenterId.IsEmpty())
+                            achievements.SubmitAllAchievements();
+
+                        user.gameCenterId = localUser.id;
+                    }
+                    else if (Utils.IsPlatform(Platform.Android))
+                    {
+                        if (user.googleGamesId.IsEmpty())
+                            achievements.SubmitAllAchievements();
+
+                        user.googleGamesId = localUser.id;
+                    }
+
+                    user.socialName = localUser.userName;
+                };
+
+                ads?.Init();
+
+                Events.Init();
+
+                config.Setup();
+
+                Missions.Init();
+
+                ui.Init();
+                // Core.UI.Init();
+
+                callback?.Invoke();
+            });
+        }
+
         static BuildSettings _build;
         public static BuildSettings build => _build == null ? _build = FindFirstObjectByType<BuildSettings>() : _build;
 
@@ -16,7 +93,6 @@ namespace SG.RSC
         public static IAPManager iapManager;
         public static Notifications notifications;
         public static Server server;
-        public static Analytic analytic;
         public static Ads.Manager ads;
         public static Achievements achievements;
         public static Sound sound;
@@ -53,30 +129,5 @@ namespace SG.RSC
                     return (Screen.width == 640 && Screen.height == 960) || (Screen.width == 640 && Screen.height == 1136);
             }
         }
-
-        //public static void Log.Error(object text)
-        //{
-        //    if ((int)build.debugLevel > 0) Debug.LogError(text);
-        //}
-        //public static void Log.Error(object text, params object[] parameters)
-        //{
-        //    if ((int)build.debugLevel > 0) Debug.LogError(string.Format(text.ToString(), parameters));
-        //}
-        //public static voidLog.Infoobject text)
-        //{
-        //    if ((int)build.debugLevel > 1) Debug.Log(text);
-        //}
-        //public static voidLog.Infoobject text, params object[] parameters)
-        //{
-        //    if ((int)build.debugLevel > 1) Debug.Log(string.Format(text.ToString(), parameters));
-        //}
-        //public static void Log.Debug(object text)
-        //{
-        //    if ((int)build.debugLevel > 2) Debug.Log(text);
-        //}
-        //public static void Log.Debug(object text, params object[] parameters)
-        //{
-        //    if ((int)build.debugLevel > 2) Debug.Log(string.Format(text.ToString(), parameters));
-        //}
     }
 }

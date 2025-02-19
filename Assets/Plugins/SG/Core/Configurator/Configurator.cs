@@ -72,6 +72,7 @@ namespace SG
         public bool mobileAppChecker = false;
         public bool push = false;
         public bool localization = false;
+        public bool unityUiText = false;
 
         [Header("Logs")] public bool Debug;
         public string[] LogTags;
@@ -513,8 +514,9 @@ namespace SG
             if (payments)
             {
                 defines += "-define:SG_PAYMENTS" + Const.lineBreak;
-
+#if SG_PAYMENTS
                 defines += Payments.OrderManager.Defines();
+#endif
             }
             if (localization)
                 defines += "-define:SG_LOCALIZATION" + Const.lineBreak;
@@ -545,6 +547,9 @@ namespace SG
                 defines += "-define:URP" + Const.lineBreak;
             else if (renderPipeline == RenderPipeline.HighDefinition)
                 defines += "-define:HDRP" + Const.lineBreak;
+
+            if (unityUiText)
+                defines += "-define:UNITY_UI_TEXT" + Const.lineBreak;
 
             defines += "-define:ECS_EXCEPTIONS" + Const.lineBreak;
 

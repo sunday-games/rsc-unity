@@ -31,7 +31,7 @@ namespace SG.Ads
         }
 
 
-        private bool _testMode => Utils.IsPlatform(Platform.Editor);
+        private bool _testMode => Utils.IsPlatformEditor();
         private string _gameId => (Utils.IsPlatform(Platform.iOS) ? AppStore : GooglePlay).GameId;
 
         private enum Status { Ready, Loading, Showing, Skipped, Finished, Failed }

@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+#if UNITY_UI_TEXT
+using Text = UnityEngine.UI.Text;
+#else
 using Text = TMPro.TextMeshProUGUI;
+#endif
 using Dropdown = TMPro.TMP_Dropdown;
 
 namespace SG
@@ -25,10 +29,7 @@ namespace SG
         private void Start()
         {
             if (key.IsEmpty())
-            {
-                enabled = false;
-                return;
-            }
+                key = name;
 
             Localization.onLanguageChanged += UpdateText;
 
@@ -47,9 +48,6 @@ namespace SG
 
         private void UpdateText(SystemLanguage language)
         {
-            if (key.IsEmpty())
-                key = name;
-
             var text = value != 0 ? key.Localize(value) : key.Localize();
 
             if (!prefix.IsEmpty())

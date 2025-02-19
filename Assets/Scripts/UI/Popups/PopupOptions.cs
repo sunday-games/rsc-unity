@@ -39,7 +39,7 @@ namespace SG.RSC
             notificationsText.text = Localization.Get(Notifications.ON ? "on" : "off");
             if (languageText != null) languageText.text = Localization.Get(Localization.language.ToString());
 
-            versionText.text = Localization.Get("version", build.version + "." + build.versionCode);
+            versionText.text = Localization.Get("version", Configurator.Instance.appInfo.version + "." + Configurator.Instance.appInfo.versionCode);
 
             rateButton.SetActive(Utils.IsPlatformMobile());
 
@@ -154,13 +154,18 @@ namespace SG.RSC
             string subject = Localization.Get("mailSubject", Random.Range(100000, 999999));
 
             string body = Localization.Get("mailBody", SystemInfo.deviceModel, SystemInfo.operatingSystem,
-                SG_Utils.resolution, SystemInfo.systemMemorySize, SystemInfo.processorType, SystemInfo.graphicsDeviceName,
-                SystemInfo.graphicsMemorySize, SystemInfo.graphicsDeviceVersion, user.isId ? user.id : "-",
-                string.IsNullOrEmpty(user.deviceId) ? "-" : user.deviceId,
-                string.IsNullOrEmpty(user.facebookId) ? "-" : user.facebookId,
-                string.IsNullOrEmpty(user.gameCenterId) ? "-" : user.gameCenterId,
-                string.IsNullOrEmpty(user.googleGamesId) ? "-" : user.googleGamesId,
-                build.version);
+                SG_Utils.resolution,
+                SystemInfo.systemMemorySize,
+                SystemInfo.processorType,
+                SystemInfo.graphicsDeviceName,
+                SystemInfo.graphicsMemorySize,
+                SystemInfo.graphicsDeviceVersion,
+                user.isId ? user.id : "-",
+                user.deviceId.IsNotEmpty() ? "-" : user.deviceId,
+                user.facebookId.IsNotEmpty() ? "-" : user.facebookId,
+                user.gameCenterId.IsNotEmpty() ? "-" : user.gameCenterId,
+                user.googleGamesId.IsNotEmpty() ? "-" : user.googleGamesId,
+                Configurator.Instance.appInfo.version);
 
             SG_Utils.Email(server.links.supportEmail, subject, body);
         }

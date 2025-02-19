@@ -53,7 +53,7 @@ namespace SG
             if (cache)
             {
 #if UNITY_EDITOR
-                if (Utils.IsPlatform(Platform.Editor))
+                if (Utils.IsPlatformEditor())
                     Utils.SaveToFile(Configurator.resourcesPath + abiFileName + ".json", abi);
                 else
 #endif

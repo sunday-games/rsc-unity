@@ -218,7 +218,7 @@ namespace SG.RSC
                 if (Input.GetKeyDown(KeyCode.Return)) promocode.EnterCode();
             }
 
-            if (build.cheats || platform == Platform.Editor)
+            if (build.cheats || Utils.IsPlatformEditor())
             {
                 if (Input.GetKeyDown(KeyCode.M)) ui.options.MusicToggle();
                 // else if (Input.GetKeyDown(KeyCode.L)) ui.options.LanguageToggle();

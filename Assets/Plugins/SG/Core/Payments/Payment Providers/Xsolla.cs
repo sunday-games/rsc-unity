@@ -8,7 +8,6 @@ using UnityEngine;
 using Xsolla.Core;
 using Xsolla.Catalog;
 using Xsolla.Auth;
-#endif
 
 namespace SG.Payments
 {
@@ -28,7 +27,6 @@ namespace SG.Payments
             public float AcceessTokenLifetime;
         }
 
-#if XSOLLA
         private VirtualCurrencyPackages _currencyPackages;
         private List<Product> _products => Configurator.Instance.appInfo.products;
 
@@ -158,6 +156,6 @@ namespace SG.Payments
             var price = _currencyPackages.items[product.Index].price;
             return new CurrencyValue(price.amount, price.currency);
         }
-#endif
     }
 }
+#endif

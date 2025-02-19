@@ -59,7 +59,7 @@ namespace SG.RSC
             sessionWhenAlmostLevelUp = user.gameSessions;
         }
         else if (user.gameSessions - sessionWhenAlmostLevelUp > 2 &&
-            iapManager.isInitialized && user.IsTutorialShown(Tutorial.Part.BuySkipMission))
+            IAPManager_SG.isInitialized && user.IsTutorialShown(Tutorial.Part.BuySkipMission))
         {
             if (!build.premium || (DateTime.Now - lastSkipMission).TotalDays > 3)
                 skipButton.SetActive(true);
@@ -97,7 +97,7 @@ namespace SG.RSC
     public void TutorialBuySkipMission()
     {
         if (sessionWhenAlmostLevelUp > 0 && user.gameSessions - sessionWhenAlmostLevelUp > 2 &&
-        iapManager.isInitialized && !user.IsTutorialShown(Tutorial.Part.BuySkipMission))
+        IAPManager_SG.isInitialized && !user.IsTutorialShown(Tutorial.Part.BuySkipMission))
             ui.tutorial.Show(Tutorial.Part.BuySkipMission, new Transform[] { transform });
     }
 

@@ -80,7 +80,7 @@ namespace SG.RSC
             if (hearts) hearts.descriptionText.text = Localization.Get("buyValentinesDescription", balance.events.heartsPurchase);
             if (bats) bats.descriptionText.text = Localization.Get("buyBatsDescription", balance.events.batsPurchase);
 
-            if (!iapManager.isInitialized)
+            if (!IAPManager_SG.isInitialized)
             {
                 sausages.price.SetActive(false);
                 goldfishes.price.SetActive(false);

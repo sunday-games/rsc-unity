@@ -40,7 +40,8 @@ namespace SG.RSC
             {
                 if (!string.IsNullOrEmpty(user.facebookId))
                     server.DownloadPic(avatarImage, fb.GetPicURL(user.facebookId));
-                else if (user.socialPic != null) avatarImage.texture = user.socialPic;
+                else if (SG.Achievements.UserPic != null)
+                    avatarImage.texture = SG.Achievements.UserPic;
             }
             levelText.text = user.level.ToString();
             nameText.text = !string.IsNullOrEmpty(user.nameToView) ? user.nameToView : Localization.Get("nameNotSet");
@@ -65,20 +66,8 @@ namespace SG.RSC
                 medals.Add(Medal.Create(medalsGrid.transform, achieve));
             }
 
-            if (platform == Platform.iOS)
-            {
-                achievementsButton.SetActive(true);
-                achievementsImage.sprite = gameCenter;
-            }
-            else if (platform == Platform.Android)
-            {
-                achievementsButton.SetActive(true);
-                achievementsImage.sprite = googleGames;
-            }
-            else
-            {
-                achievementsButton.SetActive(false);
-            }
+            achievementsButton.SetActive(Utils.IsPlatformMobile());
+            achievementsImage.sprite = Utils.IsPlatform(Platform.iOS) ? gameCenter : googleGames;
         }
 
         public override void AfterInit()

@@ -75,7 +75,7 @@ namespace SG.RSC
         {
             get
             {
-                if (iapManager.store == null || !iapManager.isInitialized)
+                if (IAPManager_SG.store == null || !IAPManager_SG.isInitialized)
                     return Localization.language == SystemLanguage.Russian ? priceRUB + " руб" : "$" + priceUSD;
 
                 string localized = string.IsNullOrEmpty(priceFormated) ? price + " " + currencyCode : priceFormated;

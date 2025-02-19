@@ -39,7 +39,7 @@ namespace SG.RSC
             data.Add("revenue", (float)ObscuredPrefs.GetInt("revenue", 0));
 
             data.Add("firstDate", ObscuredPrefs.GetString("firstDate", SG_Utils.dateNowFormated));
-            data.Add("firstVersion", ObscuredPrefs.GetString("firstVersion", build.version));
+            data.Add("firstVersion", ObscuredPrefs.GetString("firstVersion", Configurator.Instance.appInfo.version));
 
             data.Add("tutorial", ObscuredPrefs.GetString("tutorial", "{}"));
 

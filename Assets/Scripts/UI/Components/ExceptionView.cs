@@ -31,7 +31,7 @@ namespace SG.RSC
                 string.IsNullOrEmpty(user.facebookId) ? "-" : user.facebookId,
                 string.IsNullOrEmpty(user.gameCenterId) ? "-" : user.gameCenterId,
                 string.IsNullOrEmpty(user.googleGamesId) ? "-" : user.googleGamesId,
-                build.version, errorText.text);
+                Configurator.Instance.appInfo.version, errorText.text);
 
             SG_Utils.Email(server.links.supportEmail, subject, body);
 

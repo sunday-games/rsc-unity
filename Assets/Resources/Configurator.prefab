@@ -94,55 +94,6 @@ MonoBehaviour:
     absoluteURLTest: 0
     absoluteURL: https://sunday.games/tools?number=123&double=1.23&text=abc
     getParameters: 0
---- !u!1 &4969542630939969430
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3394362202095246894}
-  - component: {fileID: 3497768142346586855}
-  m_Layer: 0
-  m_Name: Payments
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3394362202095246894
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4969542630939969430}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6404624703133919153}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3497768142346586855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4969542630939969430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb8c3ccda1e26245a9c5d982f93b2d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Epic: 0
-  Xsolla: 1
-  PayPal: 0
-  CardPay: 0
-  frequency: 10
 --- !u!1 &6279355183111559364
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +370,6 @@ Transform:
   - {fileID: 6404624702900024097}
   - {fileID: 814566102124088374}
   - {fileID: 4701174122041793973}
-  - {fileID: 3394362202095246894}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6404624703133919154
@@ -436,7 +386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 96d8ed648d9f3a3439619a2dacad1afd, type: 2}
   Store: 0
-  renderPipeline: 1
+  renderPipeline: 0
   style: {fileID: 0}
   updateStyle: 0
   frameworkFolder: {fileID: 102900000, guid: 58273cfc7ffb34b068564038134d2993, type: 3}
@@ -447,7 +397,7 @@ MonoBehaviour:
   iconsColorCards: {fileID: 0}
   appInfo: {fileID: 11400000, guid: acf4bb6577fbb64489150e46a1923ecd, type: 2}
   exchangeRates: 0
-  payments: 1
+  payments: 0
   blockchain: 0
   analytics: 1
   unityAds: 0
@@ -460,6 +410,7 @@ MonoBehaviour:
   mobileAppChecker: 0
   push: 0
   localization: 1
+  unityUiText: 1
   Debug: 1
   LogTags:
   - LOG_INIT

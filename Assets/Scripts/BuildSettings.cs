@@ -48,16 +48,11 @@ namespace SG.RSC
         public new bool ads => appodeal || unityAds;
 
         [Space(10)]
-        public string version;
-        public int versionCode;
-        [HideInInspector]
-        public int currentVersionCode;
-        public bool isUpdateNeeded => versionCode < currentVersionCode;
-        [HideInInspector]
-        public int criticalVersionCode;
-        public bool isCriticalUpdateNeeded => versionCode < criticalVersionCode;
-        [HideInInspector]
-        public string updateUrl = null;
+        [HideInInspector] public int currentVersionCode;
+        public bool isUpdateNeeded => Configurator.Instance.appInfo.versionCode < currentVersionCode;
+        [HideInInspector] public int criticalVersionCode;
+        public bool isCriticalUpdateNeeded => Configurator.Instance.appInfo.versionCode < criticalVersionCode;
+        [HideInInspector] public string updateUrl = null;
 
         [Space(10)]
         public string keystorePass; // Kf,bhbyN
@@ -167,12 +162,12 @@ namespace SG.RSC
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, ID);
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.WebGL, ID);
             PlayerSettings.productName = productName;
-            PlayerSettings.bundleVersion = version;
+            PlayerSettings.bundleVersion = Configurator.Instance.appInfo.version;
 #if UNITY_TIZEN
         PlayerSettings.bundleVersion += "." + versionCode;
 #endif
-            PlayerSettings.iOS.buildNumber = versionCode.ToString();
-            PlayerSettings.Android.bundleVersionCode = versionCode;
+            PlayerSettings.iOS.buildNumber = Configurator.Instance.appInfo.versionCode.ToString();
+            PlayerSettings.Android.bundleVersionCode = Configurator.Instance.appInfo.versionCode;
             PlayerSettings.Android.keystorePass = keystorePass;
             PlayerSettings.Android.keyaliasName = keyaliasName;
             PlayerSettings.Android.keyaliasPass = keyaliasPass;
@@ -184,7 +179,7 @@ namespace SG.RSC
             //var googleAnalyticsManager = FindObjectOfType<SG.GoogleAnalyticsManager>();
             //googleAnalyticsManager?.Setup();
 
-            var facebookManager = FindObjectOfType<FacebookManager>();
+            var facebookManager = FindFirstObjectByType<FacebookManager>();
             facebookManager?.Setup();
 
 #if GAME_ANALYTICS

@@ -52,7 +52,7 @@ namespace SG.Ads
                 providerInterstitial = facebook.interstitial;
                 providerRewarded = facebook.videoRewarded;
             }
-            else if (Utils.IsPlatform(Platform.Editor))
+            else if (Utils.IsPlatformEditor())
             {
                 providerInterstitial = editor.interstitial;
                 providerRewarded = editor.videoRewarded;

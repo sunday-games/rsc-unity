@@ -195,7 +195,7 @@ namespace SG.RSC
                              string.Empty,
                              user.permanentRecord);
 
-                         if (user.socialPic != null) rival.userPicTexture = user.socialPic;
+                         if (SG.Achievements.UserPic != null) rival.userPicTexture = SG.Achievements.UserPic;
                      }
                      else if ((string)rivalDict["userId"] == user.id)
                      {

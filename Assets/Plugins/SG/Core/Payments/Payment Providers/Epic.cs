@@ -11,7 +11,6 @@ using Epic.OnlineServices.UserInfo;
 using Epic.OnlineServices.Ecom;
 using PlayEveryWare.EpicOnlineServices;
 using EpicResult = Epic.OnlineServices.Result;
-#endif
 
 namespace SG.Payments
 {
@@ -41,7 +40,6 @@ namespace SG.Payments
             public CurrencyValue Price;
         }
 
-#if EPIC_GAMES && !EOS_DISABLE && (UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR)
         private static EOSManager.EOSSingleton _manager => EOSManager.Instance;
         private static EpicAccountId _userId => _manager.GetLocalUserId();
         private static EcomInterface _ecom => _manager.GetEOSEcomInterface();
@@ -453,6 +451,6 @@ namespace SG.Payments
             else
                 Log.Error($"Epic - {functionName}: {result}");
         }
-#endif
     }
 }
+#endif

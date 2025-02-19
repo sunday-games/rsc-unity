@@ -199,27 +199,6 @@ namespace SG.RSC
             return 2000000000;
         }
 
-        public static string SpaceFormat(this int n)
-        {
-            if (n < 10000) return n.ToString();
-
-            var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-            nfi.NumberGroupSeparator = " ";
-            string result = n.ToString("#,#", nfi);
-
-            return string.IsNullOrEmpty(result) ? "0" : result;
-        }
-        public static string SpaceFormat(this long n)
-        {
-            if (n < 10000) return n.ToString();
-
-            var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-            nfi.NumberGroupSeparator = " ";
-            string result = n.ToString("#,#", nfi);
-
-            return string.IsNullOrEmpty(result) ? "0" : result;
-        }
-
         public enum DataTimeFormats { One, Two, Three }
         public static string Localize(this TimeSpan timeSpan, DataTimeFormats format = DataTimeFormats.Three)
         {

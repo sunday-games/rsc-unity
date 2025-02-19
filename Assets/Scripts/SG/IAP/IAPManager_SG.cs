@@ -7,11 +7,10 @@ namespace SG.RSC
     {
         public string skuPrefix = "com.sundaygames.";
 
-        [HideInInspector]
-        public IAPStore store = null;
+        public static IAPStore store = null;
 
-        bool _isInitialized = false;
-        public bool isInitialized
+        static bool _isInitialized = false;
+        public static bool isInitialized
         {
             get
             {
@@ -38,7 +37,7 @@ namespace SG.RSC
             Init();
         }
 
-        public void Init()
+        public static void Init()
         {
             if (store != null) store.Init();
             else isInitialized = true;

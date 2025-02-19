@@ -76,7 +76,7 @@ namespace SG.RSC
                 withoutButtonText.text = Localization.Get("playWithoutBoosts");
             }
 
-            if (iapManager.isInitialized)
+            if (IAPManager_SG.isInitialized)
             {
                 priceGoldfishes.SetActive(true);
                 priceGoldfishesText.text = iapManager.goldfishes.priceLocalized;
@@ -118,7 +118,7 @@ namespace SG.RSC
 
         public void BuyGoldfishes()
         {
-            if (iapManager.isInitialized)
+            if (IAPManager_SG.isInitialized)
                 iapManager.Purchase(iapManager.goldfishes, purchaseSuccess => { Refresh(buyCoinsCountText.transform.position); });
         }
 

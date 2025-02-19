@@ -4,6 +4,7 @@
     "references": [
         "SG.Core",
         "SG.Ads",
+        "SG.Achievements",
         "UnityEngine.Purchasing",
         "UnityEngine.Purchasing.Security",
         "UnityEngine.Purchasing.SecurityCore",

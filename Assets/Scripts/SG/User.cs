@@ -34,14 +34,14 @@ namespace SG.RSC
 
             if (!data.ContainsKey("revenue")) data.Add("revenue", 0.0f);
 
-            if (!data.ContainsKey("version")) data.Add("version", build.version);
-            if (version != build.version) data["version"] = build.version;
+            if (!data.ContainsKey("version")) data.Add("version", Configurator.Instance.appInfo.version);
+            if (version != Configurator.Instance.appInfo.version) data["version"] = Configurator.Instance.appInfo.version;
 
             if (!data.ContainsKey("deviceInfo")) data.Add("deviceInfo", Json.Serialize(SG_Utils.deviceInfo));
 
             if (!data.ContainsKey("firstDate")) data.Add("firstDate", SG_Utils.dateNowFormated);
 
-            if (!data.ContainsKey("firstVersion")) data.Add("firstVersion", build.version);
+            if (!data.ContainsKey("firstVersion")) data.Add("firstVersion", Configurator.Instance.appInfo.version);
 
             TutorialLoad();
 
@@ -126,8 +126,6 @@ namespace SG.RSC
                 Save();
             }
         }
-        public Texture2D socialPic =>
-            (Social.localUser != null && Social.localUser.authenticated && platform == Platform.Android) ? Social.localUser.image : null;
 
         public string gameCenterId
         {
@@ -436,7 +434,7 @@ namespace SG.RSC
         {
             if (blockSave || !needSync || !isForeignId)
             {
-                if (callback != null) callback();
+                callback?.Invoke();
                 return;
             }
 
@@ -445,7 +443,7 @@ namespace SG.RSC
                 if (download.success && download.responseDict != null)
                     ServerToLocal(download.responseDict);
 
-                if (callback != null) callback();
+                callback?.Invoke();
             });
 
             lastSyncTime = DateTime.Now;

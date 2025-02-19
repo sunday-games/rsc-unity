@@ -45,7 +45,7 @@ namespace SG.RSC
 
             if (rival.userPicTextureRect != zeroRect) picImage.uvRect = rival.userPicTextureRect;
 
-            if (picImage.texture == pics.emptyUserPic && user.socialPic != null) picImage.texture = user.socialPic;
+            if (picImage.texture == pics.emptyUserPic && SG.Achievements.UserPic != null) picImage.texture = SG.Achievements.UserPic;
         }
 
         public void OpenProfile()

@@ -1,8 +1,9 @@
 ﻿using System;
+using UnityEngine;
 
 namespace SG.RSC
 {
-    public class Achievements : AchievementsSG
+    public class Achievements : SG.Achievements
     {
         #region EVENTS
         public override void SubmitAllAchievements()
@@ -95,6 +96,22 @@ namespace SG.RSC
             if (great8.isDone) AchievementComplete(great8);
         }
         #endregion
+
+        public void AchievementComplete(Achievement achievement)
+        {
+            if (Utils.IsPlatformMobile() && LocalUser.authenticated)
+            {
+                var id = Utils.IsPlatform(Platform.iOS) ? achievement.appleGameCenterId : achievement.googleGamesId;
+                ReportProgress(id);
+
+                AchievementSave(achievement);
+            }
+            else if (!PlayerPrefs.HasKey(achievement.appleGameCenterId))
+            {
+                if (!achievement.hide && Core.ui.medalShow.Show(achievement))
+                    AchievementSave(achievement);
+            }
+        }
 
         public GetSuperCats[] getSuperCats;
         public GetGameSessions[] getGameSessions;
@@ -210,7 +227,7 @@ namespace SG.RSC
 
             inviteFriends = new InviteFriends[]
             {
-            new InviteFriends(0, 10, 10, achievements.googleAchievementIds[13], "InviteFriends1"),
+            new InviteFriends(0, 10, 10, googleAchievementIds[13], "InviteFriends1"),
             new InviteFriends(1, 25, 20, googleAchievementIds[14], "InviteFriends2"),
             new InviteFriends(2, 50, 30, googleAchievementIds[15], "InviteFriends3")
             };
@@ -238,7 +255,7 @@ namespace SG.RSC
         {
             public GetSuperCats(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.collection.Count;
+                this.current = () => Core.user.collection.Count;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -252,7 +269,7 @@ namespace SG.RSC
         {
             public GetGameSessions(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.gameSessions;
+                this.current = () => Core.user.gameSessions;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -266,7 +283,7 @@ namespace SG.RSC
         {
             public TournamentWonFriends(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.maxWonFriends;
+                this.current = () => Core.user.maxWonFriends;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -280,7 +297,7 @@ namespace SG.RSC
         {
             public InviteFriends(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.invitedFriends.Count;
+                this.current = () => Core.user.invitedFriends.Count;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -294,7 +311,7 @@ namespace SG.RSC
         {
             public UseSausages(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId)
             {
-                this.current = () => user.useSausagesHistory;
+                this.current = () => Core.user.useSausagesHistory;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -307,7 +324,7 @@ namespace SG.RSC
         {
             public Goldfishes(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.coinsMAX;
+                this.current = () => Core.user.coinsMAX;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -321,7 +338,7 @@ namespace SG.RSC
         {
             public Level(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.level;
+                this.current = () => Core.user.level;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -335,7 +352,7 @@ namespace SG.RSC
         {
             public League(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => Core.gameplay.GetLeagueCount(user.permanentRecord);
+                this.current = () => Core.gameplay.GetLeagueCount(Core.user.permanentRecord);
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -349,7 +366,7 @@ namespace SG.RSC
         {
             public Combo(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.chainLengthHistory;
+                this.current = () => Core.user.chainLengthHistory;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -363,7 +380,7 @@ namespace SG.RSC
         {
             public CatLevel(byte rank, int targetValue, int bonus, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.maxCatLevel;
+                this.current = () => Core.user.maxCatLevel;
                 this.rank = rank;
                 this.target = targetValue;
                 this.bonus = bonus;
@@ -377,7 +394,7 @@ namespace SG.RSC
         {
             public LegendaryPlace(byte rank, int targetValue, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.legendaryPlace;
+                this.current = () => Core.user.legendaryPlace;
                 this.rank = rank;
                 this.target = targetValue;
                 this.googleGamesId = googleGamesId;
@@ -391,7 +408,7 @@ namespace SG.RSC
         {
             public Honored(byte rank, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => user.honored;
+                this.current = () => Core.user.honored;
                 this.rank = rank;
                 this.target = 1;
                 this.googleGamesId = googleGamesId;
@@ -403,7 +420,7 @@ namespace SG.RSC
         {
             public Revenue(byte rank, int targetValue, string googleGamesId, string appleGameCenterId, bool hide = false)
             {
-                this.current = () => (int)user.revenue;
+                this.current = () => (int)Core.user.revenue;
                 this.rank = rank;
                 this.target = targetValue;
                 this.googleGamesId = googleGamesId;

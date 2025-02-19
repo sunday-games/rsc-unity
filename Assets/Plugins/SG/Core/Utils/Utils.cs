@@ -1222,6 +1222,18 @@ namespace SG
             return instance;
         }
 
+        public static string SpaceFormat(this int n) => SpaceFormat((long)n);
+        public static string SpaceFormat(this long n)
+        {
+            if (n < 10000) return n.ToString();
+
+            var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+            nfi.NumberGroupSeparator = " ";
+            string result = n.ToString("#,#", nfi);
+
+            return string.IsNullOrEmpty(result) ? "0" : result;
+        }
+
         public static string ToStringFormated(this float d) => string.Format(CultureInfo.InvariantCulture, "{0:#,##0.##################}", d);
         public static string ToStringFormated1(this float d) => string.Format(CultureInfo.InvariantCulture, "{0:#,##0.#}", d);
         public static string ToStringFormated2(this float d) => string.Format(CultureInfo.InvariantCulture, "{0:#,##0.##}", d);
